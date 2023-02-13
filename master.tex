@@ -1,0 +1,89 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{NM2}
+\author{Domen Vogrin}
+\date{pomlad 2023}
+
+\begin{document}
+
+\maketitle
+
+% 13. 2. 2023
+\section{Teorija aproksimacije}
+
+\subsection{Aproksimacija funkcij}
+Denimo, da imamo podano funkcijo $f$. Radi bi jo aproksimirali s kakšno "preprostejšo" funkcijo $\tilde{f}$, ki bi bila lažje izračunljiva, bi se jo dalo enostavno odvajati, integrirati ...
+
+primer:
+\begin{equation}
+    sin(x) ~ x - \frac{x^3}{3!} + \frac{x^5}{5!}
+\end{equation}
+
+\subsection{Ključna vprašanja}
+\begin{itemize}
+    \item V kakšni množici/podprostoru naj iščemo aproksimant $\tilde{f}$?
+    \item V čem naj si bo $\tilde{f}$ podobna/sorodna z $f$?
+    \item Ali $\tilde{f}$ obstaja (v množici, kjer jo iščemo)?
+    \item Če obstaja, ali je določen enolično?
+    \item Kako konstruirati aproksimant $\tilde{f}$?
+    \item Kako dobro nadomestilo za $f$ je izračunan $\tilde{f}$?
+\end{itemize}
+
+V splošnem aproksimacijski problem formaliramo takole:
+
+z $X$ označimo vektorski prostor, katerega elemente želimo aproksimirati, $S 	\subseteq X$ naj označuje podprostor/podmnožico v $X$, v katerem iščemo aproksimante. Aproksimacijska shema je operator $A: X \longrightarrow S$, ki vsakemu elementu $f \in X$ priredi aproksimacijski element (aproksimant) $\tilde{f} = A f \in S'$
+
+Primeri vektorskih prostorov:
+\begin{itemize}
+    \item $X = C([a, b]), X = C^k([a, b])$
+    \item $X = L^{2}_{\rho}([a, b]) = \{f: [a, b] \longrightarrow \R (int1)\}$, pri čemer je $\rho$ POZITIVNA UTEŽ: (pu1)
+    \item $X = \R ^n$
+\end{itemize}
+
+Primeri podprostorov, v katerih iščemo aproksimante:
+\begin{itemize}
+    \item $S = \P_n = Lin\{1, x, x^2, ..., x^n\}$ polinom stopnje $\leq$ $n$ = #3
+\end{itemize}
+
+Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksimacije, potrebujemo \textbf{normo}.
+
+Najbolj znane norme na prostoru funkcij so naslednje:
+\begin{itemize}
+    \item neskončna norma
+    \item druga norma - norma, porojena iz skalarnega produkta
+    Naj bo vektorksi prostor $X$ opremljen s skalarnim produktom $<., .>$. Potem je $||f||_2 = \sqrt{<f, f>}$.
+    Primeri skalarnih produktov (glej list)
+    \item diskretni semi-skalarni produkt
+\end{itemize}
+
+Kako določiti aproksimant f~?
+
+Ločimo:
+\begin{enumerate}
+    \item Optimalni aproksimacijski problemi
+    \item interpolacija
+\end{enumerate}
+
+Splošen optimalni aproksimacijski problem:
+Naj bo $X$ vektorski prostor z normo ||.|| $S \subseteq X$. Za $f \in X$ poiščemo $f~ \in S$, da velja #5
+
+Pri tem predmetu si bomo ogledali:
+\begin{enumerate}
+    \item aproksimacijo po metodi najmanjših kvadratov
+    (za normo izberemo drugo normo - normo iz skalarnega produkta)
+    \item enakomerna polinomska Aproksimacija
+    $X = C([a, b]), S = \P_n, ||.||_{\inf}$ 
+\end{enumerate}
+
+Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zveznih funkcij:
+
+Izrek: Weierstrassov izrek
+
+Bernsteinov aproksimacijski polinom nam poda en možen način aproksimacije funkcije $f$ (na $[0, 1]$).
+
+Bernsteinov aproksimacijski operator:
+
+Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskončni normi, žal pa je konvergenca zelo počasna.
+
+\end{document}
