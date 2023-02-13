@@ -1,0 +1,3 @@
+\babel@toc {slovene}{}\relax 
+\contentsline {section}{\numberline {1}Teorija aproksimacije}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Aproksimacija funkcij}{1}{subsection.1.1}%
