@@ -117,7 +117,7 @@ ki vsakemu elementu $f \in X$ priredi aproksimacijski element (aproksimant) \[\t
         \item $S = P_n = Lin\{1, x, x^2, \dots, x^n\}$ polinom stopnje $\leq$ $n$ = \\
         $\{ \sum_{i = 0}^{n} a_i x^i; a_i \in \R \}$
         \item $S = Lin\{1, \sin x, \cos x, \sin 2x, \cos 2x, \dots, \sin nx, \cos nx\} \\
-        \textbf{triginimetrični polinomi}$
+        \textbf{triginimetri"cni polinomi}$
         \item podprostori racionalnih funkcij, odsekoma polinomskih funkcij
     \end{itemize}
 \end{ex}
@@ -127,9 +127,9 @@ Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksim
 \begin{itemize}
     \item neskon"cna norma ($\norm{f}_{\infty}$)
     \[f \in \mathscr{C}([a, b]), \norm{f}_{\infty, [a, b]} = \max_{x \in [a, b]} |f(x)|\]
-    Za izračun numeričnega približka za neskončno normo na intervalu $[a, b]$ izberemo dovolj gosto zaporedje točk:
+    Za izra"cun numeri"cnega pribli"zka za neskon"cno normo na intervalu $[a, b]$ izberemo dovolj gosto zaporedje to"c"k:
     \[a \leq x_0 < x_1 < ... < x_n \leq b, \textbf{x} = (x_i)_{i=0}^N\]
-    in izračunamo
+    in izra"cunamo
     \[\norm{f}_{\infty, \textbf{x}} = \max_{i = 1, \dots, N} |f(x_i)|\]
     \item druga norma - norma, porojena iz skalarnega produkta
     Naj bo vektorski prostor $X$ opremljen s skalarnim produktom $\innerproduct{\cdot}{\cdot}$. Potem je $||f||_2 = \sqrt{\innerproduct{f}{f}}$.
@@ -143,29 +143,33 @@ Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksim
     \item diskretni semi-skalarni produkt
     \[\textbf{x} = (x_i)_{i=0}^N, a \leq x_0 < x_1 < ... < x_n \leq b\]
     \[\innerproduct{f}{g} = \sum_{i = 0}^{N} f(x_i) g(x_i) \rho(x_i)\]
-    Če ga še delimo z dolžino intervala, dobimo približek za prejšnjega.
+    "Ce ga "se delimo z dol"z"ino intervala, dobimo pribli"zek za prej"snjega.
     \[\norm{f}_{2, \textbf{x}} = \sqrt[]{\sum_{i = 0}^{N} f^2(x_i)\rho(x_i)}\]
 \end{itemize}
 
-%Kako dolo"citi aproksimant f~?
-%
-%Lo"cimo:
-%\begin{enumerate}
-%    \item Optimalni aproksimacijski problemi
-%    \item interpolacija
-%\end{enumerate}
-%
-%Splo"sen optimalni aproksimacijski problem:
-%Naj bo $X$ vektorski prostor z normo ||.|| $S \subseteq X$. Za $f \in X$ poi"s"cemo $f~ \in S$, da velja #5
-%
-%Pri tem predmetu si bomo ogledali:
-%\begin{enumerate}
-%    \item aproksimacijo po metodi najmanj"sih kvadratov
-%    (za normo izberemo drugo normo - normo iz skalarnega produkta)
-%    \item enakomerna polinomska Aproksimacija
-%    $X = C([a, b]), S = \P_n, ||.||_{\inf}$ 
-%\end{enumerate}
-%
+
+Za dolo"canje aproksimanta $\tilde{f}$ lo"cimo dva primera:
+\begin{enumerate}
+    \item Optimalni aproksimacijski problemi
+    \item interpolacija
+\end{enumerate}
+
+\subsubsection{Splo"sen optimalni aproksimacijski problem}
+Naj bo $X$ vektorski prostor z normo $\norm{\cdot}$, $S \subseteq X$. Za $f \in X$ i"s"cemo $f~ \in S$, da velja
+\begin{equation}
+    \norm{f - \tilde{f}} = \inf_{s \in S} \norm{f - s} = dist(f, S)
+\end{equation}
+Torej, izmed mo"znih pribli"zkov izberemo najbolj"sega.
+
+
+Pri tem predmetu si bomo ogledali:
+\begin{enumerate}
+    \item aproksimacijo po metodi najmanj"sih kvadratov
+    
+    (za normo izberemo drugo normo - normo iz skalarnega produkta)
+    \item enakomerna polinomska aproksimacija ($X = C([a, b])$, $S = P_n$, $\norm{\cdot}_{\inf}$)
+\end{enumerate}
+
 %Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zveznih funkcij:
 %
 %Izrek: Weierstrassov izrek
