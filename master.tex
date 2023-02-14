@@ -61,7 +61,7 @@
 
 \begin{document}
 
-\title{Numeri"cne metode 2 - zapiski s predavanj prof. Knez}
+\title{Numeri"cne metode 2\\ \small zapiski s predavanj prof. Marjetke Knez}
 \author{Domen Vogrin}
 \date{pomlad 2023}
 \maketitle
@@ -170,14 +170,37 @@ Pri tem predmetu si bomo ogledali:
     \item enakomerna polinomska aproksimacija ($X = C([a, b])$, $S = P_n$, $\norm{\cdot}_{\inf}$)
 \end{enumerate}
 
-%Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zveznih funkcij:
-%
-%Izrek: Weierstrassov izrek
-%
-%Bernsteinov aproksimacijski polinom nam poda en mo"zen na"cin aproksimacije funkcije $f$ (na $[0, 1]$).
-%
-%Bernsteinov aproksimacijski operator:
-%
-%Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskon"cni normi, "zal pa je konvergenca zelo po"casna.
+Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zveznih funkcij.
+
+\begin{theorem} (Weierstrassov izrek)
+    Naj bo $f \in \mathscr{C} ([a, b])$. Potem za vsak $\varepsilon < 0$ obstaja polinom $p$, da je $\norm{f - p}_{\infty, [a, b]} < \varepsilon$. Drugače povedano:
+    \begin{equation}
+        dist(f, P_n) \to 0 \text{, ko gre } n \to 0
+    \end{equation}
+\end{theorem}
+
+\begin{proof}(konstruktivni - ideja)
+    Naj bo $[a, b] = [0, 1]$. Za $f \in \mathscr{C} ([0, 1])$ definiramo t.i. $\textbf{Bernsteinov polinom}$:
+    \begin{equation}
+        \mathscr{B}_n f (x) = \sum_{i = 0}^{n} f (\frac{i}{n}) B_i^n(x)
+    \end{equation}
+    kjer je $B_i^n(x)$ $\textbf{Bernsteinov bazni polinom}$:
+    \begin{equation}
+        B_i^n (x) = {n \choose i} x^i (1-x)^{n-i} \text{, } i = 0, 1, \dots, n  
+    \end{equation}
+    Da se pokazati, da gre $\norm{f - \mathscr{B}_n f}_{\infty, [a, b]} \to 0$, ko gre $n \to 0$.
+\end{proof}
+
+Bernsteinov aproksimacijski polinom nam poda en mo"zen na"cin aproksimacije funkcije $f$ (na $[0, 1]$).
+
+Bernsteinov aproksimacijski operator:
+
+\[\mathscr{B}_n : \mathscr{C} ([a, b]) \to P_n\]
+\[f \mapsto \mathscr{B}_n f\]
+\begin{equation}
+    \mathscr{B}_n f(x) = \sum_{i = 0}^{n} f(a + \frac{i}{n}(b-a)) B_i^n (\frac{x-a}{b-a})
+\end{equation}
+
+Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskon"cni normi, "zal pa je konvergenca zelo po"casna.
 
 \end{document}
