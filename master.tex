@@ -155,7 +155,7 @@ Za dolo"canje aproksimanta $\tilde{f}$ lo"cimo dva primera:
 \end{enumerate}
 
 \subsubsection{Splo"sen optimalni aproksimacijski problem}
-Naj bo $X$ vektorski prostor z normo $\norm{\cdot}$, $S \subseteq X$. Za $f \in X$ i"s"cemo $f~ \in S$, da velja
+Naj bo $X$ vektorski prostor z normo $\norm{\cdot}$, $S \subseteq X$. Za $f \in X$ i"s"cemo $\tilde{f} \in S$, da velja
 \begin{equation}
     \norm{f - \tilde{f}} = \inf_{s \in S} \norm{f - s} = dist(f, S)
 \end{equation}
@@ -175,7 +175,7 @@ Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zve
 \begin{theorem} (Weierstrassov izrek)
     Naj bo $f \in \mathscr{C} ([a, b])$. Potem za vsak $\varepsilon < 0$ obstaja polinom $p$, da je $\norm{f - p}_{\infty, [a, b]} < \varepsilon$. Drugače povedano:
     \begin{equation}
-        dist(f, P_n) \to 0 \text{, ko gre } n \to 0
+        dist(f, P_n) \to 0 \text{, ko gre } n \to \infty
     \end{equation}
 \end{theorem}
 
@@ -188,7 +188,7 @@ Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zve
     \begin{equation}
         B_i^n (x) = {n \choose i} x^i (1-x)^{n-i} \text{, } i = 0, 1, \dots, n  
     \end{equation}
-    Da se pokazati, da gre $\norm{f - \mathscr{B}_n f}_{\infty, [a, b]} \to 0$, ko gre $n \to 0$.
+    Da se pokazati, da gre $\norm{f - \mathscr{B}_n f}_{\infty, [a, b]} \to 0$, ko gre $n \to \infty$.
 \end{proof}
 
 Bernsteinov aproksimacijski polinom nam poda en mo"zen na"cin aproksimacije funkcije $f$ (na $[0, 1]$).
