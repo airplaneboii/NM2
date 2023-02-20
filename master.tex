@@ -209,44 +209,49 @@ Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskon"cni normi, "za
 \subsection{Aproksimacija po metodi najmanjših kvadratov (MNK)}
 Sodi pod optimalne aproksimacijske probleme.
 
-Naj bo $X$ normiran vektorski prostor nad $\R$ s skalarnim produktom <.,.> in naj bo $\norm{\codt}_d = \sqrt[]{<., .>}$.
-
-$S \subseteq X$ naj bo končno dimenzionalen podprostor v $X$, $S = Lin\{\varphi_1, \varphi_2, \}$, $dimS = n$.
-
-Za izbran $f \in X$ iščemo $f^* \in S$, da bo veljalo
+Naj bo $X$ normiran vektorski prostor nad $\R$ s skalarnim produktom $\innerproduct{\cdot}{\cdot}$ in naj bo $\norm{\cdot}_2 = \sqrt[]{\innerproduct{\cdot}{\cdot}}$.
+$S \subseteq X$ naj bo končno dimenzionalen podprostor v $X$, $S = Lin\{\varphi_1, \varphi_2, \dots, \varphi_n\}$, $dimS = n$. Za izbran $f \in X$ iščemo $f^* \in S$, da bo veljalo
 \begin{equation}
     \norm{f - f^*}_2 = \min_{s\in S} \norm{f - s}_2
 \end{equation}
 
-$f^*$ imenujemo element najbližje aproksimacije po MNK za $f \in X$.
+$f^*$ naj bo element najbližje aproksimacije (e.n.a.) po MNK za $f \in X$.
 
 \begin{theorem}
-    Naj bo $S \subseteq X$ končno dimenzionalen podprostor. Element $f^* \in S$ je element najbližje aproksimacije po MNK za $f\in X$ natanko takrat,
-    ko je $f - f^* \perp S$.
+    Naj bo $S \subseteq X$ končno dimenzionalen podprostor. Element $f^* \in S$ je element najbližje aproksimacije po MNK za $f \in X$ natanko takrat,
+    ko je 
+    \[f - f^* \perp S\]
 \end{theorem}
 
-\begin{proof}[$\Longleftarrow$]
-    Predpostavimo, da je $f - f^* \perp S$. Dokazati moramo, da je $\norm{f - f^*}_2 = \min_{s \in S} \norm{f-s}_2$.
+\begin{proof}
+    ($\Longleftarrow$)
+    Predpostavimo, da je $f - f^* \perp S$. Dokazati moramo, da je 
+    \[\norm{f - f^*}_2 = \min_{s \in S} \norm{f-s}_2\]
     Izberimo poljuben $s \in S$.
-    \begin{equation}
-        \norm{f - s}_2 = \norm{f - f^* + f^* - s}_2 = \innerproduct{(f - f^*) + (f^* - s)}{(f - f^*) + (f^* - s)} =
-        \norm{f - f^*}_2^2 + 2 * \innerproduct{f^* - s}{f - f^*} + norm{f^* - s}_2^2 \geq \norm{f - f^*}_^2
-    \end{equation}
+    \begin{align}
+        \norm{f - s}_2 &=  \norm{f - f^* + f^* - s}_2\\
+                       &= \innerproduct{(f - f^*) + (f^* - s)}{(f - f^*) + (f^* - s)}\\
+                       &= \norm{f - f^*}_2^2 + 2 * \innerproduct{f^* - s}{f - f^*} + \norm{f^* - s}_2^2\\
+                       &\geq \norm{f - f^*}_2^2
+    \end{align}
+    $(10)$ velja, saj je (povej zakaj - nimam označeno)
 \end{proof}
 
-\begin{proof}[$\Longleftarrow$]
+\begin{proof}
+    ($\Longleftarrow$)
     Predpostavimo, da je $f^*$ e.n.a. po MNK.
     Dokazati želimo: $f - f^* \perp S$ (podčrtkano)
 
     $\forall s \in S \text{ in } \forall \lambda > 0$ velja
-    \begin{equation}
-        \norm{f - f^*}_2 \leq \norm{f - (f^* - \lambda s)}_2 = \innerproduct{f - f^* + \lambda s}{f - f^* + \lambda s} =
-        \norm{f-f^*}_2^2 + 2 * \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2
-    \end{equation}
-    \begin{equation}
-        0 \leq 2 * \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2\\
-        0 \leq \lambda (2\innerproduct{f-f^*}{s} + \lambda \norm{s}_2^2)
-    \end{equation}
+    \begin{align}
+        \norm{f - f^*}_2 &\leq \norm{f - (f^* - \lambda s)}_2\\
+                         &= \innerproduct{f - f^* + \lambda s}{f - f^* + \lambda s}\\
+                         &= \norm{f-f^*}_2^2 + 2 * \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2
+    \end{align}
+
+    \[0 \leq 2 * \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2\]
+    \[0 \leq \lambda (2\innerproduct{f-f^*}{s} + \lambda \norm{s}_2^2)\]
+
     Ker lahko $\lambda > 0$ vzamemo tako majhno, da velikost člena $2\innerproduct{f-f^*}{s}$ prevlada nad $\lambda \norm{s}_2^2$, vidimo,
     da mora biti $0 \leq \innerproduct{f-f^*}{s}$. Če sedaj v $S$ izberemo element $-s$, potem pa po istem sklepu velja, da mora biti
     \begin{equation}
@@ -258,90 +263,90 @@ $f^*$ imenujemo element najbližje aproksimacije po MNK za $f \in X$.
     \end{equation}
 \end{proof}
 
-Iz izreka sledi konstrukcija .
-
-Izberemo $f \in X$. Naj bodo $\varphi_1, \varphi_2, \dots, \varphi_n$ baza za podprostor $S$:
-\[S = Lin{\varphi_1, \varphi_2, \dots, \varphi_n}\]
-Iščemo $f^* \in S$ e.n.a. po MNK.
-
-\[f^* = \sum_{j = 1}^{n} \alpha_j \varphi_j\]
-
-kjer so $(\alpha_j)_{j = 1}^n$ neznani koeficienti. Iz izreka sledi, da mora biti $f - f^* \perp S$. To bo res $<=>$ ko bo
-\[f - f^* \perp \varphi_i, i \in [n]\]
-\[\innerproduct{f - f^*}{\varphi_i} = 0\]
-\[\innerproduct{f - \sum_{j = 1}^{n}\alpha_j \varphi_j}{\varphi_j} = 0\]
-\[\innerproduct{f}{\varphi_i} - \sum_{j = 1}^{n}\alpha_j \innerproduct{\varphi_j}{\varphi_i} = 0\]
-\[\sum_{j = 1}^{n} \alpha_j \innerproduct{\varphi_j}{\varphi_i} = \innerproduct{f}{\varphi_i}\]
-
-insert enačbo (po vektorjih - cela stran)
-
-\begin{ex}
-    Naj bo $f(x) = \sin (x)$, $\innerproduct{f}{g} = \int_{0}^{\pi} f(x) g(x) dx$. Aproksimiraj $f$ po MNK v podprostoru $\P_1$
-\end{ex}
-Rešitev (prepiši):
-
-\[X = \mathscr{C} ([0, \pi]) (X = \mathscr{L}^2 ([0, \pi]))\]
-\[S = P_1 = Lin\{1, x\}, \varphi_1(x) = 1, \varphi_2 (x) = x\]
-
-\[f^*(x) = \alpha_1 \varphi_1(x) + \alpha_2 \varphi_2(x)\]
-
-G = matrika
-
-Računali smo:
-\[\min_{p \in P_1} \norm{f - p}_2 = \min_{p \in P_1} \sqrt[]{\int_{0}^{\pi} (sinx - p(x)^2) dx}\]
-(skica - minimizacija območja)
-
-\begin{ex}
-    Točke $(1, 2), (2, 3), (3, 5), (4, 8)$ aproksimiraj po MNK s premico.
-
-    $S = P_1 = Lin\{1, x\}$
-    \[\innerproduct{f}{g} = \sum_{i = 1}^{4} f(x_i), g(x_i)\]
-    x = [1, 2, 3, 4]^T (piši kot vektor)
-    $f$, ki jo aproksimiramo, je znana le v točkah x (piši kot vektor).
-
-    Gramova matrika:
-    \[\innerproduct{\varphi_1}{\varphi_1} = \sum_{i = 1}^{4}1\cdot1 = 4\]
-    \[\innerproduct{\varphi_1}{\varphi_2} = \sum_{i = 1}^{4}1\cdotx_i = 10\]
-    \[\innerproduct{\varphi_2}{\varphi_2} = \sum_{i = 1}^{4}x_i^2 = 30\]
-    (Zapiši gramovo matriko)
-
-    \[\innerproduct{f}{\varphi_1} = \sum_{i = 1}^{4} y_i \cdot 1 = 18, \innerproduct{f}{\varphi_2} = \sum_{i = 1}^{4} y_i x_i = 55\]
-
-    (sistem)
-    Minimizirali smo
-    \begin{equation}
-        \min_{p \in P_1} \norm{f - p}_2 =\sqrt[root]{\sum_{i = 1}^{4} (x_i \cdot -p(x_i))^2}
-    \end{equation}
-    (skica)
-\end{ex}
-
-
-Povezava te teorije s predoločenimi sistemi enačb. (subsection al neki tazga)
-
-\begin{equation}
-    Ax = b, A\in \R^{mxn}, A = [a_q a_2 \dots a_n], a_j \dots j-ti stolpec od matrike A, b \in R^m\\
-    \min_{x \in \R^n \norm{Ax - b}_2}
-\end{equation}
-
-Aproksimiramo vektor $b \in \R^m (X = \R^m)$
-\[S = Lin\{a_1, a_2, \dots, a_n\} = ImA\]
-\[b^* = \sum_{j = 1}^{n}x_j a_j = Ax\]
-\[\min_{z \in ImA} \norm{b-z} = min_{x \in \R^m} \norm{b-Ax}_2\]
-\[\innerproduct{x}{y} = \sum_{i = 1}^{m}x_i y_i = x^T y\]
-
-G = neki
-desna stran (neki)
-
-\begin{ex}
-    $X = \mathscr{C} ([0, 1])$
-    \[S = P_{n-1} = Lin\{1, x, x^2, \dots, x^{n-1}\}\]
-    \[\innerproduct{f}{g} = \int_{0}^{1} f(x) g(x) dx\]
-    \[\innerproduct{\varphi_i}{\varphi_j} = \int_{0}^{1} x^{i-1} x^{j-1} dx = \int_{0}^{1}x^{i+j-2} dx = \frac{1}{i+j-1}\]
-
-    \[G ? (\frac{1}{i+j-1})_{i, j = 1}^n\]
-    Hilbertova matrika
-\end{ex}
-
+%Iz izreka sledi konstrukcija .
+%
+%Izberemo $f \in X$. Naj bodo $\varphi_1, \varphi_2, \dots, \varphi_n$ baza za podprostor $S$:
+%\[S = Lin{\varphi_1, \varphi_2, \dots, \varphi_n}\]
+%Iščemo $f^* \in S$ e.n.a. po MNK.
+%
+%\[f^* = \sum_{j = 1}^{n} \alpha_j \varphi_j\]
+%
+%kjer so $(\alpha_j)_{j = 1}^n$ neznani koeficienti. Iz izreka sledi, da mora biti $f - f^* \perp S$. To bo res $<=>$ ko bo
+%\[f - f^* \perp \varphi_i, i \in [n]\]
+%\[\innerproduct{f - f^*}{\varphi_i} = 0\]
+%\[\innerproduct{f - \sum_{j = 1}^{n}\alpha_j \varphi_j}{\varphi_j} = 0\]
+%\[\innerproduct{f}{\varphi_i} - \sum_{j = 1}^{n}\alpha_j \innerproduct{\varphi_j}{\varphi_i} = 0\]
+%\[\sum_{j = 1}^{n} \alpha_j \innerproduct{\varphi_j}{\varphi_i} = \innerproduct{f}{\varphi_i}\]
+%
+%insert enačbo (po vektorjih - cela stran)
+%
+%\begin{ex}
+%    Naj bo $f(x) = \sin (x)$, $\innerproduct{f}{g} = \int_{0}^{\pi} f(x) g(x) dx$. Aproksimiraj $f$ po MNK v podprostoru $\P_1$
+%\end{ex}
+%Rešitev (prepiši):
+%
+%\[X = \mathscr{C} ([0, \pi]) (X = \mathscr{L}^2 ([0, \pi]))\]
+%\[S = P_1 = Lin\{1, x\}, \varphi_1(x) = 1, \varphi_2 (x) = x\]
+%
+%\[f^*(x) = \alpha_1 \varphi_1(x) + \alpha_2 \varphi_2(x)\]
+%
+%G = matrika
+%
+%Računali smo:
+%\[\min_{p \in P_1} \norm{f - p}_2 = \min_{p \in P_1} \sqrt[]{\int_{0}^{\pi} (sinx - p(x)^2) dx}\]
+%(skica - minimizacija območja)
+%
+%\begin{ex}
+%    Točke $(1, 2), (2, 3), (3, 5), (4, 8)$ aproksimiraj po MNK s premico.
+%
+%    $S = P_1 = Lin\{1, x\}$
+%    \[\innerproduct{f}{g} = \sum_{i = 1}^{4} f(x_i), g(x_i)\]
+%    x = [1, 2, 3, 4]^T (piši kot vektor)
+%    $f$, ki jo aproksimiramo, je znana le v točkah x (piši kot vektor).
+%
+%    Gramova matrika:
+%    \[\innerproduct{\varphi_1}{\varphi_1} = \sum_{i = 1}^{4}1\cdot1 = 4\]
+%    \[\innerproduct{\varphi_1}{\varphi_2} = \sum_{i = 1}^{4}1\cdotx_i = 10\]
+%    \[\innerproduct{\varphi_2}{\varphi_2} = \sum_{i = 1}^{4}x_i^2 = 30\]
+%    (Zapiši gramovo matriko)
+%
+%    \[\innerproduct{f}{\varphi_1} = \sum_{i = 1}^{4} y_i \cdot 1 = 18, \innerproduct{f}{\varphi_2} = \sum_{i = 1}^{4} y_i x_i = 55\]
+%
+%    (sistem)
+%    Minimizirali smo
+%    \begin{equation}
+%        \min_{p \in P_1} \norm{f - p}_2 =\sqrt[root]{\sum_{i = 1}^{4} (x_i \cdot -p(x_i))^2}
+%    \end{equation}
+%    (skica)
+%\end{ex}
+%
+%
+%Povezava te teorije s predoločenimi sistemi enačb. (subsection al neki tazga)
+%
+%\begin{equation}
+%    Ax = b, A\in \R^{mxn}, A = [a_q a_2 \dots a_n], a_j \dots j-ti stolpec od matrike A, b \in R^m\\
+%    \min_{x \in \R^n \norm{Ax - b}_2}
+%\end{equation}
+%
+%Aproksimiramo vektor $b \in \R^m (X = \R^m)$
+%\[S = Lin\{a_1, a_2, \dots, a_n\} = ImA\]
+%\[b^* = \sum_{j = 1}^{n}x_j a_j = Ax\]
+%\[\min_{z \in ImA} \norm{b-z} = min_{x \in \R^m} \norm{b-Ax}_2\]
+%\[\innerproduct{x}{y} = \sum_{i = 1}^{m}x_i y_i = x^T y\]
+%
+%G = neki
+%desna stran (neki)
+%
+%\begin{ex}
+%    $X = \mathscr{C} ([0, 1])$
+%    \[S = P_{n-1} = Lin\{1, x, x^2, \dots, x^{n-1}\}\]
+%    \[\innerproduct{f}{g} = \int_{0}^{1} f(x) g(x) dx\]
+%    \[\innerproduct{\varphi_i}{\varphi_j} = \int_{0}^{1} x^{i-1} x^{j-1} dx = \int_{0}^{1}x^{i+j-2} dx = \frac{1}{i+j-1}\]
+%
+%    \[G ? (\frac{1}{i+j-1})_{i, j = 1}^n\]
+%    Hilbertova matrika
+%\end{ex}
+%
 
 
 \end{document}
