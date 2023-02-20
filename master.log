@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.2.13)  20 FEB 2023 19:14
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 23.1) (preloaded format=pdflatex 2023.2.13)  20 FEB 2023 19:27
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -964,8 +964,8 @@ Package rerunfilecheck Info: File `master.out' has not changed.
 (rerunfilecheck)             Checksum: DE2C8535DE8750C4C46FFAB5934E678B;931.
  ) 
 Here is how much of TeX's memory you used:
- 24025 strings out of 476374
- 449351 string characters out of 5788854
+ 24024 strings out of 476374
+ 449338 string characters out of 5788854
  1863340 words of memory out of 5000000
  43908 multiletter control sequences out of 15000+600000
  578109 words of font info for 81 fonts, out of 8000000 for 9000
@@ -993,9 +993,9 @@ Users/domen/AppData/Local/Programs/MiKTeX/fonts/type1/public/lm/lmsy8.pfb><C:/U
 sers/domen/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfonts/symbols/ms
 am10.pfb><C:/Users/domen/AppData/Local/Programs/MiKTeX/fonts/type1/public/amsfo
 nts/symbols/msbm10.pfb>
-Output written on master.pdf (6 pages, 236595 bytes).
+Output written on master.pdf (6 pages, 236496 bytes).
 PDF statistics:
- 170 PDF objects out of 1000 (max. 8388607)
- 33 named destinations out of 1000 (max. 500000)
+ 169 PDF objects out of 1000 (max. 8388607)
+ 32 named destinations out of 1000 (max. 500000)
  45 words of extra memory for PDF output out of 10000 (max. 10000000)
 
