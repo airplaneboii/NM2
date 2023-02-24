@@ -523,5 +523,106 @@ $\innerproduct{x}{y} = \sum_{i = 1}^{m} x_i y_i$:
     kjer je G Hilbertova matrika. Te so zelo občutljive.
 \end{ex}
 
+% 24. 2. 2023
+
+Gramova matrika je lahko zelo občutljiva. Reševanju sistema linearnih enačb se izognemo, če v podprostoru $S$ izberemo $\textbf{ortonormirano bazo}$
+\[\{\varphi_1, \varphi_2, \dots, \varphi_n\}\] je ortonormirana baza, če \[\varphi_1 \varphi_j \forall i \neq j \text{ in } \norm{\varphi_i}_2 = 1\]
+V tem primeru je $G = I$ in $\alpha_i = \innerproduct{f}{\varphi_i}$ in $f^* = \sum_{i = 1}^{n}\innerproduct{f}{\varphi_i} \varphi_i$. Ortonormirano
+bazo izračunamo z $\textbf{modificiranim Gram-Schmidtovim algoritmom}$.
+
+Algoritem: (daj v psevdokodo)
+Vhodni podatki: baza $\{\psi_1, \psi_2, \dots, \psi_n\}$
+for i = 1:n
+    $\varphi_i = \psi_i$
+end
+for i = 1:n
+    $\varphi_i = \frac{\varphi_i}{\norm{\varphi_i}_2}$
+    for j = i+1:n
+        $\varphi_j = \varphi_j - \innerproduct{\varphi_j}{\varphi_i}\varphi_i$
+    end
+end
+izhod: $\{\varphi_1, \varphi_2, \dots, \varphi_n\}$ ortonormirana baza
+
+$X \in \mathscr{C}([a, b])$
+(vstavi skico)
+
+\subsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
+$X = \mathscr{C} ([a, b]), S = \Pp_n, \norm{\cdot}_{\infty}$
+
+Problem: Za dano funkcijo $f \in \mathscr{C} ([a, b])$ iščemo polinom $p^* \in \Pp_n$, za katerega velja
+\[\norm{f - p^*}_{\infty, [a, b]} = \min_{p \in \Pp_n} \norm{f - p}_{\infty, [a, b]} = \min_{p \in Pp_n} \max_{x \in [a, b]} |f(x) - p(x)|\]
+$p^*$ imenujemo $\textbf{polinom najboljše enakomerne aproksimacije (PENA)}$.
+Problem je nelinearen.
+
+(skica2)
+Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PENA za neko funkcijo.
+\begin{theorem}
+    Naj bo $f \in \mathscr{C}([a, b])$. Če je polinom $p \in Pp_n$ tak, da $\textbf{residual}$
+    \begin{equation}
+        p = f - p
+    \end{equation}
+    alternirajoče doseže svojo normo $\norm{p}_{\infty, [a, b]}$ v vsaj $n + 2$ različnih točkah $(x_i)_{i*0}^{n+1}$
+    \[a \leq x_0 < x_1 < \dots < \x_{n+1} \leq b\]
+    potem je $p$ polinom najboljše enakomerne aproksimacije za $f$ na $[a, b]$.
+\end{theorem}
+
+OPOMBA: Kaj pomeni "alternirajoče doseže svojo normo"?
+\[\norm{r}_{\infty, [a, b]} = |r(x_i)| \forall i \in [n]\]
+in
+\[r(x_i)r(x_{i+1}) < 0 \forall i\]
+
+(vstavi graf)
+
+\begin{proof}
+    Dokaz s protislovjem.
+
+    Recimo, da $p$ ne bi bil PNEA za $f$. Tedaj bi obstajal nek drug polinom $q \in \Pp_n$, da bi veljalo
+    \begin{equation}
+        |f(x_i) - q(x_i)| \leq \max_{x \in [a, b]} |f(x_i) - q(x_i)| = \norm{f - q}_{\infty, [a, b]} <
+         \norm{f - p}_{\infty, [a, b]} = |f(x_i) - p(x_i)| \forall i = 0, 1, 2, \dots, n+1
+    \end{equation}
+    Torej
+    \[|f(x_i) - q(x_i)| < |f(x_i) - p(x_i)| \forall i\]
+    \[- sign((f(x_i) - p(x_i)) (f(x_i) - p(x_i))) < f(x_i) - q(x_i) < sign((f(x_i) - p(x_i)) (f(x_i) - p(x_i)))\]
+    Dalje velja 
+    \[sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1})) < f(x_{i+1}) - q(x_{i+1}) < - sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1}))\]
+    Opomba:
+    \[sign(f(x_{i+1}) - p(x_{i+1})) = sign(f(x_i) - p(x_i))\]
+
+    BŠS rečemo, da je $sign(f(x_i) - p(x_i)) = 1$. Potem je $f(x_i) - q(x_i) < f(x_i) - p(x_i)$, $p(x_i) - q(x_i) < 0$ in
+    $f(x_{i+1}) - p(x_{i+1}) < f(x_{i+1}) - q(x_{i+1})$, torej $p(x_{i+1}) - q(x_{i+1}) > 0$.
+
+    Vidimo, da ima razlika $p-q$ ničlo na intervalu $(x_i, x_{i+q})$ za $i \in [n]$. Razlika $p-q$ je polinom stopnje $n$, ki ima $n+1$ ničel.
+    Torej mora biti $p === q$.
+
+\end{proof}
+
+Da se pokazati, da tak polinom res obstaja oziroma da v izreku velja ekvivalenca (težko - dokaz izpustimo).
+
+Iskanje/računanje PNEA se prevede na iskanje ustrezne množice točk $\{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$.
+
+DEF:
+Naj bo $E = \{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$. Definirajmo $\textbf{minimaks}$ za $f$ na $E$ konstruirati
+\[M_n (f, E) = \min_{p \in \Pp_n} \max_{x_i \in E} |f(x_i) - p(x_i)|\]
+(end of def)
+
+Polinom, pri katerem je ta minimum dosežen, imenujemo $textbf{polinom najboljše enakomerne aproksimacije za f na množici E}$. Izračunamo ga tako,
+da rešimo naslednji sistem linearnih enačb:
+\begin{equation}
+    f(x_i) - p(x_i) = (-1)^i m, i \in [n+1] 
+\end{equation}
+(brez izpeljave)
+Imamo torej $n+2$ enačb in $n+2$ neznank ($n + 1$ v polinomu $p$ in eno v $m$):
+\[p(x) = \sum_{j = 0}^{n} a_j x^j\]
+ter koeficient $m$, za katerega velja
+\[|m| = M_n (f, E)\]
+
+(vstavi slikco)
+
+\section{Interpolacija}
+Problem: Podane imamo vrednosti izbrane funkcije $f$ v $n+1$ paroma različnih točkah $x_0, x_q, \dots, x_n$ na realni osi. Te točke bomo imenovali
+$\textbf{interpolacijske točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pohojem
+\[g(x_i) = f(x_i) \forall i \in [n]\]
+$g$ imenujemo $\texthb{interpolacijska funkcija}$. Za interpolacijske funkcije običajno izberemo polinome, odsekoma polinomske funkcije \dots
 
 \end{document}
