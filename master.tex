@@ -17,6 +17,8 @@
 \usepackage{tikz}
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}
 \newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
 % encoding and language
 \usepackage{lmodern}
@@ -98,8 +100,13 @@ Klju"cna vpra"sanja, ki se nam postavijo, so:
 V splo"snem aproksimacijski problem formaliramo takole:
 
 z $X$ ozna"cimo vektorski prostor, katerega elemente "zelimo aproksimirati, $S \subseteq X$ naj ozna"cuje podprostor/podmno"zico v $X$, v katerem i"s"cemo aproksimante. Aproksimacijska shema je operator 
-\[\mathscr{A}\colon X \to S\]
-ki vsakemu elementu $f \in X$ priredi aproksimacijski element (aproksimant) \[\tilde{f} = \mathscr{A} f \in S'\]
+\begin{equation*}
+    \mathscr{A}\colon X \to S
+\end{equation*}
+ki vsakemu elementu $f \in X$ priredi aproksimacijski element (aproksimant)
+\begin{equation*}
+    \tilde{f} = \mathscr{A} f \in S'
+\end{equation*}
 
 \begin{ex}
     Vektorski prostori:
@@ -115,10 +122,14 @@ ki vsakemu elementu $f \in X$ priredi aproksimacijski element (aproksimant) \[\t
     Podprostori, v katerih i"s"cemo aproksimante:
     
     \begin{itemize}
-        \item $S = \Pp_n = Lin\{1, x, x^2, \dots, x^n\}$ polinom stopnje $\leq$ $n$ = \\
-        $\{ \sum_{i = 0}^{n} a_i x^i; a_i \in \R \}$
-        \item $S = Lin\{1, sin x, cos x, sin 2x, cos 2x, \dots, sin nx, cos nx\} \\
-        \textbf{triginimetri"cni polinomi}$
+        \item $S = \Pp_n = Lin\{1, x, x^2, \dots, x^n\}$ polinom stopnje $\leq$ $n$:
+        \begin{equation*}
+            S = \{ \sum_{i = 0}^{n} a_i x^i; a_i \in \R \}
+        \end{equation*}
+        \item $\textbf{triginimetri"cni polinomi}$
+        \begin{equation*}
+            S = Lin\{1, \sin x, \cos x, \sin 2x, \cos 2x, \dots, \sin nx, \cos nx\}
+        \end{equation*}
         \item podprostori racionalnih funkcij, odsekoma polinomskih funkcij
     \end{itemize}
 \end{ex}
@@ -127,13 +138,23 @@ Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksim
 
 \begin{itemize}
     \item neskon"cna norma ($\norm{f}_{\infty}$)
-    \[f \in \mathscr{C}([a, b]), \norm{f}_{\infty, [a, b]} = \max_{x \in [a, b]} |f(x)|\]
+    \begin{equation*}
+        f \in \mathscr{C}([a, b]), \norm{f}_{\infty, [a, b]} = \max_{x \in [a, b]} \left| f(x) \right|
+    \end{equation*}
     Za izra"cun numeri"cnega pribli"zka za neskon"cno normo na intervalu $[a, b]$ izberemo dovolj gosto zaporedje to"ck:
-    \[a \leq x_0 < x_1 < ... < x_n \leq b, \textbf{x} = (x_i)_{i=0}^N\]
+    \begin{equation*}
+        a \leq x_0 < x_1 < ... < x_n \leq b, \textbf{x} = (x_i)_{i=0}^N
+    \end{equation*}
     in izra"cunamo
-    \[\norm{f}_{\infty, \textbf{x}} = \max_{i = 1, \dots, N} |f(x_i)|\]
-    \item druga norma - norma, porojena iz skalarnega produkta
-    Naj bo vektorski prostor $X$ opremljen s skalarnim produktom $\innerproduct{\cdot}{\cdot}$. Potem je $||f||_2 = \sqrt{\innerproduct{f}{f}}$.
+    \begin{equation*}
+        \norm{f}_{\infty, \textbf{x}} = \max_{i = 1, \dots, N} \left| f(x_i) \right|
+    \end{equation*}
+
+    \item druga norma ($\norm{\cdot}_2$) - norma, porojena iz skalarnega produkta
+    Naj bo vektorski prostor $X$ opremljen s skalarnim produktom $\innerproduct{\cdot}{\cdot}$. Potem je 
+    \begin{equation*}
+        \norm{f}_2 = \sqrt{\innerproduct{f}{f}}
+    \end{equation*}
     Primeri skalarnih produktov:
     \begin{enumerate}
         \item[$\cdot$] $\innerproduct{f}{g} = \int_{a}^{b} f(x) g(x) \rho(x) dx$, $f, g \in \mathscr{L}_{\rho}^2 ([a, b])$
@@ -141,11 +162,18 @@ Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksim
         
         Za $f(x) \equiv 1$ to imenujemo $\textbf{standardni skalarni produkt}$
     \end{enumerate}
+
     \item diskretni semi-skalarni produkt
-    \[\textbf{x} = (x_i)_{i=0}^N, a \leq x_0 < x_1 < ... < x_n \leq b\]
-    \[\innerproduct{f}{g} = \sum_{i = 0}^{N} f(x_i) g(x_i) \rho(x_i)\]
-    "Ce ga "se delimo z dol"z"ino intervala, dobimo pribli"zek za prej"snjega.
-    \[\norm{f}_{2, \textbf{x}} = \sqrt[]{\sum_{i = 0}^{N} f^2(x_i)\rho(x_i)}\]
+    \begin{equation*}
+        \textbf{x} = (x_i)_{i=0}^N \text{, }a \leq x_0 < x_1 < \dots < x_n \leq b
+    \end{equation*}
+    \begin{equation*}
+        \innerproduct{f}{g} = \sum_{i = 0}^{N} f(x_i) g(x_i) \rho(x_i)
+    \end{equation*}
+    "Ce ga "se delimo z dol"zino intervala, dobimo pribli"zek za prej"snjega.
+    \begin{equation*}
+        \norm{f}_{2, \textbf{x}} = \sqrt[]{\sum_{i = 0}^{N} f^2(x_i)\rho(x_i)}
+    \end{equation*}
 \end{itemize}
 
 
@@ -155,11 +183,12 @@ Za dolo"canje aproksimanta $\tilde{f}$ lo"cimo dva primera:
     \item interpolacija
 \end{enumerate}
 
+
 \subsubsection{Splo"sen optimalni aproksimacijski problem}
 Naj bo $X$ vektorski prostor z normo $\norm{\cdot}$, $S \subseteq X$. Za $f \in X$ i"s"cemo $\tilde{f} \in S$, da velja
-\begin{equation}
+\begin{equation*}
     \norm{f - \tilde{f}} = \inf_{s \in S} \norm{f - s} = dist(f, S)
-\end{equation}
+\end{equation*}
 Torej, izmed mo"znih pribli"zkov izberemo najbolj"sega.
 
 
@@ -175,18 +204,18 @@ Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zve
 
 \begin{theorem} (Weierstrassov izrek)
     Naj bo $f \in \mathscr{C} ([a, b])$. Potem za vsak $\varepsilon < 0$ obstaja polinom $p$, da je $\norm{f - p}_{\infty, [a, b]} < \varepsilon$. Drugače povedano:
-    \begin{equation}
+    \begin{equation}\label{eq:Weierstrass}
         dist(f, \Pp_n) \to 0 \text{, ko gre } n \to \infty
     \end{equation}
 \end{theorem}
 
 \begin{proof}(konstruktivni - ideja)
     Naj bo $[a, b] = [0, 1]$. Za $f \in \mathscr{C} ([0, 1])$ definiramo t.i. $\textbf{Bernsteinov polinom}$:
-    \begin{equation}
+    \begin{equation}\label{eq:BernsteinPolinom}
         \mathscr{B}_n f (x) = \sum_{i = 0}^{n} f (\frac{i}{n}) B_i^n(x)
     \end{equation}
     kjer je $B_i^n(x)$ $\textbf{Bernsteinov bazni polinom}$:
-    \begin{equation}
+    \begin{equation}\label{eq:BernsteinBazniPolinom}
         B_i^n (x) = {n \choose i} x^i (1-x)^{n-i} \text{, } i = 0, 1, \dots, n  
     \end{equation}
     Da se pokazati, da gre $\norm{f - \mathscr{B}_n f}_{\infty, [a, b]} \to 0$, ko gre $n \to \infty$.
@@ -196,11 +225,15 @@ Bernsteinov aproksimacijski polinom nam poda en mo"zen na"cin aproksimacije funk
 
 Bernsteinov aproksimacijski operator:
 
-\[\mathscr{B}_n : \mathscr{C} ([a, b]) \to \Pp_n\]
-\[f \mapsto \mathscr{B}_n f\]
-\begin{equation}
+\begin{equation*}
+    \mathscr{B}_n : \mathscr{C} ([a, b]) \to \Pp_n
+\end{equation*}
+\begin{equation*}
+    f \mapsto \mathscr{B}_n f
+\end{equation*}
+\begin{equation*}
     \mathscr{B}_n f(x) = \sum_{i = 0}^{n} f(a + \frac{i}{n}(b-a)) B_i^n (\frac{x-a}{b-a})
-\end{equation}
+\end{equation*}
 
 Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskon"cni normi, "zal pa je konvergenca zelo po"casna.
 
@@ -212,22 +245,22 @@ Sodi pod optimalne aproksimacijske probleme.
 
 Naj bo $X$ normiran vektorski prostor nad $\R$ s skalarnim produktom $\innerproduct{\cdot}{\cdot}$ in naj bo $\norm{\cdot}_2 = \sqrt[]{\innerproduct{\cdot}{\cdot}}$.
 $S \subseteq X$ naj bo končno dimenzionalen podprostor v $X$, $S = Lin\{\varphi_1, \varphi_2, \dots, \varphi_n\}$, $dimS = n$. Za izbran $f \in X$ iščemo $f^* \in S$, da bo veljalo
-\begin{equation}
+\begin{equation*}
     \norm{f - f^*}_2 = \min_{s\in S} \norm{f - s}_2
-\end{equation}
+\end{equation*}
 
 $f^*$ naj bo element najbližje aproksimacije (ENA) po MNK za $f \in X$.
 
 \begin{theorem}
     Naj bo $S \subseteq X$ končno dimenzionalen podprostor. Element $f^* \in S$ je element najbližje aproksimacije po MNK za $f \in X$ natanko takrat,
     ko je
-    \begin{equation}
+    \begin{equation*}
         f - f^* \perp S
-    \end{equation}
+    \end{equation*}
     oziroma
-    \begin{equation}
+    \begin{equation*}
         \innerproduct{f - f^*}{S} = 0
-    \end{equation}
+    \end{equation*}
 \end{theorem}
 
 \begin{proof}
@@ -237,65 +270,73 @@ $f^*$ naj bo element najbližje aproksimacije (ENA) po MNK za $f \in X$.
     \[\norm{f - f^*}_2 = \min_{s \in S} \norm{f-s}_2\]
     Izberimo poljuben $s \in S$.
     \begin{align}
-        \norm{f - s}_2 &=  \norm{f - f^* + f^* - s}_2\\
-                       &= \innerproduct{(f - f^*) + (f^* - s)}{(f - f^*) + (f^* - s)}\\
-                       &= \norm{f - f^*}_2^2 + 2 * \innerproduct{f^* - s}{f - f^*} + \norm{f^* - s}_2^2\\
-                       &\geq \norm{f - f^*}_2^2
+        \norm{f - s}_2 &=  \norm{f - f^* + f^* - s}_2 \nonumber \\
+                       &= \innerproduct{(f - f^*) + (f^* - s)}{(f - f^*) + (f^* - s)} \nonumber \\
+                       &= \norm{f - f^*}_2^2 + 2 * \innerproduct{f^* - s}{f - f^*} + \norm{f^* - s}_2^2 \nonumber \\
+                       \label{eq:dokazNeenakost1}
+                       &\geq \norm{f - f^*}_2^2 
     \end{align}
-    $(10)$ velja, saj sta tako $f^* - s \in S$, torej veljata enakost $\innerproduct{f^* - s}{f - f^*} = 0$ in neenakost $\norm{f^* - s}_2 \geq 0$.
+    Neenakost~\ref{eq:dokazNeenakost1} velja, saj zato, ker velja tako $f^* \in S$ kot $s \in S$ velja tudi $(f^* - s) \in S$,
+    torej veljata tudi enakost $\innerproduct{f^* - s}{f - f^*} = 0$ in neenakost $\norm{f^* - s}_2 \geq 0$.
 
     ($\Longrightarrow$)
     Predpostavimo, da je $f^*$ ENA po MNK.
     Dokazati želimo
-    \begin{equation}
+    \begin{equation*}
         f - f^* \perp S
-    \end{equation}
+    \end{equation*}
 
     $\forall s \in S$ in $\forall \lambda > 0$ velja
-    \begin{align}
-        \norm{f - f^*}_2 &\leq \norm{f - (f^* - \lambda s)}_2\\
-                         &= \innerproduct{f - f^* + \lambda s}{f - f^* + \lambda s}\\
+    \begin{align*}
+        \norm{f - f^*}_2 &\leq \norm{f - (f^* - \lambda s)}_2 \\
+                         &= \innerproduct{f - f^* + \lambda s}{f - f^* + \lambda s} \\
                          &= \norm{f-f^*}_2^2 + 2 * \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2
-    \end{align}
+    \end{align*}
 
     \begin{align}
-        0 &\leq 2 \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2\\
+        0 &\leq 2 \innerproduct{f - f^*}{\lambda s} + \lambda^2 \norm{s}_2^2 \nonumber \\
+        \label{eq:prviLambda}
         0 &\leq \lambda (2 \innerproduct{f-f^*}{s} + \lambda \norm{s}_2^2)\\
+        \label{eq:drugiLambda}
         0 &\leq \innerproduct{f-f^*}{s} + \lambda \norm{s}_2^2
     \end{align}
     
-    pri čemer iz (18) na (19) pridemo preko začetnega izbora za $\lambda > 0$. Ker lahko $\lambda$ vzamemo tako majhno, da velikost člena $2\innerproduct{f-f^*}{s}$ prevlada nad $\lambda \norm{s}_2^2$, vidimo,
+    pri čemer iz ~\ref{eq:prviLambda} na ~\ref{eq:drugiLambda} pridemo preko začetnega izbora za $\lambda > 0$. Ker lahko $\lambda$ vzamemo tako majhno, da velikost člena $2\innerproduct{f-f^*}{s}$ prevlada nad $\lambda \norm{s}_2^2$, vidimo,
     da mora biti $0 \leq \innerproduct{f-f^*}{s}$. Če sedaj v $S$ izberemo element $-s$, potem po istem sklepu velja, da mora biti
     $0 \leq \innerproduct{f - f^*}{-s}$ oziroma $\innerproduct{f - f^*}{s} \leq 0$. Sledi, da mora biti
-    \begin{equation}
+    \begin{equation*}
         \innerproduct{f - f^*}{s} = 0
-    \end{equation}
+    \end{equation*}
 \end{proof}
 
 Iz izreka sledi konstrukcija.
 
 Izberemo $f \in X$. Naj bodo $\varphi_1, \varphi_2, \dots, \varphi_n$ baza za $S \subseteq X$:
-\[S = Lin{\varphi_1, \varphi_2, \dots, \varphi_n}\]
+\begin{equation*}
+    S = Lin{\varphi_1, \varphi_2, \dots, \varphi_n}
+\end{equation*}
 
 Iščemo $f^* \in S$ ENA po MNK.
-\[f^* = \sum_{j = 1}^{n} \alpha_j \varphi_j\]
+\begin{equation*}
+    f^* = \sum_{j = 1}^{n} \alpha_j \varphi_j
+\end{equation*}
+
 kjer so $(\alpha_j)_{j = 1}^n$ neznani koeficienti. Iz izreka sledi, da mora biti $f - f^* \perp S$. To bo res, ko bo
-\[f - f^* \perp \varphi_i, i \in [n]\]
-\begin{align}
+\begin{equation*}
+    f - f^* \perp \varphi_i, i \in [n]
+\end{equation*}
+\begin{align*}
     0 =& \innerproduct{f - f^*}{\varphi_i}\\
       =& \innerproduct{f - \sum_{j = 1}^{n}\alpha_j \varphi_j}{\varphi_j}\\
       =& \innerproduct{f}{\varphi_i} - \sum_{j = 1}^{n}\alpha_j \innerproduct{\varphi_j}{\varphi_i}
-\end{align}
+\end{align*}
 Za vsak i tako dobimo enačbo
-\begin{equation}
+\begin{equation*}
     \sum_{j = 1}^{n} \alpha_j \innerproduct{\varphi_j}{\varphi_i} = \innerproduct{f}{\varphi_i}
-\end{equation}
-kar skupaj nanese sistem linearnih enačb. Če zgornje zapišemo po vektorjih, dobimo
+\end{equation*}
+iz česar skupaj dobimo sistem linearnih enačb. Če zgornje zapišemo po vektorjih, dobimo
 
-
-
-
-\begin{equation}
+\begin{equation*}
     \begin{bmatrix}
         \innerproduct{\varphi_1}{\varphi_i} & \innerproduct{\varphi_2}{\varphi_i} & \cdots & \innerproduct{\varphi_n}{\varphi_i}
     \end{bmatrix}
@@ -307,10 +348,10 @@ kar skupaj nanese sistem linearnih enačb. Če zgornje zapišemo po vektorjih, d
     \end{bmatrix}
     =
     \innerproduct{f}{\varphi_i} \text{, } i \in [n]
-\end{equation}
+\end{equation*}
 
 V matrični obliki:
-\begin{equation}
+\begin{equation*}
     \begin{bmatrix}
         \innerproduct{\varphi_1}{\varphi_1} & \innerproduct{\varphi_2}{\varphi_1} & \cdots & \innerproduct{\varphi_n}{\varphi_1} \\
         \innerproduct{\varphi_1}{\varphi_2} & \innerproduct{\varphi_2}{\varphi_2} & \cdots & \innerproduct{\varphi_n}{\varphi_2} \\
@@ -330,11 +371,13 @@ V matrični obliki:
         \vdots \\
         \innerproduct{f}{\varphi_n}
     \end{bmatrix}
-\end{equation}
+\end{equation*}
 
 \subsubsection{Normalni oziroma Gramov sistem enačb}
 Gramova matrika G
-\[G = (\innerproduct{\varphi_j}{\varphi_i})_{i, j = 1}^n\]
+\begin{equation*}
+    G = (\innerproduct{\varphi_j}{\varphi_i})_{i, j = 1}^n
+\end{equation*}
 je $\textbf{simetrična}$ matrika. Gramova matrika je tudi pozitivno definitna. To dokažemo tako, da izberemo $x \in \R^n, x \neq 0$.
 \begin{align}
     x^T G x =&
@@ -345,17 +388,22 @@ je $\textbf{simetrična}$ matrika. Gramova matrika je tudi pozitivno definitna. 
         \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_1} \\
         \vdots \\
         \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_n}
-    \end{bmatrix} \\
-    =& \sum_{i = 1}^{n} x_i \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_1} \\
-    =& \sum_{i = 1}^{n} \sum_{j = 1}^{n} \innerproduct{x_j \varphi_j}{x_i \varphi_1} \\
-    =& \innerproduct{\sum_{j = 1}^{n} x_j \varphi_j}{\sum_{i = 1}^{n} x_i \varphi_1} \\
-    =& \norm{\sum_{i = 1}^{n} x_i \varphi_i}_2^2 > 0
+    \end{bmatrix} \nonumber \\
+    =& \sum_{i = 1}^{n} x_i \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_1} \nonumber \\
+    =& \sum_{i = 1}^{n} \sum_{j = 1}^{n} \innerproduct{x_j \varphi_j}{x_i \varphi_1} \nonumber \\
+    =& \innerproduct{\sum_{j = 1}^{n} x_j \varphi_j}{\sum_{i = 1}^{n} x_i \varphi_1} \nonumber\\
+    =& \norm{\sum_{i = 1}^{n} x_i \varphi_i}_2^2 \nonumber \\
+    >& 0 \label{eq:grammNeenacaj}
 \end{align}
 
-Neenačaj je strog, saj 
-\[\sum_{i = 1}^{n} x_i \varphi_i \neq 0\]
-To je res zato, ker je $x_i > 0$ in ker je 
-\[\varphi_i \in Lin\{\varphi_1, \varphi_2, \dots, \varphi_n\}\]
+Neenačaj~\ref{eq:grammNeenacaj} je strog, saj velja
+\begin{equation*}
+    \sum_{i = 1}^{n} x_i \varphi_i \neq 0
+\end{equation*}
+To je res zato, ker je $x_i > 0$ in ker je
+\begin{equation*}
+    \varphi_i \in Lin\{\varphi_1, \varphi_2, \dots, \varphi_n\}
+\end{equation*}
 kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
 
 \begin{ex}
@@ -368,7 +416,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
     Zdaj definiramo $f^*$
     \[f^*(x) = \alpha_1 \varphi_1(x) + \alpha_2 \varphi_2(x)\]
     Imamo Gramovo matriko $G$
-    \begin{equation}
+    \begin{equation*}
         \begin{bmatrix}
             \innerproduct{\varphi_1}{\varphi_1} & \innerproduct{\varphi_2}{\varphi_1}\\
             \innerproduct{\varphi_1}{\varphi_2} & \innerproduct{\varphi_2}{\varphi_2}
@@ -378,8 +426,8 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
             \pi & \frac{\pi^2}{2} \\
             \frac{\pi^2}{2} & \frac{\pi^3}{3}
         \end{bmatrix}
-    \end{equation}
-    \begin{equation}
+    \end{equation*}
+    \begin{equation*}
         \text{desna stran } =
         \begin{bmatrix}
             \innerproduct{f}{\varphi_1} \\
@@ -390,20 +438,20 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
             2 \\
             \pi
         \end{bmatrix}
-    \end{equation}
+    \end{equation*}
     Zgornji izračuni prihajajo iz postopkov
-    \begin{align}
+    \begin{align*}
         \innerproduct{\varphi_1}{\varphi_1} =& \int_{0}^{\pi} dx = \pi \\
         \innerproduct{\varphi_1}{\varphi_2} =& \int_{0}^{\pi} x dx = \frac{\pi^2}{2} \\
         \innerproduct{\varphi_2}{\varphi_2} =& \int_{0}^{\pi} x^2 dx = \frac{\pi^3}{3}
-    \end{align}
+    \end{align*}
     in
-    \begin{align}
+    \begin{align*}
         \innerproduct{f}{\varphi_1} = \int_{0}^{\pi} sin x dx = - cos x \Biggr|_{0}^{\pi} = 2 \\
         \innerproduct{f}{\varphi_2} = \int_{0}^{\pi} x \cdot sin x dx = \dots = \pi
-    \end{align}
+    \end{align*}
     Dobimo:
-    \begin{equation}
+    \begin{equation*}
         \begin{bmatrix}
             \pi & \frac{\pi^2}{2} \\
             \frac{\pi^2}{2} & \frac{\pi^3}{3}
@@ -417,16 +465,20 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
             2 \\
             \pi
         \end{bmatrix}
-    \end{equation}
+    \end{equation*}
     Ko poračunamo sistem enačb, dobimo
-    \[\alpha =
-    \begin{bmatrix}
-        \frac{2}{\pi} \\
-        \pi
-    \end{bmatrix}
-    \]
+    \begin{equation*}
+        \alpha =
+        \begin{bmatrix}
+            \frac{2}{\pi} \\
+            \pi
+        \end{bmatrix}
+    \end{equation*}
+
     Geometrijska interpretacija rešitve:
-    \[\min_{p \in \Pp_1} \norm{f - p}_2 = \min_{p \in \Pp_1} \sqrt[]{\int_{0}^{\pi} (sinx - p(x)^2) dx}\]
+    \begin{equation*}
+        \min_{p \in \Pp_1} \norm{f - p}_2 = \min_{p \in \Pp_1} \sqrt[]{\int_{0}^{\pi} (sinx - p(x)^2) dx}
+    \end{equation*}
 
     % izboljšaj, če ti uspe
     \begin{tikzpicture}
@@ -445,26 +497,28 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
 
     Rešitev:
     $S = \Pp_1 = Lin\{1, x\}$
-    \[\innerproduct{f}{g} = \sum_{i = 1}^{4} f(x_i), g(x_i) \text{, } x =
-    \begin{bmatrix}
-        1 \\
-        2 \\
-        3 \\
-        4
-    \end{bmatrix}\]
+    \begin{equation*}
+        \innerproduct{f}{g} = \sum_{i = 1}^{4} f(x_i), g(x_i) \text{, } x =
+        \begin{bmatrix}
+            1 \\
+            2 \\
+            3 \\
+            4
+        \end{bmatrix}
+    \end{equation*}
     $f$, ki jo aproksimiramo, je znana le v točkah $\textbf{x}$.
 
     Izračunamo:
-    \begin{align}
+    \begin{align*}
         \innerproduct{1}{1} =& \sum_{i = 1}^{4}1\cdot 1 = 4 \\
         \innerproduct{1}{x} =& \sum_{i = 1}^{4}1\cdot x_i = 10 \\
         \innerproduct{x}{x} =& \sum_{i = 1}^{4}x_i^2 = 30 \\
         \innerproduct{f}{1} =& \sum_{i = 1}^{4} y_i \cdot 1 = 18 \\
         \innerproduct{f}{x} =& \sum_{i = 1}^{4} y_i x_i = 55
-    \end{align}
+    \end{align*}
 
     Dobimo sistem
-    \begin{equation}
+    \begin{equation*}
         \begin{bmatrix}
             4 & 10 \\
             10 & 30
@@ -478,7 +532,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
             18 \\
             55
         \end{bmatrix}
-    \end{equation}
+    \end{equation*}
     iz katerega dobimo rezultat
     \[ \alpha = 
         \begin{bmatrix}
@@ -487,23 +541,33 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
         \end{bmatrix}\]
 
     Geometrijska interpretacija rešitve:
-    \[\min_{p \in \Pp_1} \norm{f - p}_2 =\sqrt[]{\sum_{i = 1}^{4} (x_i \cdot -p(x_i))^2}\]
+    \begin{equation*}
+        \min_{p \in \Pp_1} \norm{f - p}_2 =\sqrt[]{\sum_{i = 1}^{4} (x_i \cdot -p(x_i))^2}
+    \end{equation*}
     % TODO: dodaj skico
 \end{ex}
 
 \subsubsection{Povezava s predoločenimi sistemi enačb}
-
-
-    \[Ax = b \text{, } A\in \R^{m \times n} \text{, } A = \begin{bmatrix}
+\begin{equation*}
+    Ax = b \text{, } A\in \R^{m \times n} \text{, } A = 
+    \begin{bmatrix}
         a_1 & a_2 & \dots & a_n
-    \end{bmatrix} \text{, }  b \in R^m\]
-    \[\min_{x \in \R^n} \norm{Ax - b}_2 = \min_{z \in ImA} \norm{b - z}\]
-
+    \end{bmatrix} \text{, }  b \in R^m
+\end{equation*}
+\begin{equation*}
+    \min_{x \in \R^n} \norm{Ax - b}_2 = \min_{z \in ImA} \norm{b - z}
+\end{equation*}
 
 Aproksimiramo vektor $b \in \R^m (X = \R^m)$
-\[S = Lin\{a_1, a_2, \dots, a_n\} = ImA\]
-\[b^* = \sum_{j = 1}^{n}x_j a_j = Ax\]
-\[\innerproduct{x}{y} = \sum_{i = 1}^{m}x_i y_i = x^T y\]
+\begin{equation*}
+    S = Lin\{a_1, a_2, \dots, a_n\} = ImA
+\end{equation*}
+\begin{equation*}
+    b^* = \sum_{j = 1}^{n}x_j a_j = Ax
+\end{equation*}
+\begin{equation*}
+    \innerproduct{x}{y} = \sum_{i = 1}^{m}x_i y_i = x^T y
+\end{equation*}
 
 $\innerproduct{x}{y} = \sum_{i = 1}^{m} x_i y_i$:
 \begin{equation}
@@ -515,61 +579,88 @@ $\innerproduct{x}{y} = \sum_{i = 1}^{m} x_i y_i$:
 
 \begin{ex}
     $X = \mathscr{C} ([0, 1])$
-    \[S = P_{n-1} = Lin\{1, x, x^2, \dots, x^{n-1}\}\]
-    \[\innerproduct{f}{g} = \int_{0}^{1} f(x) g(x) dx\]
-    \[\innerproduct{\varphi_i}{\varphi_j} = \int_{0}^{1} x^{i-1} x^{j-1} dx = \int_{0}^{1}x^{i+j-2} dx = \frac{1}{i+j-1}\]
-
-    \[G = (\frac{1}{i+j-1})_{i, j = 1}^n\]
+    \begin{equation*}
+        S = P_{n-1} = Lin\{1, x, x^2, \dots, x^{n-1}\}
+    \end{equation*}
+    \begin{equation*}
+        \innerproduct{f}{g} = \int_{0}^{1} f(x) g(x) dx
+    \end{equation*}
+    \begin{equation*}
+        \innerproduct{\varphi_i}{\varphi_j} = \int_{0}^{1} x^{i-1} x^{j-1} dx = \int_{0}^{1}x^{i+j-2} dx = \frac{1}{i+j-1}
+    \end{equation*}
+    \begin{equation*}
+        G = (\frac{1}{i+j-1})_{i, j = 1}^n
+    \end{equation*}
     kjer je G Hilbertova matrika. Te so zelo občutljive.
 \end{ex}
 
 % 24. 2. 2023
 
-Gramova matrika je lahko zelo občutljiva. Reševanju sistema linearnih enačb se izognemo, če v podprostoru $S$ izberemo $\textbf{ortonormirano bazo}$
-\[\{\varphi_1, \varphi_2, \dots, \varphi_n\}\] je ortonormirana baza, če \[\varphi_1 \varphi_j \forall i \neq j \text{ in } \norm{\varphi_i}_2 = 1\]
-V tem primeru je $G = I$ in $\alpha_i = \innerproduct{f}{\varphi_i}$ in $f^* = \sum_{i = 1}^{n}\innerproduct{f}{\varphi_i} \varphi_i$. Ortonormirano
-bazo izračunamo z $\textbf{modificiranim Gram-Schmidtovim algoritmom}$.
+Gramova matrika je lahko zelo občutljiva. Reševanju sistema linearnih enačb se izognemo, če v podprostoru $S$ izberemo $\textbf{ortonormirano bazo}$:
+\begin{equation*}
+    \{\varphi_1, \varphi_2, \dots, \varphi_n\}
+\end{equation*}
+je ortonormirana baza, če
+\begin{equation*}
+    \varphi_1 \perp \varphi_j \text{ } \forall i \neq j \text{ in } \norm{\varphi_i}_2 = 1
+\end{equation*}
+V tem primeru je $G = I$ in $\alpha_i = \innerproduct{f}{\varphi_i}$,  $f^* = \sum_{i = 1}^{n}\innerproduct{f}{\varphi_i} \varphi_i$. Ortonormirano
+bazo izračunamo z $\textbf{modificiranim Gram-Scmidtovim algoritmom}$.
 
-Algoritem: (daj v psevdokodo)
-Vhodni podatki: baza $\{\psi_1, \psi_2, \dots, \psi_n\}$
-for i = 1:n
-    $\varphi_i = \psi_i$
-end
-for i = 1:n
-    $\varphi_i = \frac{\varphi_i}{\norm{\varphi_i}_2}$
-    for j = i+1:n
-        $\varphi_j = \varphi_j - \innerproduct{\varphi_j}{\varphi_i}\varphi_i$
-    end
-end
-izhod: $\{\varphi_1, \varphi_2, \dots, \varphi_n\}$ ortonormirana baza
+\begin{algorithm}
+    \caption{Modificiran Gram-Schmidtov algoritem}\label{alg:mgs}
+    \hspace*{\algorithmicindent} \textbf{Input} baza $\{\psi_1, \psi_2, \dots, \psi_n\}$
+    \begin{algorithmic}[1]
+        \For{$i = 1:n$}
+            \State $\varphi_i = \psi_i$
+        \EndFor
+        \For{$i = 1:n$}
+            \State $\varphi_i = \frac{\varphi_i}{\norm{\varphi_i}_2}$
+            \For{$j = i+1:n$}
+                \State $\varphi_j = \varphi_j - \innerproduct{\varphi_j}{\varphi_i}\varphi_i$
+            \EndFor
+        \EndFor
+    \end{algorithmic}
+    \hspace*{\algorithmicindent} \textbf{Output} ortonormirana baza $\{\varphi_1, \varphi_2, \dots, \varphi_n\}$
+\end{algorithm}
+
 
 $X \in \mathscr{C}([a, b])$
 (vstavi skico)
 
 \subsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
-$X = \mathscr{C} ([a, b]), S = \Pp_n, \norm{\cdot}_{\infty}$
+\begin{equation*}
+    X = \mathscr{C} ([a, b]), S = \Pp_n, \norm{\cdot}_{\infty}
+\end{equation*}
 
 Problem: Za dano funkcijo $f \in \mathscr{C} ([a, b])$ iščemo polinom $p^* \in \Pp_n$, za katerega velja
-\[\norm{f - p^*}_{\infty, [a, b]} = \min_{p \in \Pp_n} \norm{f - p}_{\infty, [a, b]} = \min_{p \in Pp_n} \max_{x \in [a, b]} |f(x) - p(x)|\]
-$p^*$ imenujemo $\textbf{polinom najboljše enakomerne aproksimacije (PENA)}$.
+\begin{equation*}
+    \norm{f - p^*}_{\infty, [a, b]} = \min_{p \in \Pp_n} \norm{f - p}_{\infty, [a, b]} = \min_{p \in Pp_n} \max_{x \in [a, b]} \left| f(x) - p(x) \right|
+\end{equation*}
+$p^*$ imenujemo $\textbf{polinom najboljše enakomerne aproksimacije (PNEA)}$.
 Problem je nelinearen.
 
-(skica2)
-Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PENA za neko funkcijo.
+(vstavi skico)
+
+Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PNEA za neko funkcijo.
 \begin{theorem}
-    Naj bo $f \in \mathscr{C}([a, b])$. Če je polinom $p \in Pp_n$ tak, da $\textbf{residual}$
+    Naj bo $f \in \mathscr{C}([a, b])$. Če je polinom $p \in \Pp_n$ tak, da $\textbf{residual}$
     \begin{equation}
-        p = f - p
+        r = f - p
     \end{equation}
-    alternirajoče doseže svojo normo $\norm{p}_{\infty, [a, b]}$ v vsaj $n + 2$ različnih točkah $(x_i)_{i*0}^{n+1}$
-    \[a \leq x_0 < x_1 < \dots < \x_{n+1} \leq b\]
-    potem je $p$ polinom najboljše enakomerne aproksimacije za $f$ na $[a, b]$.
+    alternirajoče doseže svojo normo $\norm{p}_{\infty, [a, b]}$ v vsaj $n + 2$ različnih točkah $(x_i)_{i=0}^{n+1}$
+    \[a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\]
+    Potem je $p$ polinom najboljše enakomerne aproksimacije za $f$ na $[a, b]$.
 \end{theorem}
 
-OPOMBA: Kaj pomeni "alternirajoče doseže svojo normo"?
-\[\norm{r}_{\infty, [a, b]} = |r(x_i)| \forall i \in [n]\]
+\rem{Kaj pomeni "alternirajoče doseže svojo normo"?}
+\begin{equation*}
+    \norm{r}_{\infty, [a, b]} = \left| r(x_i) \right| \forall i \in [n]
+\end{equation*}
 in
-\[r(x_i)r(x_{i+1}) < 0 \forall i\]
+\begin{equation*}
+    r(x_i)r(x_{i+1}) < 0 \forall i
+\end{equation*}
 
 (vstavi graf)
 
@@ -577,52 +668,79 @@ in
     Dokaz s protislovjem.
 
     Recimo, da $p$ ne bi bil PNEA za $f$. Tedaj bi obstajal nek drug polinom $q \in \Pp_n$, da bi veljalo
-    \begin{equation}
-        |f(x_i) - q(x_i)| \leq \max_{x \in [a, b]} |f(x_i) - q(x_i)| = \norm{f - q}_{\infty, [a, b]} <
-         \norm{f - p}_{\infty, [a, b]} = |f(x_i) - p(x_i)| \forall i = 0, 1, 2, \dots, n+1
-    \end{equation}
-    Torej
-    \[|f(x_i) - q(x_i)| < |f(x_i) - p(x_i)| \forall i\]
-    \[- sign((f(x_i) - p(x_i)) (f(x_i) - p(x_i))) < f(x_i) - q(x_i) < sign((f(x_i) - p(x_i)) (f(x_i) - p(x_i)))\]
-    Dalje velja 
-    \[sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1})) < f(x_{i+1}) - q(x_{i+1}) < - sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1}))\]
-    Opomba:
-    \[sign(f(x_{i+1}) - p(x_{i+1})) = sign(f(x_i) - p(x_i))\]
+    \begin{align*}
+        \left| f(x_i) - q(x_i) \right| \leq& \max_{x \in [a, b]} \left| f(x_i) - q(x_i) \right| \\
+                             =& \norm{f - q}_{\infty, [a, b]} \\
+                             <& \norm{f - p}_{\infty, [a, b]} \\
+                             =& \left| f(x_i) - p(x_i) \right| \text{  } \forall i = 0, 1, 2, \dots, n+1
+    \end{align*}
+    Torej za $\forall i $ velja:
+    \begin{equation*}
+        \left| f(x_i) - q(x_i) \right| < \left| f(x_i) - p(x_i) \right|
+    \end{equation*}
+    To razvijemo v neenakosti
+    \begin{equation*}
+        - sign(f(x_i) - p(x_i)) (f(x_i) - p(x_i)) < f(x_i) - q(x_i)
+    \end{equation*}
+    in
+    \begin{equation*}
+        f(x_i) - q(x_i) < sign(f(x_i) - p(x_i)) (f(x_i) - p(x_i))
+    \end{equation*}
+    Če v neenakostih $x_i$ spremenimo v $x_{i+1}$ ter upoštevamo enakost
+    \begin{equation*}
+        sign(f(x_{i+1}) - p(x_{i+1})) = sign(f(x_i) - p(x_i))
+    \end{equation*}
+    dobimo neenakosti
+    \begin{equation*}
+        sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1})) < f(x_{i+1}) - q(x_{i+1})
+    \end{equation*}
+    in
+    \begin{equation*}
+        f(x_{i+1}) - q(x_{i+1}) < - sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1}))
+    \end{equation*}
 
-    BŠS rečemo, da je $sign(f(x_i) - p(x_i)) = 1$. Potem je $f(x_i) - q(x_i) < f(x_i) - p(x_i)$, $p(x_i) - q(x_i) < 0$ in
+    Brez škode za splošnost (BŠS) lahko rečemo, da je $sign(f(x_i) - p(x_i)) = 1$. Potem je $f(x_i) - q(x_i) < f(x_i) - p(x_i)$, $p(x_i) - q(x_i) < 0$ in
     $f(x_{i+1}) - p(x_{i+1}) < f(x_{i+1}) - q(x_{i+1})$, torej $p(x_{i+1}) - q(x_{i+1}) > 0$.
 
     Vidimo, da ima razlika $p-q$ ničlo na intervalu $(x_i, x_{i+q})$ za $i \in [n]$. Razlika $p-q$ je polinom stopnje $n$, ki ima $n+1$ ničel.
-    Torej mora biti $p === q$.
-
+    Torej mora biti $p \equiv q$.
 \end{proof}
 
-Da se pokazati, da tak polinom res obstaja oziroma da v izreku velja ekvivalenca (težko - dokaz izpustimo).
+Izkaže se, da je pogoj tudi potreben (torej da velja ekvivalenca), a je dokaz težek, zato ga bomo izpustili.
 
 Iskanje/računanje PNEA se prevede na iskanje ustrezne množice točk $\{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$.
 
-DEF:
-Naj bo $E = \{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$. Definirajmo $\textbf{minimaks}$ za $f$ na $E$ konstruirati
-\[M_n (f, E) = \min_{p \in \Pp_n} \max_{x_i \in E} |f(x_i) - p(x_i)|\]
-(end of def)
+\begin{defn}
+    Naj bo $E = \{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$. Definirajmo $\textbf{minimaks}$ za $f$ na $E$ konstruirati
+    \begin{equation*}
+        M_n (f, E) = \min_{p \in \Pp_n} \max_{x_i \in E} \left| f(x_i) - p(x_i) \right|
+    \end{equation*}
+\end{defn}
 
-Polinom, pri katerem je ta minimum dosežen, imenujemo $textbf{polinom najboljše enakomerne aproksimacije za f na množici E}$. Izračunamo ga tako,
-da rešimo naslednji sistem linearnih enačb:
-\begin{equation}
+Polinom, pri katerem je ta minimum dosežen, imenujemo $\textbf{polinom}$ $\textbf{najboljše}$ $\textbf{enakomerne}$ $\textbf{aproksimacije}$ $\textbf{za}$ $f$
+$\textbf{na}$ $\textbf{množici}$ $E$. Izračunamo ga tako,
+da rešimo naslednji sistem linearnih enačb: (brez izpeljave)
+\begin{equation*}
     f(x_i) - p(x_i) = (-1)^i m, i \in [n+1] 
-\end{equation}
-(brez izpeljave)
+\end{equation*}
+
 Imamo torej $n+2$ enačb in $n+2$ neznank ($n + 1$ v polinomu $p$ in eno v $m$):
-\[p(x) = \sum_{j = 0}^{n} a_j x^j\]
+\begin{equation*}
+    p(x) = \sum_{j = 0}^{n} a_j x^j
+\end{equation*}
 ter koeficient $m$, za katerega velja
-\[|m| = M_n (f, E)\]
+\begin{equation*}
+    \left| m \right| = M_n (f, E)
+\end{equation*}
 
 (vstavi slikco)
 
 \section{Interpolacija}
 Problem: Podane imamo vrednosti izbrane funkcije $f$ v $n+1$ paroma različnih točkah $x_0, x_q, \dots, x_n$ na realni osi. Te točke bomo imenovali
-$\textbf{interpolacijske točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pohojem
-\[g(x_i) = f(x_i) \forall i \in [n]\]
-$g$ imenujemo $\texthb{interpolacijska funkcija}$. Za interpolacijske funkcije običajno izberemo polinome, odsekoma polinomske funkcije \dots
+$\textbf{interpolacijske}$ $\textbf{točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pohojem
+\begin{equation*}
+    g(x_i) = f(x_i) \forall i \in [n]
+\end{equation*}
+$g$ imenujemo $\textbf{interpolacijska}$ $\textbf{funkcija}$. Za interpolacijske funkcije običajno izberemo polinome, odsekoma polinomske funkcije \dots
 
 \end{document}
