@@ -743,4 +743,202 @@ $\textbf{interpolacijske}$ $\textbf{točke}$. Iščemo neko preprostejšo funkci
 \end{equation*}
 $g$ imenujemo $\textbf{interpolacijska}$ $\textbf{funkcija}$. Za interpolacijske funkcije običajno izberemo polinome, odsekoma polinomske funkcije \dots
 
+
+% 27.2.2023
+Interpolacija se uporablja za
+\begin{itemize}
+    \item aproksimacijo dane funkcije
+    \item kadar funkcijo $f$ poznamo le v točkah $x_0, x_1, \dots, x_n$, radi pa bi izračunali vrednost te funkcije tudi za $x$, ki ni ena izmed interpolacijskih točk.
+    \item za izpeljavo formul za numerično integriranje, odvajanje, reševanje navadnih diferencialnih enačb (NDE) \dots
+\end{itemize}
+
+\subsection{Polinomska interpolacija}
+Za $f \in \mathscr{C}([a, b])$ in interpolacijske točke $a \leq x_0 < x_1 < \dots < x_m \leq b$ iščemo $\textbf{polinom} p_i$, ki zadošča enačbam
+\begin{equation*}
+    p(x_i) = f(x_i), i = a, \dots, n
+\end{equation*}
+Enačb je $n+1$. Da dobimo enako število enačb, moramo izbrati $p \in \Pp_n$.
+
+\begin{equation*}
+    p(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_n x^n
+\end{equation*}
+
+Enačbe:
+\begin{equation*}
+    a_0 + a_1 x_i + a_2 x_i^2 + \dots + a_n x_i^n \text{ za } i = 0, 1, \dots, n
+\end{equation*}
+
+\begin{equation*}
+    \begin{bmatrix}
+        1 & x_0 & x_0^2 & \dots & x_0^n \\
+        1 & x_1 & x_1^2 & \dots & x_1^n \\
+    \vdots & \vdots & \vdots &  & \vdots \\
+        1 & x_n & x_n^2 & \dots & x_n^n 
+    \end{bmatrix}
+    \begin{bmatrix}
+        a_0 \\
+        a_1 \\
+        \vdots \\
+        a_n
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        f(x_0) \\
+        f(x_1) \\
+        \vdots \\
+        f(x_n) \\
+    \end{bmatrix}
+\end{equation*}
+matriko imenujemo $\textbf{vandermondova matrika}$.
+\begin{equation*}
+    detV(x_0, x_1, \dots, x_n) = \prod_{0 \leq i < j \leq n} (x_j - x_i)
+\end{equation*}
+
+Ker je Vandermondova matrika obrnljiva, sledi, da imamo enolično rešitev. Torej obstaja $\textbf{enoličen}$ polinom stopnje $n$, ki interpolira $n+1$ paroma
+različnih točk.
+Tak interpolacijski problem imenujemo $\textbf{korenten}$ interpolacijski problem.
+Vandermondova matrika je primer $\textbf{zelo občutljive}$ matrike.
+Poleg tega nimamo rešitve v $\textbf{zaključeni obliki}$.
+Spoznali bomo dva druga zapisa interpolacijskega polinoma:
+\begin{itemize}
+    \item Lagrangeva oblika zapisa
+    \item Newtonova oblika zapisa
+\end{itemize}
+
+\subsubsection{Lagrangeva oblika zapisa interpolacijskega polinoma}
+Definiramo naslednje polinome:
+\begin{align*}
+    \mathscr{l}_{0, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_0 - x_1)(x_0 - x_2) \dots (x_0 - x_n)} \\
+    \mathscr{l}_{1, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_1 - x_0)(x_1 - x_2) \dots (x_1 - x_n)} \\
+    \vdots
+    \mathscr{l}_{n, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_n - x_0)(x_n - x_1) \dots (x_n - x_{n-1})}
+\end{align*}
+
+oziroma
+\begin{equation*}
+    \mathscr{l}_{i, n} (x) = \prod_{j = 0, j \neq i}^{n} \frac{(x - x_j)}{(x_i - x_j)}
+\end{equation*}
+za $i = 0, 1, \dots, n$. To imenujemo $\textbf{Lagrangebi bazni polinomi}$.
+
+Velja:
+\begin{equation*}
+    \mathscr{l}_{i, n} (x) = \delta_{i, j} = (1, i = j, 0, i \neq j)
+\end{equation*}
+Vsi ti polinomi so stopnje točno $n$.
+
+\begin{theorem}
+    Polinomi $\mathscr{l}_{i, n}$ za $i = 0, 1, \dots, n$ so baza za $\Pp_n$.
+\end{theorem}
+
+\begin{proof}
+    Dokazati moramo le, da so linearno neodvisni. Preveriti moramo, da je $\alpha_0 \mathscr{l}_{i, n} +  \alpha_1 \mathscr{l}_{i, n} + \dots +
+    \alpha_n \mathscr{l}_{i, n} = 0 <=> \alpha_0 = \alpha_1 = ... = \alpha_n = 0$.
+    (=>)
+    \begin{equation*}
+        \sum_{j = 0}^{n} \alpha_j \mathscr{l}_{j, n} (x) = 0 \forall x
+    \end{equation*}
+    Vstavimo $x = x_i$ in dobimo
+    \begin{equation*}
+        0 = \sum_{j = 0}^{n} \alpha_j \mathscr{l}_{j, n} (x_i) = \alpha_i
+    \end{equation*}
+    (<=) Očitno.
+\end{proof}
+Iz dokaza sledi, da lahko vsak polinom $p \in \Pp_n$ zapišemo kot linearno kombinacijo
+\begin{equation*}
+    p(x) = \sum_{j = 0}^{n} c_j \mathscr{l}_{j, n} (x)
+\end{equation*}
+za $c_j \in \R$.
+
+Kako izbrati koeficiente, da bo polinom interpolacijski oziroma da bo zadoščal pogojem
+\begin{equation*}
+    p(x_i) = f(x_i), i = 1, ..., n
+\end{equation*}
+
+\begin{equation*}
+    p(x_i) = \sum_{j = 0}^{n} c_j \mathscr{l}_{j, n} (x_i) = f(x_i)
+\end{equation*}
+Vsota je enaka $c_i$.
+
+Dobili smo
+\begin{equation*}
+    p(x) = \sum_{j = 0}^{n} f(x_j) \mathscr{l}_{j, n}(x)
+\end{equation*}
+kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
+
+Primer:
+Naj bo $f(x) = e^x$. Pošiči interpolacijski polinom za $f$ na točkah $x_0 = 0, x_1 = 1, x_2 = 3, x_3 = 4$.
+
+$n = 3$
+
+\begin{align*}
+    \mathscr{l}_{0, 3}(x) = \\
+    p(x) = e^0 \dots
+\end{align*}
+(prepiši doma te enačbe)
+
+\begin{lemma}
+    Če je $f \in \Pp_n$, potem je $\sum_{i = 0}^{n} f(x_i) \mathscr{l}_{i, n} (x) = f(x)$.
+\end{lemma}
+\begin{proof}
+    Sledi iz enoličnosti interpolacijskega polinoma.
+\end{proof}
+
+Posledica:
+\begin{equation}
+    \sum_{i = 0}^{n} \mathscr{l}_{i, n}(x) = 1
+\end{equation}
+Lagrangevi bazni polinomi tvorijo $\textbf{razčlenitev enote}$.
+
+\begin{theorem}
+    O napaki interpolacije. Naj bo $a \leq x_0 < x_1 \dots < x_n \leq b$, $f \in \mathscr{C}^{n+1}([a, b])$ in naj bo $p$ interpolacijski polinom za $f$. Potem za vsak $x \in [a, b]$
+    obstaja $\xi_x \in (a, b)$, da velja
+    \begin{equation*}
+        f(x) - p(x) = \omega (x) \frac{f^{(n+1)}(\xi_x)}{(n+1)!}
+    \end{equation*}
+    kjer velja
+    \begin{equation*}
+        \omega (x) = (x - x_0)(x-x_1) \dots (x - x_n)
+    \end{equation*}
+\end{theorem}
+
+\begin{proof}
+    Če je $x = x_i$, potem $f(x_i) - p(x_i) = 0$ in $\omega (x_i) = 0$ in enakost velja za vsak $\xi_x \in (a, b)$. Naj bo sedaj $x \neq x_i$, $i = 0, 1, \dots, n$
+    in naj bo fiksen.
+
+    Definirajmo $F(u) = f(u) - p(u) - c \omega (u)$ za neko konstanto $c$. $F \in \mathscr{C}^{n+1}([a, b])$, $F(x_i) = f(x_i) - p(x_i) - c \omega (x_i) = 0$ za $i = 0, 1, \dots, n$.
+    Konstanto $c$ izberemo tako, da bo tudi $F(x) = 0$. Torej ima $F$ na $[a, b]$ $n+2$ različnih ničel. Potem ima $F'$ na $(a, b)$ $n+1$ različnih ničel.
+    Potem ima $F''$ na (a, b) n ... Potem ima $F^{(n+1)}$ na $(a, b)$ vsaj eno ničlo. Označimo to ničlo z $\xi_x$.Torej je 
+    \begin{equation*}
+        0 = F^{(n+1)}(\xi_x) = f^{(n+1)}(\xi_x) - p^{(n+1)}(\xi_x) - c \omega ^{(n+1)}(\xi_x)
+    \end{equation*}
+    \begin{equation*}
+        0 = f^{(n+1)}(\xi_x) - c (n+1)!
+    \end{equation*}
+    \begin{equation*}
+        c = \frac{1}{(n+1)!}f^{(n+1)}(\xi_x)
+    \end{equation*}
+\end{proof}
+
+Za poljuben $c \in [a, b]$ po izreku veljalo
+\begin{equation*}
+    \left| f(x) - p(x) \right| = \left| \omega \rignt| \frac{1}{(n+1)!} \left| f^{(n+1)}(\xi_x) \right| \leq \norm{\omega}_{\infty, [a, b]} \frac{1}{(n+1)!} \nomr{f^{(n+1)}}_{\infty, [a, b]}
+\end{equation*}
+Sledi
+\begin{equation*}
+    \norm{f - p}_{\infty, [a, b]} \leq (nevemkaj)
+\end{equation*}
+
+Lagrangeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za numerično integracijo, odvajanje \dots Ima pa par pomankljivosti pri praktični uporabi:
+\begin{itemize}
+    \item numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
+    \item Numerične težave, če so interpolacijske točke preblizu skupaj
+    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno.
+\end{itemize}
+
+\subsubsection{Newtonova oblika zapisa interpolacijskega polinoma}
+Za bazo, v kateri bomo predstavili interpolacijski polinom, izberemo $\textbf{prestavljene potence}$.
+baza = $\{1, x-x_0, (x-x_0)(x-x_1), \dots, (x-x_0) (x-x_1) \dots (x-x_n)\}
+
+
+
 \end{document}
