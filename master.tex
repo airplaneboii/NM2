@@ -64,11 +64,34 @@
 
 \begin{document}
 
-\title{Numeri"cne metode 2\\ \small zapiski s predavanj prof. Marjetke Knez}
-\author{Domen Vogrin}
-\date{pomlad 2023}
-\maketitle
+%\title{Numeri"cne metode 2\\ \small zapiski s predavanj prof. Marjetke Knez}
+%\author{Domen Vogrin}
+%\date{pomlad 2023}
+%\maketitle
 
+\begin{titlepage}
+    \begin{center}
+        
+        \vspace*{3cm}
+            
+        \Huge
+        \textbf{Numerične metode 2}
+
+        \large
+        Zapiski s predavanj prof. Marjetke Knez
+
+        \vspace*{0.5cm}
+        \LARGE
+        Domen Vogrin
+
+        \vfill
+        \normalsize
+        Ljubljana, pomlad 2023
+    \end{center}
+
+\end{titlepage}
+
+\clearpage
 
 \pagenumbering{roman}
 \tableofcontents
@@ -204,20 +227,20 @@ Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zve
 
 \begin{theorem} (Weierstrassov izrek)
     Naj bo $f \in \mathscr{C} ([a, b])$. Potem za vsak $\varepsilon > 0$ obstaja polinom $p$, da je $\norm{f - p}_{\infty, [a, b]} < \varepsilon$. Drugače povedano:
-    \begin{equation}\label{eq:Weierstrass}
+    \begin{equation*}
         dist(f, \Pp_n) \to 0 \text{, ko gre } n \to \infty
-    \end{equation}
+    \end{equation*}
 \end{theorem}
 
 \begin{proof}(konstruktivni - ideja)
     Naj bo $[a, b] = [0, 1]$. Za $f \in \mathscr{C} ([0, 1])$ definiramo t.i. $\textbf{Bernsteinov polinom}$:
-    \begin{equation}\label{eq:BernsteinPolinom}
+    \begin{equation*}
         \mathscr{B}_n f (x) = \sum_{i = 0}^{n} f (\frac{i}{n}) B_i^n(x)
-    \end{equation}
+    \end{equation*}
     kjer je $B_i^n(x)$ $\textbf{Bernsteinov bazni polinom}$:
-    \begin{equation}\label{eq:BernsteinBazniPolinom}
+    \begin{equation*}
         B_i^n (x) = {n \choose i} x^i (1-x)^{n-i} \text{, } i = 0, 1, \dots, n  
-    \end{equation}
+    \end{equation*}
     Da se pokazati, da gre $\norm{f - \mathscr{B}_n f}_{\infty, [a, b]} \to 0$, ko gre $n \to \infty$.
 \end{proof}
 
@@ -885,72 +908,81 @@ kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
     \begin{equation*}
         p(x) = e^0 \ell_{0, 3}(x) + e^1 \ell_{1, 3}(x) + e^3 \ell_{2, 3} (x) + e^4 \ell_{3, 3}(x)
     \end{equation*}
+    Časovna zahtevnost za evaluacijo $\ell_{i, n}(x)$ v $x_i$ je $\mathcal{O}(n^2)$. Ker v praksi izpustimo skupen polinom,
+    je končna časovna zahtevnost $\mathcal{O}(n)$, tako kot Hornerjev algoritem.
 \end{ex}
 
 
-%\begin{lemma}
-%    Če je $f \in \Pp_n$, potem je $\sum_{i = 0}^{n} f(x_i) \ell_{i, n} (x) = f(x)$.
-%\end{lemma}
-%\begin{proof}
-%    Sledi iz enoličnosti interpolacijskega polinoma.
-%\end{proof}
-%
-%Posledica:
-%\begin{equation}
-%    \sum_{i = 0}^{n} \ell_{i, n}(x) = 1
-%\end{equation}
-%Lagrangevi bazni polinomi tvorijo $\textbf{razčlenitev enote}$.
-%
-%\begin{theorem}
-%    O napaki interpolacije. Naj bo $a \leq x_0 < x_1 \dots < x_n \leq b$, $f \in \mathscr{C}^{n+1}([a, b])$ in naj bo $p$ interpolacijski polinom za $f$. Potem za vsak $x \in [a, b]$
-%    obstaja $\xi_x \in (a, b)$, da velja
-%    \begin{equation*}
-%        f(x) - p(x) = \omega (x) \frac{f^{(n+1)}(\xi_x)}{(n+1)!}
-%    \end{equation*}
-%    kjer velja
-%    \begin{equation*}
-%        \omega (x) = (x - x_0)(x-x_1) \dots (x - x_n)
-%    \end{equation*}
-%\end{theorem}
-%
-%\begin{proof}
-%    Če je $x = x_i$, potem $f(x_i) - p(x_i) = 0$ in $\omega (x_i) = 0$ in enakost velja za vsak $\xi_x \in (a, b)$. Naj bo sedaj $x \neq x_i$, $i = 0, 1, \dots, n$
-%    in naj bo fiksen.
-%
-%    Definirajmo $F(u) = f(u) - p(u) - c \omega (u)$ za neko konstanto $c$. $F \in \mathscr{C}^{n+1}([a, b])$, $F(x_i) = f(x_i) - p(x_i) - c \omega (x_i) = 0$ za $i = 0, 1, \dots, n$.
-%    Konstanto $c$ izberemo tako, da bo tudi $F(x) = 0$. Torej ima $F$ na $[a, b]$ $n+2$ različnih ničel. Potem ima $F'$ na $(a, b)$ $n+1$ različnih ničel.
-%    Potem ima $F''$ na (a, b) n \dots Potem ima $F^{(n+1)}$ na $(a, b)$ vsaj eno ničlo. Označimo to ničlo z $\xi_x$.Torej je 
-%    \begin{equation*}
-%        0 = F^{(n+1)}(\xi_x) = f^{(n+1)}(\xi_x) - p^{(n+1)}(\xi_x) - c \omega ^{(n+1)}(\xi_x)
-%    \end{equation*}
-%    \begin{equation*}
-%        0 = f^{(n+1)}(\xi_x) - c (n+1)!
-%    \end{equation*}
-%    \begin{equation*}
-%        c = \frac{1}{(n+1)!}f^{(n+1)}(\xi_x)
-%    \end{equation*}
-%\end{proof}
+\begin{lemma}
+    Če je $f \in \Pp_n$, potem je $\sum_{i = 0}^{n} f(x_i) \ell_{i, n} (x) = f(x)$.
+\end{lemma}
+\begin{proof}
+    Sledi iz enoličnosti interpolacijskega polinoma.
+\end{proof}
 
-%Za poljuben $c \in [a, b]$ po izreku veljalo
-%\begin{equation*}
-%    \left| f(x) - p(x) \right| = \left| \omega \rignt| \frac{1}{(n+1)!} \left| f^{(n+1)}(\xi_x) \right| \leq \norm{\omega}_{\infty, [a, b]} \frac{1}{(n+1)!} \nomr{f^{(n+1)}}_{\infty, [a, b]}
-%\end{equation*}
-%Sledi
-%\begin{equation*}
-%    \norm{f - p}_{\infty, [a, b]} \leq (nevemkaj)
-%\end{equation*}
-%
-%Lagrangeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za numerično integracijo, odvajanje \dots Ima pa par pomankljivosti pri praktični uporabi:
-%\begin{itemize}
-%    \item numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
-%    \item Numerične težave, če so interpolacijske točke preblizu skupaj
-%    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno.
-%\end{itemize}
-%
-%\subsubsection{Newtonova oblika zapisa interpolacijskega polinoma}
-%Za bazo, v kateri bomo predstavili interpolacijski polinom, izberemo $\textbf{prestavljene potence}$.
-%baza = $\{1, x-x_0, (x-x_0)(x-x_1), \dots, (x-x_0) (x-x_1) \dots (x-x_n)\}
+\begin{conseq}
+    \begin{equation}
+        \sum_{i = 0}^{n} \ell_{i, n}(x) = 1
+    \end{equation}
+    Lagrangevi bazni polinomi tvorijo $\textbf{razčlenitev}$ oziroma $\textbf{razčlenitev enote}$, ki pozitivno vpliva na stabilnost baze.
+\end{conseq}
 
+\begin{theorem}[O napaki interpolacije.]
+    Naj bodo $a \leq x_0 < x_1 \dots < x_n \leq b$, $f \in \mathscr{C}^{n+1}([a, b])$ in naj bo $p$ interpolacijski polinom za $f$ na teh točkah. Potem za vsak $x \in [a, b]$
+    obstaja $\xi_x \in (a, b)$, da velja
+    \begin{equation*}
+        f(x) - p(x) = \omega (x) \frac{f^{(n+1)}(\xi_x)}{(n+1)!}
+    \end{equation*}
+    kjer velja
+    \begin{equation*}
+        \omega (x) = (x - x_0)(x-x_1) \dots (x - x_n)
+    \end{equation*}
+\end{theorem}
 
+\begin{proof}
+    Če je $x = x_i$, potem $f(x_i) - p(x_i) = 0$ in $\omega (x_i) = 0$ ter enakost velja za vsak $\xi_x \in (a, b)$. Naj bo sedaj $x \neq x_i$, $i = 0, 1, \dots, n$
+    in naj bo ta $x$ fiksen.
+    Definirajmo $F(u) = f(u) - p(u) - c \omega (u)$ za neko konstanto $c$, pri čemer za $F$ velja $F \in \mathscr{C}^{n+1}([a, b])$, $F(x_i) = f(x_i) - p(x_i) - c \omega (x_i) = 0$ za $i = 0, 1, \dots, n$.
+    Konstanto $c$ izberemo tako, da bo tudi $F(x) = 0$. Torej ima $F$ na $[a, b]$ $n+2$ različnih ničel. Potem ima $F'$ na $(a, b)$ $n+1$ različnih ničel.
+    Potem ima $F''$ na (a, b) n različnih ničel \dots Potem ima $F^{(n+1)}$ na $(a, b)$ vsaj eno ničlo. Označimo to ničlo z $\xi_x$. Torej je
+    \begin{align*}
+        0 =& F^{(n+1)}(\xi_x) \\
+          =& f^{(n+1)}(\xi_x) - p^{(n+1)}(\xi_x) - c \omega ^{(n+1)}(\xi_x)
+    \end{align*}
+    Uporabimo razmislek od zgoraj in dobimo
+    \begin{equation*}
+        0 = f^{(n+1)}(\xi_x) - c (n+1)!
+    \end{equation*}
+    Ko to preuredimo, dobimo
+    \begin{equation*}
+        c = \frac{1}{(n+1)!}f^{(n+1)}(\xi_x)
+    \end{equation*}
+\end{proof}
+
+Za poljuben $c \in [a, b]$ po izreku velja
+\begin{equation*}
+    \left| f(x) - p(x) \right| = \left| \omega \right| \frac{1}{(n+1)!} \left| f^{(n+1)}(\xi_x) \right| \leq \norm{\omega}_{\infty, [a, b]} \frac{1}{(n+1)!} \norm{f^{(n+1)}}_{\infty, [a, b]}
+\end{equation*}
+Iz tega sledi
+\begin{equation*}
+    \norm{f - p}_{\infty, [a, b]} \leq \frac{1}{(n+1)!} \norm{\omega}_{\infty, [a, b]} \norm{f^{(n+1)}}_{\infty, [a, b]}
+\end{equation*}
+Ta ocena je uporabna v teoriji, ne pa tudi v praksi.
+
+Lagrangeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za numerično integracijo, odvajanje \dots, ima pa tudi nekaj pomankljivosti pri praktični uporabi:
+\begin{itemize}
+    \item numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
+    \item Numerične težave, če so interpolacijske točke preblizu skupaj
+    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno.
+\end{itemize}
+
+\subsubsection{Newtonova oblika zapisa interpolacijskega polinoma}
+Za bazo, v kateri bomo predstavili interpolacijski polinom, izberemo $\\ \textbf{prestavljene}$ $\textbf{potence}$. % previdno z \\
+\begin{equation*}
+    \text{baza} = \{1, x-x_0, (x-x_0)(x-x_1), \dots, (x-x_0) (x-x_1) \dots (x-x_n)\}
+\end{equation*}
+% en odstavek manjka, ne znam prebrat :(
+
+% 6. 3. 2023
 
 \end{document}
