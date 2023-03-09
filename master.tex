@@ -34,6 +34,10 @@
 \usepackage{graphicx}
 \graphicspath{ {./images/} }
 
+% tags
+\usepackage{pifont}
+% \tag{\ding{37}} - telefon
+
 % theorems
 \theoremstyle{definition}
 \newtheorem{counter}{Counter}[section] % not for use
@@ -814,7 +818,7 @@ lahko zapišemo matrično
 \end{equation*}
 Matriko, ki jo uporabimo, imenujemo $\textbf{vandermondova matrika}$.
 \begin{equation*}
-    detV(x_0, x_1, \dots, x_n) = \prod_{0 \leq i < j \leq n} (x_j - x_i)
+    \det V(x_0, x_1, \dots, x_n) = \prod_{0 \leq i < j \leq n} (x_j - x_i)
 \end{equation*}
 
 Ker je Vandermondova matrika obrnljiva, sledi, da imamo enolično rešitev. Torej obstaja $\textbf{enoličen}$ polinom stopnje $n$, ki interpolira $n+1$ paroma
@@ -984,28 +988,34 @@ Za bazo, v kateri bomo predstavili interpolacijski polinom, izberemo $\\ \textbf
 Očitno je to baza: vidimo, da se stopnje povečujejo in je posledično kolokacijska matrika spodnje trikotna. V nadaljevanju bomo naredili rekurzivno konstrukcijo.
 
 % 6. 3. 2023
-Vsak $p \in \Pp_n$ lahko zapišemo kot $\sum_{i = 0}^{n} c_i \prod_{j = 0}^{i-1} (x-x_j)$. Iščemo koeficiente $(c_i)_{i=0}^n$, da bo $p$ interpolacijski.
-Ta $p$ bomo konstruirali $\textbf{rekurzivno}$.
-Naj bo $p_{k-1}$ interpolacijski polinom za $f$ na točkah $x_0, x_1, \dots, x_{k-1}$. Kako poiskati $p_k$, ki bo interpolacijski za $f$ na točkah $x_0, x_1, \dots, x_k$?
-$p_{k-1} \in \Pp_{k-1}, p_k \in Pp_k$
+Vsak $p \in \Pp_n$ lahko zapišemo kot 
 \begin{equation*}
-    p_k (x) = p_{k-1}(x) + c (x-x_0)(x-x_1)\dots(x-x_{k-1})
+    \sum_{i = 0}^{n} \bigl( c_i \prod_{j = 0}^{i-1} (x-x_j) \bigr)
+\end{equation*}
+Iščemo koeficiente $(c_i)_{i=0}^n$, da bo $p$ interpolacijski.
+Ta $p$ bomo konstruirali $\textbf{rekurzivno}$.
+Naj bo $p_{k-1}$ interpolacijski polinom za $f$ na točkah $x_0$, $x_1$, $\dots$, $x_{k-1}$. Kako poiskati $p_k$, ki bo interpolacijski za $f$ na točkah
+$x_0, x_1, \dots, x_k$, kjer bo $p_{k-1} \in \Pp_{k-1} \text{ in } p_k \in \Pp_k$?
+
+\begin{equation*}
+    p_k (x) = p_{k-1}(x) + c (x-x_0)(x-x_1)\cdots(x-x_{k-1})
 \end{equation*}
 Vstavimo $x = x_j$, $j \in \{0, 1, \dots, k-1\}$
 \begin{equation*}
     p_k(x_j) = p_{k-1}(x_j) + c \cdot 0 = f(x_j)
 \end{equation*}
-Ostane le pogoj
+Ostane le pogoj za $x = x_k$
 \begin{equation*}
     p_k(x_k) = f(x_k)
 \end{equation*}
-(poglej, ce kaj manjka)
+kjer lahko zapišemo
+\begin{equation*}
+    p_k(x_k) = p_{k-1}(x_x) +  c \prod_{j = 0}^{k-1}(x_k - x_j)
+\end{equation*}
+S tem je določen $c$, ki je kar $\textbf{vodilni koeficient}$ od $p_k$. Označimo ga z $[x_0, x_1, \dots, x_k] f$ in ga imenujemo $\textbf{deljena diferenca}$.
 
-
-$c$ določimo tako, da je izpolnjen še ta pogoj.
-Ta $c$ je $\textbf{vodilni koeficient}$ od $p_k$. Označimo ga z $[x_0, x_1, \dots, x_k] f$ in ga imenujemo $\textbf{deljena diferenca}$.
 \begin{defn}
-    Deljena diferenca  $[x_0, x_1, \dots, x_k] f$ je vodilni koeficient interpolacijskega polinoma stopnje $k$ (keoficient pri $x^k$) za funkcijo $f$ na
+    $\textbf{Deljena diferenca}$  $[x_0, x_1, \dots, x_k] f$ je vodilni koeficient interpolacijskega polinoma stopnje $k$ (koeficient pri $x^k$) za funkcijo $f$ na
     točkah $x_0, x_1, \dots, x_k$.
 \end{defn}
 
@@ -1015,23 +1025,28 @@ Sledi, da lahko $p_k(x)$ zapišemo kot
 \end{equation*}
 
 (vstavi graf)
-
+V grafu: $p_0 \in \Pp_p$, $p_0(x) = x_0 \cdot 1$.
 Po definiciji je $[x_0]f = f(x_0)$.
 
 Iz te rekurzivne konstrukcije dobimo
 \begin{align*}
-    p_n(x) =& p_{n-1}(x) + [x_0, x_1, \dots, x_n] f (x-x_0)(x-x_1) \dots (x-x_{n-1}) \\
-           =& \dots \\
-           =& p_o(x) + [x_0, x_1] f (x-x_o) + [x_0, x_1, x_2] f (x-x_0)(x-x_1) + \dots + [x_0, x_1, \dots, x_n] f (x-x_0)(x-x_1) \dots (x-x_{n-1}) \\
-    p_n(x) = & \sum_{i = 0}^{n}[x_0, x_1, \dots, x_i] f (x-x_0)(x-x_1)\dots(x-x_{i-1})
+    p_n(x) = & p_{n-1}(x) + [x_0, x_1, \dots, x_n] f (x-x_0)(x-x_1) \dots (x-x_{n-1}) \\
+           = & \dots \\
+           = & p_o(x) + [x_0, x_1] f (x-x_o) + [x_0, x_1, x_2] f (x-x_0)(x-x_1) + \\
+            & + \dots + [x_0, x_1, \dots, x_n] f (x-x_0)(x-x_1) \dots (x-x_{n-1})
 \end{align*}
-Temu rečemo Newtonova oblika zapisa interpolacijskega polinoma.
+\begin{equation*}
+    p_n(x) = \sum_{i = 0}^{n}[x_0, x_1, \dots, x_i] f (x-x_0)(x-x_1)\dots(x-x_{i-1})
+\end{equation*}
+
+Temu rečemo $\textbf{Newtonova oblika}$ zapisa interpolacijskega polinoma.
 
 Kako izračunati deljene diference?
 
-Vemo že $[x_0] f = f(x_0)$
-
-$[x_0, x_1] f = ?$
+\begin{itemize}
+    \item $[x_0] f = f(x_0)$
+    \item $[x_0, x_1] f = \text{?}$
+\end{itemize}
 
 (vstavi graf)
 
@@ -1039,8 +1054,9 @@ $[x_0, x_1] f = ?$
     p_1 (x) =& f(x_0) + \frac{f(x_1)- f(x_0)}{x_1 - x_0} (x-x_0) \\
             =& [x_0] f \cdot 1 + [x_0, x_1] f (x-x_0)
 \end{align*}
+V zgornji enačbi je $\frac{f(x_1)- f(x_0)}{x_1 - x_0}$ vodilni koeficient, $1$ in $(x-x_0)$ pa sta baza. Iz tega sledi
 \begin{equation*}
-    [x_0, x_1] f =& \frac{f(x_1)- f(x_0)}{x_1 - x_0} = \frac{[x_1]f - [x_0]f}{x_1 - x_0}    
+    [x_0, x_1] f = \frac{f(x_1)- f(x_0)}{x_1 - x_0} = \frac{[x_1]f - [x_0]f}{x_1 - x_0}    
 \end{equation*}
 
 
@@ -1048,31 +1064,47 @@ $[x_0, x_1] f = ?$
 \begin{theorem}[Rekurzivna formula za deljene diference]
     Naj bodo $x_0, x_1, \dots, x_k$ paroma različne točke. Tedaj velja
     \begin{equation*}
-        [x_0, x_1, \dots, x_k]f = \frac{[x_0, x_1, \dots x_k] f - [x_0, x_1, \dots x_{k-1}]f}{x_k - x_0}
+        [x_0, x_1, \dots, x_k]f = \frac{[x_1, x_2, \dots x_k] f - [x_0, x_1, \dots x_{k-1}]f}{x_k - x_0}
     \end{equation*}
 \end{theorem}
 
+\begin{rem}
+    Pazi na koeficiente! V števcu gredo pri prvem od $x_1$ do $x_k$, pri drugem pa od $x_0$ do $x_{k-1}$. Tista, ki smo ju izpustili,
+    potem odštejemo v imenovalcu, torej $x_k-x_0$.
+\end{rem}
+
 \begin{proof}
-    Naj bo $q_0$ interpolacijski za $f$ na točkah $x_0, x_1, \dots, x_{k-1}$ in $q_1$ interpolacijski za $f$ na točkah $x_0, x_1, \dots, x_k$.
+    Naj bo $q_0$ interpolacijski za $f$ na točkah $x_0, x_1, \dots, x_{k-1}$ in $q_1$ interpolacijski za $f$ na točkah $x_1, x_2, \dots, x_k$.
     Velja, da sta $q_0, q_1 \in \Pp_{k-1}$.
-    Kako do polinoma $p$, ki bo interpolacijski na $x_0, x_1, \dots, x_k$? Ta $p$ bo $p \in \Pp_k$.
+    Kako priti do polinoma $p$, ki bo interpolacijski na $x_0, x_1, \dots, x_k$? Ta $p$ bo tak, da bo veljalo $p \in \Pp_k$.
+
+    Sestavimo model za $p$
     \begin{equation*}
         p(x) = \ell_0(x) q_0(x) + \ell_1(x) q_1(x), \ell_0, \ell_1 \in \Pp_1, \ell_0, \ell_1 = ?
     \end{equation*}
     \begin{equation*}
         x = x_j, j \in \{x_1, x_2, \dots, x_{k-1}\}
     \end{equation*}
-    Pogoj **
-    \begin{equation*}
-        p(x_j) = \ell_0(x_j) q_0 (x_j) + \ell_1 (x_j) q_1 (x_j) = (\ell_0 (x_j) + \ell_1 (x_j)) f(x_j) =? f(x_j)
-    \end{equation*}
-    Pogoja *
-    \begin{equation*}
-        p(x_0) = \ell_0(x_0) f(x_0) + \ell_1 (x_0) q(x_0) =? f(x_0)
-    \end{equation*}
-    \begin{equation*}
-        p(x_k) = \ell_0 (x_k) q(x_k) + \ell_1(x_k) f(x_k) =? f(x_k)
-    \end{equation*}
+    Dobimo tri pogoje:
+    \begin{itemize}
+
+        \item[($\star \star$)] $x = x_j$
+        \begin{equation*}
+            p(x_j) = \ell_0(x_j) q_0 (x_j) + \ell_1 (x_j) q_1 (x_j) = (\ell_0 (x_j) + \ell_1 (x_j)) f(x_j) \stackrel{\text{?}}{=} f(x_j)
+        \end{equation*}
+
+        \item[($\star$)] $x = x_0$
+        \begin{equation*}
+            p(x_0) = \ell_0(x_0) f(x_0) + \ell_1 (x_0) q(x_0) \stackrel{\text{?}}{=} f(x_0)
+        \end{equation*}
+
+        \item[($\star$)] $x = x_k$
+        \begin{equation*}
+            p(x_k) = \ell_0 (x_k) q(x_k) + \ell_1(x_k) f(x_k) \stackrel{\text{?}}{=} f(x_k)
+        \end{equation*}
+
+    \end{itemize}
+    
     Če izberemo
     \begin{equation*}
         \ell_0(x) = \frac{x - x_k}{x_0 - x_k}
@@ -1081,24 +1113,26 @@ $[x_0, x_1] f = ?$
     \begin{equation*}
         \ell_1(x) = \frac{x - x_0}{x_k - x_0}
     \end{equation*}
-    zadostimo pogojema *. Ker pa je $\ell_0(x) + \ell_1(x) = 1$ za $\forall x$, pa velja tudi **
+    zadostimo pogojema ($\star$). Ker pa je $\ell_0(x) + \ell_1(x) = 1$ za $\forall x$, pa velja tudi ($\star \star$).
 
     Torej
     \begin{equation*}
         p(x) = \frac{x-x_k}{x_0-x_k} q_0(x) + \frac{x-x_0}{x_k-x_0} q_1(x)
     \end{equation*}
+    \begin{rem}
+        V nadaljevanju se bo namesto vodilni koeficient pisalo $v.k.$
+    \end{rem}
     Primerjamo vodilne koeficiente na levi in desni strani in dobimo:
     \begin{equation*}
-        \text{vod.koef.}(p) = [x_0, x_1, \dots, x_k]f
+        v.k.(p) = [x_0, x_1, \dots, x_k]f
     \end{equation*}
     Na desni strani:
     \begin{equation*}
-        \frac{1}{x_0-x_k} \cdot vod.koef. (q_0) + \frac{1}{x_k - x_0} vod.koef. (q_1) = \frac{[x_1, x_2, ..., x_k] f - [x_0, x_1, ..., x_{k-1}] f}{x_k - x_o}
+        \frac{1}{x_0-x_k} \cdot v.k. (q_0) + \frac{1}{x_k - x_0} \cdot v.k. (q_1) = \frac{[x_1, x_2, ..., x_k] f - [x_0, x_1, ..., x_{k-1}] f}{x_k - x_o}
     \end{equation*}
 \end{proof}
 
-
-
+\subsubsection*{Trikotna shema}
 \begin{equation*}
     [x_0, x_1, x_2] f = \frac{[x_1, x_2]f - [x_0, x_1] f}{x_2 - x_0}
 \end{equation*}
@@ -1119,7 +1153,7 @@ Deljive diference, ki jih potrebujemo v zapisu interpolacijskega polinoma, raču
     $p \in \Pp_3$, $x_0 = 1, x_1 =3,  x_2 = 5, x_3 = 4$
     baza:
     \begin{equation*}
-        {1, x, x(x-1), x(x-1)(x-3)}
+        \{1, x, x(x-1), x(x-1)(x-3)\}
     \end{equation*}
     (tabela)
     \begin{equation*}
@@ -1135,7 +1169,8 @@ Kako izračunati vrednost polinoma v Newtonovi bazi pri izbranem $x$?
 Označimo $d_i = [x_0, x_1, \dots, x_i] f, i = 0, 1, \dots, n$
 $n = 4$
 \begin{align*}
-    p(x) =& d_0 \cdot 1 + d_1 (x-x_0) + d_2 (x-x_0)(x-x_1) + d_3 (x-x_0)(x-x_1)(x-x_2) + d_4 (x-x_0)(x-x_1)(x-x_2)(x-x_3) \\
+    p(x) =& d_0 \cdot 1 + d_1 (x-x_0) + d_2 (x-x_0)(x-x_1) + \\
+         +& d_3 (x-x_0)(x-x_1)(x-x_2) + d_4 (x-x_0)(x-x_1)(x-x_2)(x-x_3) \\
          =& d_0 + (x-x_0)(d_1 - (x-x_1)(d_2 - (x-x_2)(d_3 - (x-x_3)d_4)))
 \end{align*}
 zapišemo
@@ -1147,31 +1182,23 @@ zapišemo
     v_0 =& d_0 + (x-x_0)v_1
 \end{align*}
 
-(algoritem)
-$v_n = d_n$
-$for i = n-1:-1:0$
-$   v_i = d_i + (x-x_i) v_{i+1}$
-$end$
-$v_0 = p(x)$
 
-Algoritem(posplošen Hornerjev algoritem)
-Vhod: $d_ (= [d_0, d_1, ..., d_n]), x_ = [x_0, x_1, ..., x_n], x$
-$v_n = d_n$
-$for i = n-1:-1:0$
-$   v_i = d_i + (x-x_i)c_{i+1}$
-$end$
-Izhod: $v_0$
+
+\begin{algorithm}
+    \caption{Posplošen Hornerjev algoritem}\label{alg:horner}
+    \hspace*{\algorithmicindent} \textbf{Input} $\underline{d} (= [d_0, d_1, \dots, d_n]), \underline{x}(= [x_0, x_1, \dots..., x_n]), x$
+    \begin{algorithmic}
+        \State $v_n = d_n$
+        \For{$i = n-1:-1:0$}
+            \State $v_i = d_i + (x-x_i) v_{i+1}$
+        \EndFor
+        \State $v_0 = p(x)$
+    \end{algorithmic}
+    \hspace*{\algorithmicindent} \textbf{Output} $v_0$
+\end{algorithm}
+
 
 (tabelca za hronerja)
-
-
-
-
-
-
-
-
-
 
 
 
