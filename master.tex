@@ -110,7 +110,7 @@
 Denimo, da imamo podano funkcijo $f$. Radi bi jo aproksimirali s kak"sno 'preprostej"so' funkcijo $\tilde{f}$, ki bi bila la"zje izra"cunljiva, bi se jo dalo enostavno odvajati, integrirati \dots
 
 \begin{ex}
-    \[sin(x) \sim x - \frac{x^3}{3!} + \frac{x^5}{5!}\]
+    \[\sin(x) \sim x - \frac{x^3}{3!} + \frac{x^5}{5!}\]
 \end{ex}
 
 
@@ -232,7 +232,7 @@ Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zve
 \begin{theorem} (Weierstrassov izrek)
     Naj bo $f \in \mathscr{C} ([a, b])$. Potem za vsak $\varepsilon > 0$ obstaja polinom $p$, da je $\norm{f - p}_{\infty, [a, b]} < \varepsilon$. Drugače povedano:
     \begin{equation*}
-        dist(f, \Pp_n) \to 0 \text{, ko gre } n \to \infty
+        dist(f, \Pp_n) \stackrel{n \to \infty}{\longrightarrow} 0
     \end{equation*}
 \end{theorem}
 
@@ -507,16 +507,12 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
         \min_{p \in \Pp_1} \norm{f - p}_2 = \min_{p \in \Pp_1} \sqrt[]{\int_{0}^{\pi} (sinx - p(x)^2) dx}
     \end{equation*}
 
-    % izboljšaj, če ti uspe
-    \begin{tikzpicture}
-        \draw[->] (-1, 0) -- (3.5, 0);
-        \draw[->] (0, -1) -- (0, 2);
-        \draw[smooth, blue] (0, 0) sin (1.57, 1);
-        \draw[smooth, blue] (1.57, 1) cos (3.14, 0);
-        \draw[smooth, red] (0, 0.64) -- (3.14, 0.64);
-    \end{tikzpicture}
-
-    Želimo minimizirati ploščino območja med modro in rdečo črto.
+    % previdno - zna skociti izven tega obmocja
+    \begin{figure}[h]
+        \center
+        \includegraphics[scale=0.15]{mnk_geo_final.jpg}
+        \caption{Z MNK želimo minimizirati ploščino sivega območja.}
+    \end{figure}
 \end{ex}
 
 \begin{ex}
@@ -571,9 +567,13 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
     \begin{equation*}
         \min_{p \in \Pp_1} \norm{f - p}_2 =\sqrt[]{\sum_{i = 1}^{4} (y_i -p(x_i))^2}
     \end{equation*}
-    % TODO: dodaj skico
+    \begin{figure}[h]
+        \center
+        \includegraphics[scale=0.25]{mnk_geo_druga.png}
+        \caption{Z MNK želimo najti temnosivo premico, ki minimizira svetlosive razdalje.}
+    \end{figure}
 \end{ex}
-
+%\newpage
 \subsubsection{Povezava s predoločenimi sistemi enačb}
 \begin{equation*}
     Ax = b \text{, } A\in \R^{m \times n} \text{, } A = 
@@ -653,7 +653,11 @@ bazo izračunamo z $\textbf{modificiranim Gram-Scmidtovim algoritmom}$.
 
 
 $X \in \mathscr{C}([a, b])$
-(vstavi skico)
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.25]{mnk_tretja.png}
+    \caption{??}
+\end{figure}
 
 \subsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
 \begin{equation*}
