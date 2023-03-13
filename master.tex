@@ -656,7 +656,7 @@ $X \in \mathscr{C}([a, b])$
 \begin{figure}[h]
     \center
     \includegraphics[scale=0.25]{mnk_tretja.png}
-    \caption{??}
+    \caption{Druga norma, porojena iz zveznega (levo) in diskretnega (desno) skalarnega produkta}
 \end{figure}
 
 \subsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
@@ -1203,6 +1203,148 @@ zapišemo
 
 % pazi, da bo tabelca na pravem mestu
 (tabelca za hronerja)
+
+% 13. 3. 2023
+$n = 1$
+(slikca)
+$p(x) = f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) = f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) -(x_1 \to x_0)->
+f(x_0) + \lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}(x-x_0)$
+\begin{align*}
+    p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
+    p(x_0) =& f(x_0) \\
+    p'(x_0) =& f'(x_0)
+\end{align*}
+
+\begin{defn}
+    Pravimo, da se polinom $p$ s funkcijo $f$ ujema v točki $x_i$ ($k+1$)-kratno, če se ujema v vrednosti in prvih $k$ odvodih.
+    Enačbe, ki določajo te pogoje:
+    \begin{align*}
+        p(x_i) =& f(x_i) \\
+        p'(x_i) =& f'(x_i) \\
+        p''(x_i) =& f''(x_i) \\
+        \vdots& \\
+        p^{(k)}(x_i) = f^{(k)}(x_i)
+    \end{align*}
+    Tak polinom je Taylorjev polinom:
+    \begin{equation*}
+        p(x) = f(x_i) + f'(x_i)(x-x_i) + \frac{f''(x_i)}{2!}(x-x_i)^2 + \dots + \frac{f^{(k)}(x_i)}{k!}(x-x_i)^k
+    \end{equation*}
+    Če bomo v točki $x_i$ zahtevali $(k+1)$-kratno ujemanje, potem bomo to točko podali $(k+1)$-kratno:
+    \begin{equation*}
+        x_{i-1} < x_i = x_{i+1} = x_{i+2} = \dots x_{i+k} < x_{i+k+1}
+    \end{equation*}
+\end{defn}
+
+Poglejmo si, kako posplošimo deljenje diference.
+\begin{equation}
+    [x_i, x_i, \dots, x_i] f = \frac{f^{(k)}(x_i)}{k!}
+\end{equation}
+(imamo $k+1$ $x_i$-jev)
+
+Posplošitev rekurzivne formule.
+\begin{rem}
+    Vrstni red točk v deljeni diferenci $\textbf{ni}$ pomemben.
+\end{rem}
+
+Naj velja $x_i \leq x_{i+1} \leq x_{i+2} \leq \dots \leq x_{i+k}$. Potem je
+\begin{equation}
+    [x_i, x_{i+1}, \dots, x_{i+k}] f =
+    \begin{cases*}
+        \frac{f^{(k)}(x_i)}{k!} \text{, če } x_i = x_{i+1} = \dots = x_{i+k} \\
+        \frac{[x_{i+1}, \dots, x_{i+k}] f - [x_{i}, \dots, x_{i+k-1}]f}{x_{i+k} - x_{i}} \text{, sicer}
+    \end{cases*}
+\end{equation}
+
+\begin{example}
+    Poišči polinom $p$, za katerega velja $p(0) = 1$, $p'(0) = 2$, $p''(0) = 3$, $p(1) = -1$, $p'(1) = 3$, $p(2) = 4$
+    \begin{align*}
+        x_0 = 0, x_1 = 0, x_2 = 0, x_3 = 1, x_4 = 1, x_5 = 2
+    \end{align*}
+    baza:
+    \begin{equation}
+        \{1, c, x^2, x^3, x^3(x-1), x^3(x-1)^2\}
+    \end{equation}
+    (trikotna shema)
+    \begin{equation}
+        p(x) = 1 \cdot 1 + 2 qcdot x + \frac{3}{2} x^2 - \frac{11}{2}x^3 + \frac{29}{2}x^3(x-1) - \frac{79}{8} x^3(x-1)^2
+    \end{equation}
+\end{example}
+
+Brez izpeljave povejmo še sledeče trditve:
+\begin{claim}
+    Za $f \in \mathscr{C}^k ([a, b]), a \leq x_0 \leq x_1 \leq x_n \leq b$, velja
+    \begin{align*}
+        [x_i, x_{i+1}, \dots, x_{i+k}] f = \frac{f^{(k)}(\xi)}{k!}, \xi \in [x_i, x_{i+k}]
+    \end{align*}
+\end{claim}
+
+
+% pt2
+\begin{claim}
+    Za $f \in \mathscr{C}^{n+1}([a, b]), a \leq x_0 \leq x_1 \leq \dots \leq x_n \leq b$ in interpolacijski polinom $p$ za $f$ na teh točkah velja
+    \begin{equation}
+        f(x) - p(x) = \omega(x) [x_0, x_1, \dots, x_n, x] f = \omega(x) \frac{f^{(n+1)(\xi_x)}}{(n+1)!}, \xi_x in (a, b), x \in [a, b]
+    \end{equation}
+    \begin{equation}
+        \omega(x) = \prod_{i = 0}^{n} (x-x_i)
+    \end{equation}
+\end{claim}
+
+Kako izbrati interpolacijske točke na $[a, b]$
+\begin{enumerate}
+    \item Ekvidistantne točke
+    $x_i = a + ih$, $h = \frac{b-a}{n}$. $i = 0, 1, \dots, n$
+    (slikca)
+    \item Čebiševe točke
+    Izbira, pri kateri je neskončna norma polinoma $\omega$ anjmanjša možna.
+    \begin{equation}
+        \min_{a \leq x_0 < x_1 < \dots < x_n \leq b} \norm{\omega}_{\infty, [a, b]} = \min_{a \leq x_0 < x_1 < \dots < x_n \leq b} \max_{x \in [a, b]} \right| \omega(x) \left|
+    \end{equation}
+    Rešitev so
+    \begin{equation}
+        x_i = \frac{a+b}{2} + \frac{b-1}{2}\cos(\frac{2i+1}{2n+2}\pi), i = 0, 1, \dots, n
+    \end{equation}
+\end{enumerate}
+
+Vprašanje:
+Recimo, da izberemo $f qin \mathscr{C}([a, b])$, izberemo zaporedje interpolacijskih točk $(\{x_0, x_1, \dots, x_n\})_n$ in
+večamo stopnjo $n$. Dobino zaporedje interpolacijskih polinomov $(p_n)_n$. Zanima nas, kaj se dogaja z napako
+\begin{equation}
+    \norm{f-p}_{\infty, [a, b]} -(n\to\infty)-> ??
+\end{equation}
+Žal ne velja nujno, da bi šla ta napaka proti 0.
+
+Protiprimer:
+(Rungejev primer)
+
+$f(x) = \frac{1}{1-x^2}, [-5, 5]$ ekvidistantne točke. Napaka gre proti $\infty$ z večanjem $n$-ja.
+
+\subsubsection*{Odsekoma polinomske funkcije (zlepki)}
+
+IDEJA: Interval $[a, b]$ razdelimo na $m$ delov s stilnimi točkami $a = x_0 < x_q < \dots < x_m = b$
+(slikca)
+
+\begin{equation*}
+    s: [a, b] \to \R
+\end{equation*}
+\begin{equation*}
+    s |_{[x_i, x_{i+1}]} \in \Pp_n
+\end{equation*}
+V stičnih točkah predpišemo red gladkosti.
+
+primer:
+Odsekoma linearne interpolacijske tunkcije (slikca) - funkcija, označene točke, vmes povezane s premicami
+primer:
+Odsekoma kubičen interpolacijski zlepek.
+Polinom na $\right[ x_i, x_{i+1})$ določimo tako, da zadostimo pogojem
+\begin{align*}
+    p_i(x_i) =& f(x_i) \\
+    p_i'(x_i) =& f'(x_i) \\
+    p_i(x_[i+1]) =& f(x_{i+1}) \\
+    p_i'(x_[i+1]) =& f'(x_{i+1}), p_i \in \Pp_3
+\end{align*}
+
+
 
 
 
