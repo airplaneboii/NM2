@@ -1205,71 +1205,83 @@ zapišemo
 (tabelca za hronerja)
 
 % 13. 3. 2023
-%$n = 1$
-%(slikca)
-%$p(x) = f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) = f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) -(x_1 \to x_0)->
-%f(x_0) + \lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}(x-x_0)$
-%\begin{align*}
-%    p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
-%    p(x_0) =& f(x_0) \\
-%    p'(x_0) =& f'(x_0)
-%\end{align*}
-%
-%\begin{defn}
-%    Pravimo, da se polinom $p$ s funkcijo $f$ ujema v točki $x_i$ ($k+1$)-kratno, če se ujema v vrednosti in prvih $k$ odvodih.
-%    Enačbe, ki določajo te pogoje:
-%    \begin{align*}
-%        p(x_i) =& f(x_i) \\
-%        p'(x_i) =& f'(x_i) \\
-%        p''(x_i) =& f''(x_i) \\
-%        \vdots& \\
-%        p^{(k)}(x_i) = f^{(k)}(x_i)
-%    \end{align*}
-%    Tak polinom je Taylorjev polinom:
-%    \begin{equation*}
-%        p(x) = f(x_i) + f'(x_i)(x-x_i) + \frac{f''(x_i)}{2!}(x-x_i)^2 + \dots + \frac{f^{(k)}(x_i)}{k!}(x-x_i)^k
-%    \end{equation*}
-%    Če bomo v točki $x_i$ zahtevali $(k+1)$-kratno ujemanje, potem bomo to točko podali $(k+1)$-kratno:
-%    \begin{equation*}
-%        x_{i-1} < x_i = x_{i+1} = x_{i+2} = \dots x_{i+k} < x_{i+k+1}
-%    \end{equation*}
-%\end{defn}
-%
-%Poglejmo si, kako posplošimo deljenje diference.
-%\begin{equation}
-%    [x_i, x_i, \dots, x_i] f = \frac{f^{(k)}(x_i)}{k!}
-%\end{equation}
-%(imamo $k+1$ $x_i$-jev)
-%
-%Posplošitev rekurzivne formule.
-%\begin{rem}
-%    Vrstni red točk v deljeni diferenci $\textbf{ni}$ pomemben.
-%\end{rem}
-%
-%Naj velja $x_i \leq x_{i+1} \leq x_{i+2} \leq \dots \leq x_{i+k}$. Potem je
-%\begin{equation}
-%    [x_i, x_{i+1}, \dots, x_{i+k}] f =
-%    \begin{cases*}
-%        \frac{f^{(k)}(x_i)}{k!} \text{, če } x_i = x_{i+1} = \dots = x_{i+k} \\
-%        \frac{[x_{i+1}, \dots, x_{i+k}] f - [x_{i}, \dots, x_{i+k-1}]f}{x_{i+k} - x_{i}} \text{, sicer}
-%    \end{cases*}
-%\end{equation}
-%
-%\begin{example}
-%    Poišči polinom $p$, za katerega velja $p(0) = 1$, $p'(0) = 2$, $p''(0) = 3$, $p(1) = -1$, $p'(1) = 3$, $p(2) = 4$
-%    \begin{align*}
-%        x_0 = 0, x_1 = 0, x_2 = 0, x_3 = 1, x_4 = 1, x_5 = 2
-%    \end{align*}
-%    baza:
-%    \begin{equation}
-%        \{1, c, x^2, x^3, x^3(x-1), x^3(x-1)^2\}
-%    \end{equation}
-%    (trikotna shema)
-%    \begin{equation}
-%        p(x) = 1 \cdot 1 + 2 qcdot x + \frac{3}{2} x^2 - \frac{11}{2}x^3 + \frac{29}{2}x^3(x-1) - \frac{79}{8} x^3(x-1)^2
-%    \end{equation}
-%\end{example}
-%
+Poglejmo si za $n = 1$
+
+(slikca)
+
+\begin{align*}
+    p(x) =& f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) \\
+         =& f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) - (x_1 \to x_0) \\
+         \longrightarrow& f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0)
+    p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
+\end{align*}
+Iz tega dobimo sistem enačb:
+\begin{align*}
+    p(x_0) =& f(x_0) \\
+    p'(x_0) =& f'(x_0)
+\end{align*}
+
+\begin{defn}
+    Pravimo, da se polinom $p$ s funkcijo $f$ ujema v točki $x_i$ ($k+1$)-kratno, če se ujema v vrednosti in prvih $k$ odvodih.
+    Enačbe, ki določajo te pogoje:
+    \begin{align*}
+        p(x_i) =& f(x_i) \\
+        p'(x_i) =& f'(x_i) \\
+        p''(x_i) =& f''(x_i) \\
+        \vdots& \\
+        p^{(k)}(x_i) =& f^{(k)}(x_i)
+    \end{align*}
+    Tak polinom je Taylorjev polinom:
+    \begin{equation*}
+        p(x) = f(x_i) + f'(x_i)(x-x_i) + \frac{f''(x_i)}{2!}(x-x_i)^2 + \dots + \frac{f^{(k)}(x_i)}{k!}(x-x_i)^k
+    \end{equation*}
+    Če bomo v točki $x_i$ zahtevali $(k+1)$-kratno ujemanje, potem bomo to točko podali $(k+1)$-kratno:
+    \begin{equation*}
+        x_{i-1} < x_i = x_{i+1} = x_{i+2} = \dots x_{i+k} < x_{i+k+1}
+    \end{equation*}
+\end{defn}
+
+\subsubsection*{Posplošitev deljene diference}
+Poglejmo si, kako posplošimo deljenje diference.
+\begin{equation*}
+    [x_i, x_i, \dots, x_i] f = \frac{f^{(k)}(x_i)}{k!}
+\end{equation*}
+\begin{rem}
+    V zgornji enačbi imamo $(k+1)$ $x_i$-jev
+\end{rem}
+
+\subsubsection*{Posplošitev rekurzivne formule}
+\begin{rem}
+    Vrstni red točk v deljeni diferenci $\textbf{ni}$ pomemben.
+\end{rem}
+Naj velja $x_i \leq x_{i+1} \leq x_{i+2} \leq \dots \leq x_{i+k}$. Potem je
+\begin{equation*}
+    [x_i, x_{i+1}, \dots, x_{i+k}] f =
+    \begin{cases}
+        \frac{f^{(k)}(x_i)}{k!} & x_i = x_{i+1} = \dots = x_{i+k} \\
+        \frac{[x_{i+1}, \dots, x_{i+k}] f - [x_{i}, \dots, x_{i+k-1}]f}{x_{i+k} - x_{i}} & \text{sicer}
+    \end{cases}
+\end{equation*}
+
+\begin{ex}
+    Poišči polinom $p$, za katerega velja $p(0) = 1$, $p'(0) = 2$, $p''(0) = 3$, $p(1) = -1$, $p'(1) = 3$, $p(2) = 4$
+
+    Določimo točke $x_0, x_1, \dots, x_5$:
+    \begin{equation*}
+        x_0 = 0, x_1 = 0, x_2 = 0, x_3 = 1, x_4 = 1, x_5 = 2
+    \end{equation*}
+    Potem sestavimo bazo:
+    \begin{equation}
+        \{1, c, x^2, x^3, x^3(x-1), x^3(x-1)^2\}
+    \end{equation}
+    Z uporabo trikotne sheme izračunamo koeficiente za polinom:
+    (trikotna shema)
+    Iz trikotne sheme preberemo koeficiente in sestavimo interpolacijski polinom:
+    \begin{equation}
+        p(x) = 1 \cdot 1 + 2 \cdot x + \frac{3}{2} x^2 - \frac{11}{2}x^3 + \frac{29}{2}x^3(x-1) - \frac{79}{8} x^3(x-1)^2
+    \end{equation}
+\end{ex}
+
 %Brez izpeljave povejmo še sledeče trditve:
 %\begin{claim}
 %    Za $f \in \mathscr{C}^k ([a, b]), a \leq x_0 \leq x_1 \leq x_n \leq b$, velja
@@ -1509,160 +1521,160 @@ zapišemo
 
 
 % 27. 3. 2023
-Glede na izbiro vozlov ločimo dve vrsti pravil:
-\begin{itemize}
-    \item Newton-Cotesova pravila
-    Vozle izberemo ekvidistantno: $x_0 = a, x_i = x_0 + ih, h = \frac{b-a}{n}, i = 0, 1, \dots, n$
-    Ločimo:
-    \begin{itemize}
-        \item zaprta pravila (upoštevamo krajišči)
-        \begin{equation*}
-            \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) + Rf
-        \end{equation*}
-        \item odprta pravila (ne upoštevamo krajišč):
-        \item \begin{equation*}
-            \int_{a}^{b} f(x) dx = \sum_{i=1}^{n-1} A_i f(x_i) + Rf
-        \end{equation*}
-    \end{itemize}
-    \item Gaussova pravila
-    Vozle izračunamo oziroma določimo tako, da je pravilo čim višjega reda.
-\end{itemize}
-
-\subsubsection*{Nekaj osnovnih Newton-Cotesovih (N-C) pravil}
-\begin{ex}
-    $n = 1$, $a = x_0$, $b = x_1 = x_0 + h$, $h = b-a$
-    \begin{align*}
-        \int_{a}^{b} f(x) dx =& \int_{a}^{b} (f(x_0) \frac{x-x_1}{x_0 - x_1} + f(x_1) \frac{x-x_0}{x_1-x_0}) dx + \int_{a}^{b} (x-x_0)(x-x_1) [x_0, x_1, x] f dx
-                             =& f(x_0) \frac{1}{-h} \int_{x_0}^{x_1} (x-x_1) dx f(x_1) \frac{1}{h} \int_{x_0}^{x_1} (x-x_0) dx + \int_{x_0}^{x_1} (x-x_0) (x-x_1) [x_0, x_1, x] f dx
-                             =& \frac{h}{2} (f(x_0) + f(x_1)) + Rf
-    \end{align*}
-    (pazi! nekaj komentarjev manjka (in drugih stvari))
-    (*) Posplošen izrek o povprečni vrednosti
-    Če $f$ na $[a, b]$ ne spremeni predzanaka, potem je 
-    \begin{equation*}
-        \int_{a}^{b} f(x) g(x) dx = g(\xi) \int_{a}^{b} f(x) dx, \xi \in [a, b]
-    \end{equation*}
-    Trapezno pravilo:
-    \begin{equation*}
-        \int_{x_0}^{x_1} f(x) dx = \frac{h}{2} (f(x_0) + f(x_1)) - \frac{1}{12} h^3 f''(\xi), \xi \in [x_0, x_1] za f \in \mathscr{C}^2([x_0, x_1])
-    \end{equation*}
-
-    Določimo še red pravila
-    \begin{itemize}
-        \item Red je zagotovo vsaj 1
-        \begin{equation*}
-            Rp=? ua p\in \Pp_2
-            R(x - x_0)^2 = S(\cdot - x_0)^2 + F(\cdot - x_0)^2 = \int_{x_0}^{x_1} (\cdot - x_0)^2 d\cdot - \frac{h}{2}((x_0 - x_0)^2 + (x_1 - x_0)^2) =
-            = \frac{(x_1 - x_0)^3}{3} - \frac{h}{2} h^2 = \frac{h^3}{3} - \frac{h^3}{2} = - \frac{h^3}{6} \neq 0
-        \end{equation*}
-    \end{itemize}
-\end{ex}
-
-\begin{ex}
-    $n = 2, x_0 = a, x_1 = x_0 + h, x_2 = x_0 + 2h = b, h = \frac{b-a}{2}$
-    \begin{equation*}
-        \int_{x_0}^{x_1} f(x) dx = \int_{x_0}^{x_1} \frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)} dx + \int_{x_0}^{x_1} \frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)} dx + \int_{x_0}^{x_1} \frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)} dx + \int_{x_0}^{x_1} (x-x_0)(x-x_1)(x-x_2) [x_0, x_1, x_2, x] f dx
-        A_0 = \frac{1}{h^2} \int_{x_0}^{x_1} (x-x_1)(x-x_2) dx = \frac{1}{h^2} \int_{x_0}^{x_1} h(t-1) h(t-2) h dt = \dots = \frac{h}{3}
-    \end{equation*}
-    Podobno:
-    \begin{align*}
-        A_1 = \frac{4}{3}h\\
-        A_2 = \frac{1}{3} h
-    \end{align*}
-    \begin{equation*}
-        \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2) + Rf)
-        Rf = \int_{x_0}^{x_2} (x-x_0)(x-x_1)(x-x_2)[x_0, x_1, x_2, x] f dx = ??
-    \end{equation*}
-    Določimo red pravila.
-    Red pravila je vsaj 2.
-    $R(x-x_0)^3 = S(x-x_0)^3 - F(x-x_0)^3 = \int_{x_0}^{x_2} (x-x_0)^3 dx - \frac{h}{3} ((x_0-x_0)^3 + 4(x_1-x_0)^3 + (x_2 - x_0)^3) =
-    \frac{(x_2-x_0)^4}{4} - \frac{h}{3}(4h^3 + 8h^3) = (dopolni) = 0$
-    Red je vsaj 3
-    Za red = 4 nisem prepisoval - lahko ctrl+c
-    Red je 3
-    Uporabimo nastavek za napako:
-    \begin{equation*}
-        Rf = C f^{(m+1)} (\xi), \xi \in [a, b]
-    \end{equation*}
-    Za $f$ izberemo $f(x) = (x-x_0)^4$ in dobimo
-    \begin{equation*}
-        F(x-x_0)^4 = C * f^{(4)} (\xi) = C*4!
-    \end{equation*}
-    sledi
-    \begin{equation*}
-        C = -\frac{h^5}{90}
-    \end{equation*}
-    in dobimo
-    \begin{equation*}
-        Rf = -\frac{h^5}{90}f^{(4)}(\xi)
-    \end{equation*}
-    \begin{rem}
-        Ta nastavek sledi iz razvoja funkcije $f$ v Taylorjevo vrsto
-        \begin{equation*}
-            f(x) f(a) + f(a)'(x-a) + \frac{f''(a)}{2!} (x-a)^2 + \dots + (za m)
-        \end{equation*}
-        \begin{equation*}
-            Rf = \dots
-        \end{equation*}
-    \end{rem}
-
-    Izpeljali smo Simpsonovo pravilo
-    \begin{equation*}
-        \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2)) - \frac{h^5}{90} f^{(4)}(\xi)
-    \end{equation*}
-\end{ex}
-
-\subsubsection*{Alternativna izpeljava integracijskih pravil - metoda nedoločenih koeficientov}
-\begin{equation*}
-    \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) dx + Rf
-\end{equation*}
-
-Ideja je, da neznane uteži določimo tako, da bo red pravila čim višji. Poglejmo si to na primeru Simpsonovega pravila:
-
-Izberemo bazo polinomov
-\begin{equation*}
-    \{q, x-x_0, (x-x_0)^2, \dots\}
-\end{equation*}
-\begin{equation*}
-    \int_{x_0}^{x_2}f(x) dx = A_0 f(x_0) + A_1 f(x_1) + A_2 f(x_2) + Rf
-\end{equation*}
-Če rečemo, da $f(x) = 1$:
-\begin{equation*}
-    \int_{x_0}^{x_2} 1 dx = A_0 + A_1 + A_2 \\
-    2h =  A_0 + A_1 + A_2
-\end{equation*}
-Če rečemo, da $f(x) = x-x_0$:
-\begin{equation*}
-    \int_{x_0}^{x_2} (x-x_0) dx = A_0 (x_0-x_0) + A_1(x_1-x_0) + A_2(x_2-x_0) \\
-    2h = A_1 + 2A_2
-\end{equation*}
-Če rečemo, da $f(x) = (x-x_0)^2$:
-\begin{equation*}
-    \frac{8}{3} h = A_1 + 4A_2
-\end{equation*}
-Rešimo sistem in dobimo rešitev:
-\begin{equation*}
-    A_0 = A_2 = h/3, A_1 = \frac{4h}{3}
-\end{equation*}
-
-\begin{ex}
-    Primer odprtega N-C pravila
-    \begin{equation*}
-        \int_{a}^{b} f(x) dx = A_1 f(x_1) + Rf = 2hf(x_1) + \frac{h^3}{3} f''(\xi)
-    \end{equation*}
-    Pravokotniško pravilo.
-\end{ex}
-
-\subsection*{Numerične napake pri integracijskih pravilih}
-Poglejmo si neodstranljivo napako (napaka, do katere pride, ker ne računamo s točnimi vrednostmi $f(x_i)$, ampak s približki $\tilde{f}(x_i)$).
-Recimo, da velja $|f(x_i) - \tilde{f}(x_i)| \leq \epsilon$. Naj bo $F f = \sum_{i = 0}^{n} A_i f(x_i)$.
-\begin{equation*}
-    D_a = |\sum_{i=0}^{n} A_i (f(x_i) - \tilde{f}(x_i))| \leq \sum_{i=0}^{n} |A_i| \epsilon = \epsilon \sum_{i=0}^{n} |A_i|
-\end{equation*}
-\begin{equation*}
-    \sum_{i=0}^{n} A_i * 1 = F1 = S1 = \int_{a}^{b} 1dx = b-a
-\end{equation*}
-(manjka en komentar)
-Če so uteži vse pozitivne, potem $D_a \leq \epsilon(b-a)$ in ni težav, če $n$ večamo.
+%Glede na izbiro vozlov ločimo dve vrsti pravil:
+%\begin{itemize}
+%    \item Newton-Cotesova pravila
+%    Vozle izberemo ekvidistantno: $x_0 = a, x_i = x_0 + ih, h = \frac{b-a}{n}, i = 0, 1, \dots, n$
+%    Ločimo:
+%    \begin{itemize}
+%        \item zaprta pravila (upoštevamo krajišči)
+%        \begin{equation*}
+%            \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) + Rf
+%        \end{equation*}
+%        \item odprta pravila (ne upoštevamo krajišč):
+%        \item \begin{equation*}
+%            \int_{a}^{b} f(x) dx = \sum_{i=1}^{n-1} A_i f(x_i) + Rf
+%        \end{equation*}
+%    \end{itemize}
+%    \item Gaussova pravila
+%    Vozle izračunamo oziroma določimo tako, da je pravilo čim višjega reda.
+%\end{itemize}
+%
+%\subsubsection*{Nekaj osnovnih Newton-Cotesovih (N-C) pravil}
+%\begin{ex}
+%    $n = 1$, $a = x_0$, $b = x_1 = x_0 + h$, $h = b-a$
+%    \begin{align*}
+%        \int_{a}^{b} f(x) dx =& \int_{a}^{b} (f(x_0) \frac{x-x_1}{x_0 - x_1} + f(x_1) \frac{x-x_0}{x_1-x_0}) dx + \int_{a}^{b} (x-x_0)(x-x_1) [x_0, x_1, x] f dx
+%                             =& f(x_0) \frac{1}{-h} \int_{x_0}^{x_1} (x-x_1) dx f(x_1) \frac{1}{h} \int_{x_0}^{x_1} (x-x_0) dx + \int_{x_0}^{x_1} (x-x_0) (x-x_1) [x_0, x_1, x] f dx
+%                             =& \frac{h}{2} (f(x_0) + f(x_1)) + Rf
+%    \end{align*}
+%    (pazi! nekaj komentarjev manjka (in drugih stvari))
+%    (*) Posplošen izrek o povprečni vrednosti
+%    Če $f$ na $[a, b]$ ne spremeni predzanaka, potem je 
+%    \begin{equation*}
+%        \int_{a}^{b} f(x) g(x) dx = g(\xi) \int_{a}^{b} f(x) dx, \xi \in [a, b]
+%    \end{equation*}
+%    Trapezno pravilo:
+%    \begin{equation*}
+%        \int_{x_0}^{x_1} f(x) dx = \frac{h}{2} (f(x_0) + f(x_1)) - \frac{1}{12} h^3 f''(\xi), \xi \in [x_0, x_1] za f \in \mathscr{C}^2([x_0, x_1])
+%    \end{equation*}
+%
+%    Določimo še red pravila
+%    \begin{itemize}
+%        \item Red je zagotovo vsaj 1
+%        \begin{equation*}
+%            Rp=? ua p\in \Pp_2
+%            R(x - x_0)^2 = S(\cdot - x_0)^2 + F(\cdot - x_0)^2 = \int_{x_0}^{x_1} (\cdot - x_0)^2 d\cdot - \frac{h}{2}((x_0 - x_0)^2 + (x_1 - x_0)^2) =
+%            = \frac{(x_1 - x_0)^3}{3} - \frac{h}{2} h^2 = \frac{h^3}{3} - \frac{h^3}{2} = - \frac{h^3}{6} \neq 0
+%        \end{equation*}
+%    \end{itemize}
+%\end{ex}
+%
+%\begin{ex}
+%    $n = 2, x_0 = a, x_1 = x_0 + h, x_2 = x_0 + 2h = b, h = \frac{b-a}{2}$
+%    \begin{equation*}
+%        \int_{x_0}^{x_1} f(x) dx = \int_{x_0}^{x_1} \frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)} dx + \int_{x_0}^{x_1} \frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)} dx + \int_{x_0}^{x_1} \frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)} dx + \int_{x_0}^{x_1} (x-x_0)(x-x_1)(x-x_2) [x_0, x_1, x_2, x] f dx
+%        A_0 = \frac{1}{h^2} \int_{x_0}^{x_1} (x-x_1)(x-x_2) dx = \frac{1}{h^2} \int_{x_0}^{x_1} h(t-1) h(t-2) h dt = \dots = \frac{h}{3}
+%    \end{equation*}
+%    Podobno:
+%    \begin{align*}
+%        A_1 = \frac{4}{3}h\\
+%        A_2 = \frac{1}{3} h
+%    \end{align*}
+%    \begin{equation*}
+%        \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2) + Rf)
+%        Rf = \int_{x_0}^{x_2} (x-x_0)(x-x_1)(x-x_2)[x_0, x_1, x_2, x] f dx = ??
+%    \end{equation*}
+%    Določimo red pravila.
+%    Red pravila je vsaj 2.
+%    $R(x-x_0)^3 = S(x-x_0)^3 - F(x-x_0)^3 = \int_{x_0}^{x_2} (x-x_0)^3 dx - \frac{h}{3} ((x_0-x_0)^3 + 4(x_1-x_0)^3 + (x_2 - x_0)^3) =
+%    \frac{(x_2-x_0)^4}{4} - \frac{h}{3}(4h^3 + 8h^3) = (dopolni) = 0$
+%    Red je vsaj 3
+%    Za red = 4 nisem prepisoval - lahko ctrl+c
+%    Red je 3
+%    Uporabimo nastavek za napako:
+%    \begin{equation*}
+%        Rf = C f^{(m+1)} (\xi), \xi \in [a, b]
+%    \end{equation*}
+%    Za $f$ izberemo $f(x) = (x-x_0)^4$ in dobimo
+%    \begin{equation*}
+%        F(x-x_0)^4 = C * f^{(4)} (\xi) = C*4!
+%    \end{equation*}
+%    sledi
+%    \begin{equation*}
+%        C = -\frac{h^5}{90}
+%    \end{equation*}
+%    in dobimo
+%    \begin{equation*}
+%        Rf = -\frac{h^5}{90}f^{(4)}(\xi)
+%    \end{equation*}
+%    \begin{rem}
+%        Ta nastavek sledi iz razvoja funkcije $f$ v Taylorjevo vrsto
+%        \begin{equation*}
+%            f(x) f(a) + f(a)'(x-a) + \frac{f''(a)}{2!} (x-a)^2 + \dots + (za m)
+%        \end{equation*}
+%        \begin{equation*}
+%            Rf = \dots
+%        \end{equation*}
+%    \end{rem}
+%
+%    Izpeljali smo Simpsonovo pravilo
+%    \begin{equation*}
+%        \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2)) - \frac{h^5}{90} f^{(4)}(\xi)
+%    \end{equation*}
+%\end{ex}
+%
+%\subsubsection*{Alternativna izpeljava integracijskih pravil - metoda nedoločenih koeficientov}
+%\begin{equation*}
+%    \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) dx + Rf
+%\end{equation*}
+%
+%Ideja je, da neznane uteži določimo tako, da bo red pravila čim višji. Poglejmo si to na primeru Simpsonovega pravila:
+%
+%Izberemo bazo polinomov
+%\begin{equation*}
+%    \{q, x-x_0, (x-x_0)^2, \dots\}
+%\end{equation*}
+%\begin{equation*}
+%    \int_{x_0}^{x_2}f(x) dx = A_0 f(x_0) + A_1 f(x_1) + A_2 f(x_2) + Rf
+%\end{equation*}
+%Če rečemo, da $f(x) = 1$:
+%\begin{equation*}
+%    \int_{x_0}^{x_2} 1 dx = A_0 + A_1 + A_2 \\
+%    2h =  A_0 + A_1 + A_2
+%\end{equation*}
+%Če rečemo, da $f(x) = x-x_0$:
+%\begin{equation*}
+%    \int_{x_0}^{x_2} (x-x_0) dx = A_0 (x_0-x_0) + A_1(x_1-x_0) + A_2(x_2-x_0) \\
+%    2h = A_1 + 2A_2
+%\end{equation*}
+%Če rečemo, da $f(x) = (x-x_0)^2$:
+%\begin{equation*}
+%    \frac{8}{3} h = A_1 + 4A_2
+%\end{equation*}
+%Rešimo sistem in dobimo rešitev:
+%\begin{equation*}
+%    A_0 = A_2 = h/3, A_1 = \frac{4h}{3}
+%\end{equation*}
+%
+%\begin{ex}
+%    Primer odprtega N-C pravila
+%    \begin{equation*}
+%        \int_{a}^{b} f(x) dx = A_1 f(x_1) + Rf = 2hf(x_1) + \frac{h^3}{3} f''(\xi)
+%    \end{equation*}
+%    Pravokotniško pravilo.
+%\end{ex}
+%
+%\subsection*{Numerične napake pri integracijskih pravilih}
+%Poglejmo si neodstranljivo napako (napaka, do katere pride, ker ne računamo s točnimi vrednostmi $f(x_i)$, ampak s približki $\tilde{f}(x_i)$).
+%Recimo, da velja $|f(x_i) - \tilde{f}(x_i)| \leq \epsilon$. Naj bo $F f = \sum_{i = 0}^{n} A_i f(x_i)$.
+%\begin{equation*}
+%    D_a = |\sum_{i=0}^{n} A_i (f(x_i) - \tilde{f}(x_i))| \leq \sum_{i=0}^{n} |A_i| \epsilon = \epsilon \sum_{i=0}^{n} |A_i|
+%\end{equation*}
+%\begin{equation*}
+%    \sum_{i=0}^{n} A_i * 1 = F1 = S1 = \int_{a}^{b} 1dx = b-a
+%\end{equation*}
+%(manjka en komentar)
+%Če so uteži vse pozitivne, potem $D_a \leq \epsilon(b-a)$ in ni težav, če $n$ večamo.
 
 \end{document}
