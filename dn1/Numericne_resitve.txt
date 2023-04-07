@@ -1,0 +1,46 @@
+% 1.NALOGA: Bernsteinovi polinomi
+Neskončne norme na množici X_1000:
+n = 2: 0.1567007180
+n = 3: 0.1133409027
+n = 4: 0.0883838615
+n = 5: 0.0722468956
+n = 6: 0.0609985105
+n = 7: 0.0527300796
+n = 8: 0.0464070351
+n = 9: 0.0414210242
+n = 10:0.0373917987
+
+
+% 2.NALOGA: Aproksimacija po MNK
+Koeficienti elementa najboljse aproksimacije:
+-3.1119247018
+ 2.3994076945
+ 3.0662679171
+-1.3019747966
+Pogojenostno stevilo Gramove matrike: 6.6032650593e+02
+|f(0.5)-f*(0.5)| = 0.0382764731
+
+
+
+% 3.NALOGA: Interpolacija in Hornerjev algoritem
+Koeficienti interpolacijskega polinoma p:
+   0.1731781896
+   1.5136049906
+   1.0186970264
+  -5.0946980258
+   1.6898931209
+   3.1870807641
+  -2.1260190587
+  -0.4011770347
+
+
+Vrednosti polinoma p izracunane s Hornerjevim algoritmom:
+p(0.25) = 0.6418024524
+p(0.95) = 0.5269279907
+
+Vrednosti funkcije f:
+f(0.25) = 0.6418310927
+f(0.95) = 0.5269777103
+
+
+
