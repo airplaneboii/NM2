@@ -1,0 +1,5 @@
+f = @(x) x;
+g = @(x) x;
+integral(f, , 1)
+integral(g, 0, 1)
+skalarni_produkt(f, g, 0, 1)

@@ -9,5 +9,6 @@ function v = skalarni_produkt(f, g, a, b)
 % Izhod:
 %   v       izracunan skalarni produkt funkcij f in g
 %
-
+    h = @(x) f(x).*g(x);
+    v = integral(h, a, b);
 end
