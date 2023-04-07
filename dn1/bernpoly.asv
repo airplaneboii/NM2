@@ -21,5 +21,6 @@ function Bf = bernpoly(f,n,x)
     for i = 0:n
         Bf = Bf + f(i/n) * bern_bazni(i+1);
     end
+  
 
 end
