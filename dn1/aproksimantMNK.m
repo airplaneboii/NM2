@@ -16,5 +16,5 @@ function [koef,gram,desna] = aproksimantMNK(F, baza, a, b)
 %   desna   vektor desne strani, ki vsebuje skalarne produkte
 %           funkcije F z baznimi funkcijami
 %
-
+    skalarni_produkt(F, g, a, b)
 end
