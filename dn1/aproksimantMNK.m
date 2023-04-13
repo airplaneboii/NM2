@@ -16,5 +16,23 @@ function [koef,gram,desna] = aproksimantMNK(F, baza, a, b)
 %   desna   vektor desne strani, ki vsebuje skalarne produkte
 %           funkcije F z baznimi funkcijami
 %
-    skalarni_produkt(F, g, a, b)
+
+    % prihranimo nekaj  kalkulacij
+    n = length(baza);
+
+    % pripravimo potrebne matrike
+    gram = zeros(n);
+    desna = zeros(n, 1);
+
+    % izračunamo elemente matrik
+    for i = 1:n
+        for j = 1:n
+            gram(i, j) = skalarni_produkt(baza(i), baza(j), a, b);
+        end
+        desna(i, 1) = skalarni_produkt(F, baza(i), a, b);
+    end
+    
+    % rešimo sistem enačb
+    koef = gram\desna;
+
 end
