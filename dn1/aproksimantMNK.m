@@ -27,9 +27,9 @@ function [koef,gram,desna] = aproksimantMNK(F, baza, a, b)
     % izračunamo elemente matrik
     for i = 1:n
         for j = 1:n
-            gram(i, j) = skalarni_produkt(baza(i), baza(j), a, b);
+            gram(i, j) = skalarni_produkt(baza{i}, baza{j}, a, b);
         end
-        desna(i, 1) = skalarni_produkt(F, baza(i), a, b);
+        desna(i, 1) = skalarni_produkt(F, baza{i}, a, b);
     end
     
     % rešimo sistem enačb
