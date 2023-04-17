@@ -1676,146 +1676,320 @@ Naj velja $x_i \leq x_{i+1} \leq x_{i+2} \leq \dots \leq x_{i+k}$. Potem je
 %\end{equation*}
 %(manjka en komentar)
 %Če so uteži vse pozitivne, potem $D_a \leq \epsilon(b-a)$ in ni numeričnih težav, če $n$ večamo.
+%
+%% 3.4.2023
+%Žal pa tako pri zaprtih N-C pravilih za $n \geq 8$ kot tudi pri odprtih N-C pravilih za $n \geq 4$ dobimo negativne uteži.
+%
+%\begin{rem}
+%    $n = 50, [a, b] = [0, 1]$, velja $\sum_{i=0}^{n} |A_i| = 6.7 \cdot 10^{10}$ (zaprto N-C pravilo)
+%\end{rem}
+%
+%Namesto, da bi uporabljali pravila z visoko stopnjo $n$ raje uporabljamo t.i. sestavljena pravila.
+%\subsubsection{Sestavljena integracijska pravila}
+%Računamo integral
+%\begin{equation*}
+%    \int_{a}^{b} f(x) dx
+%\end{equation*}
+%
+%Ideja: Interval $[a, b]$ razdelimo na manjše podintervale in na vsakem od podintervalov uporabimo integracijsko pravilo nizkega reda in nato 
+%rezultate seštejemo.
+%
+%Recimo, da želimo uporabiti $m$ osnovnih pravil, vsak osnovno pravilo pa "zahteva", da razdelimo podinterval na $n$ delov.
+%Imamo korak $h = \frac{b-a}{m \cdot n}$ in točke $x_i = a + i\cdot h$, kjer gre $i$ od $1$ do $m\cdot n$.
+%Sestavljeno pravilo bo potem oblike
+%\begin{equation*}
+%    \int_{a}^{b} f(x) dx = \sum_{i = 0}^{m \cdot n} A_i f(x_i) + Rf
+%\end{equation*}
+%
+%Izpeljimo sestavljeno trapezno pravilo.
+%
+%Osnovno:
+%\begin{equation*}
+%    \int_{x_0}^{x_1} f(x) dx = \frac{h}{2} (f(x_0) - f(x_1)) - \frac{h^3}{12} f''(\xi)
+%\end{equation*}
+%kjer je $h = x_1 - x_0$.
+%
+%(skica)
+%Sestavljeno pravilo:
+%\begin{equation*}
+%    \int_{a}^{b} f(x) dx = \sum_{i=0}^{m-1} \int_{x_i}^{x_i+1} f(x) dx = (vstavimo osnovno pravilo) = \sum_{i=0}^{m-1} (\frac{h}{2} (f(x_i) + f(x_{i+1})) - \frac{h^3}{12} f''(\xi_i)) =
+%    (\x_i \in [x_i, x_{i+1}]) = \frac{h}{2}(1 \cdot f(x_0) + 2 \cdot f(x_1) + 2 \cdot f(x_2) + \dots + 2 \cdot f(x_{m-1}) + 1 \cdot f(x_m)) + Rf
+%\end{equation*}
+%Ostanek določimo
+%\begin{equation*}
+%    Rf = \sum_{i=0}^{m-1} (- \frac{h^3}{12} f''(\xi_i)) = - \frac{h^3}{12} \sum_{i=0}^{m-1} f''(\xi_i)  = - \frac{h^3}{12} m f''(\mu) = -\frac{h^3}{12} \frac{b-a}{h} f''(\mu) = -\frac{h^2}{12} (b-a) f''(\mu)
+%\end{equation*}
+%(op: nekaj je pisala spodaj, nisem prepisal)
+%Ker predpostavimo, da je $f \in \mathscr{C}^2 ([a, b])$, obstaja $\mu \in [a, v]$, da je
+%\begin{equation*}
+%    \frac{1}{m} \sum_{i=0}^{m-1} f''(\xi_i) = f''(\mu)
+%\end{equation*}
+%
+%\subsubsection{Sestavljeno Simpsonovo pravilo}
+%Osnovno: $n=2$
+%\begin{equation*}
+%    \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2)) - \frac{h^5}{90} f^{(4)}(\xi)
+%\end{equation*}
+%kjer je $\xi \in [x_0, x_2]$ in $f \in \mathscr{C}^4([a, b])$
+%
+%(skica)
+%
+%\begin{equation*}
+%    \int_{a}^{b} f(x) dx = \sum_{i = 0}^{m-1} \int_{x_{2i}}^{x_{2i+2}} f(x) dx = \sum_{i=0}^{m-1} (\frac{h}{3} (f(x_{2i}) + 4f(x_{2i+1}) + f(x_{2i+2})) - \frac{h^5}{90} f^{(4)}(\xi)) =
+%    = \frac{h}{3} (f(x_0) + 4 \cdot f(x_1) +2 \cdot f(x_2) + 4 \cdot f(x_3) + 2\cdot f(x_4) + \dots + 2 \cdot f(x_{2m-2}) + 4 \cdot f(x_{2m-1}) + 1 \cdot f(x_{2m})) + Rf
+%    = \frac{h}{3} f(x_0) + 4 \sum_{i=0}^{m-1} f(x_{2i+1}) + 2 \sum_{j = 1}^{m-1} f(x_{2i}) + f(x_{2m}) + Rf
+%\end{equation*}
+%\begin{equation*}
+%    Rf = - \frac{h^5}{90} \sum_{i=0}^{m-1} f^{(4)} (\xi_i) = - \frac{h^5}{90} m f^{(4)}(\mu) = - \frac{h^4}{180} (b-a) f^{(4)} (\mu)
+%\end{equation*}
+%
+%\subsubsection{Ocena napake in Richardsonova ekstrapolacija}
+%
+%Recimo, da računamo približek za integral s sestavljenim N-C pravilom s korakom $h$. Vprašanje je, kako v praksi določiti ta korak.
+%
+%Označimo $F_h$ približek, ki ga izračunamo s korakom $h$ za neko fiksno funkcijo $f$. Predpostavimo, da velja
+%\begin{equation*}
+%    I = F_h + c_0 \cdot h^p + \mathscr{O} (h^{p+1})
+%\end{equation*}
+%kjer je $c_0$ konstanta.
+%
+%Namesto s korakom $h$ računamo s korakom $\frac{h}{2}$:
+%\begin{equation*}
+%    I = F_{\frac{h}{2}} + c_0 (\frac{h}{2})^p + \mathscr{O} (h^{p+1})
+%\end{equation*}
+%\begin{equation*}
+%    2^p I = 2^p F_{\frac{h}{2}} + c_0 h^p  + \mathscr{O} (h^{p+1})
+%    (2^p - 1) I = 2^p F_{\frac{h}{2}} - F_h + \mathscr{O} (h^{p+1})
+%\end{equation*}
+%\begin{equation*}
+%    I = \frac{2^p F_{\frac{h}{2}} - F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
+%\end{equation*}
+%
+%Ulomku pravimo ekstrapoliran približek.
+%\begin{equation*}
+%    I = \frac{2^p F_{\frac{h}{2}} - F_{\frac{h}{2}} + F_{\frac{h}{2}} -  F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
+%    = F_{\frac{h}{2}} + \frac{F_{\frac{h}{2}} - F_h}{2^p - 1}+ \mathscr{O} (h^{p+1})
+%\end{equation*}
+%
+%Ulomek je ocena za napako približka $F_{\frac{h}{2}}$.
+%
+%Podobno:
+%\begin{equation*}
+%    I = \frac{2^p F_{\frac{h}{2}} - 2^p F_h + F_h - 2^p F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
+%    = F_h + 2^p \frac{F_{\frac{h}{2}} - F_h}{2^p - 1} + \mathscr{O} (h^{p+1})
+%\end{equation*}
+%Ulomek je ocena za napako približka $F_h$.
+%
+%Pri sestavljenem Simpsonovem pravilu je $p = 4$ in
+%\begin{equation*}
+%    I = F_{\frac{h}{2}} + \frac{F_{\frac{h}{2}} - F_h}{15} + \mathscr{O} (h^{p+1})
+%\end{equation*}
+%
+%Ekstrapoliran približek = $\frac{16 F_{\frac{h}{2}} - F_h}{15}$
+%
+%Ekstrapoliran približek za sestavljeno trapezno pravilo = $\frac{4 F_{\frac{h}{2}} - F_h}{3}$
+%
+%\subsection{Gaussova integracijska pravila}
+%Ideja za izpeljavo: Uteži in vozle izračunamo tako, da je pravilo čim višjega reda oziroma da je pravilo točno za polinome čim višjih stopenj.
+%\begin{equation*}
+%    \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) + Rf
+%\end{equation*}
+%Temu rečemo metoda nedoločenih koeficientov:
+%\begin{equation*}
+%    f(x) = x^k
+%    \int_{a}^{b} x^k dx = \sum_{i=0}^{n} A_i x_i^k ,k = 0, 1, \dots 2n + 1
+%\end{equation*}
+%Imamo neznanke $A_0, A_1, \dots A_n$, ki jim rečemo uteži, in $x_0, x_1, \dots, x_n$, ki jim pravimo vozli. Imamo torej $2n + 2$ neznank, torej rabimo tudi $2n + 2$ enačb.
+%Zgornji sistem je nelinearen sistem $2n + 2$ enačb za $2n + 2$ neznank.
+%
+%Ideja je ločiti enačbe za neznane vozle od enačb za neznane uteži. Kako?
+%\begin{equation*}
+%    f(x) = p(x) + \omega(x) [x_0, x_1, \dots, x_n, x]
+%\end{equation*}
+%Če je $f \in \Pp_{n+r}$, je $[x_0, x_1, \dots, x_n, x] f \in \Pp_{r-1}$
+%\begin{equation*}
+%    Rf = \int_{a}^{b} \omega (x) [x_0, x_1, \dots, x_n, x] f dx
+%\end{equation*}
+%
+%Definiramo $\scalarproduct{f, g} = \int_{a}^{b} f(x) g(x) dx$
 
-% 3.4.2023
-Žal pa tako pri zaprtih N-C pravilih za $n \geq 8$ kot tudi pri odprtih N-C pravilih za $n \geq 4$ dobimo negativne uteži.
+
+% 17. 4. 2023
+Če hočemo, da bo pravilo reda vsaj $n+r$, mora biti
+\begin{equation*}
+    \int_{a}^{b} \omega (x) [x_0, \dots, x_n, x] f dx = 0
+\end{equation*}
+za nek $f \in \Pp_{n+r}$.
+
+Če bo $\innerproduct{w}{q} = 0$ $\forall q \in \Pp_{r-1}$, bo pravilo zagotovo reda vsaj $n + r$. Drugače povedano: Če je $\omega \perp \Pp_{r-1}$,
+je pravilo zagotovo reda vsaj $n + r$. Koliko je lahko $r$ največ?
+\begin{equation*}
+    \omega(x) = \prod_{i = 0}^{n} (x-x_i)
+\end{equation*}
+$\omega$ je lahko pravokoten "največ" na $\Pp_n$
+\begin{align*}
+    r - 1 \leq& n \\
+    r \leq& n + 1
+\end{align*}
+Če bo $\omega \perp \Pp_n$, potem bo pravilo reda $n+r = n + n + 1 = 2n + 1$. Če torej izberemo vozle $x_0, x_1, \dots, x_n$ tako, da bo $\omega \perp \Pp_n$,
+potem je pravilo reda $2n + 1$. To pravilo imenujemo Gaussovo pravilo. (Prva trditev velja tudi v drugo smer oziroma velja ekvivalenca).
+
+Za neznane vozle dobimo $n + 1$ pogojev za $n + 1$ neznank:
+\begin{equation*}
+    \omega \perp 1, \omega \perp x, \omega \perp x^2, \dots, \omega \perp x^n
+\end{equation*}
+
+Iz pogojev sestavimo sistem nelinearnih enačb:
+\begin{align*}
+    \innerproduct{\omega}{1} =& \int_{a}^{b} \omega(x) \cdot 1 dx  = 0\\
+    \innerproduct{\omega}{x} =& \int_{a}^{b} \omega(x) \cdot x dx  = 0\\
+    \vdots&
+    \innerproduct{\omega}{x^n} =& \int_{a}^{b} \omega(x) \cdot x^n dx = 0\\
+\end{align*}
 
 \begin{rem}
-    $n = 50, [a, b] = [0, 1]$, velja $\sum_{i=0}^{n} |A_i| = 6.7 \cdot 10^{10}$ (zaprto N-C pravilo)
+    Drug način: Iz baze $1, x, \dots, x^{n+1}$ izračunamo ortonormirano bazo polinomov $P_0, P_1, \dots P_{n+1}$ (glede na dan skalarni produkt).
+    Za vozle izberemo ničle polinoma $P_{n+1}$.
 \end{rem}
 
-Namesto, da bi uporabljali pravila z visoko stopnjo $n$ raje uporabljamo t.i. sestavljena pravila.
-\subsubsection{Sestavljena integracijska pravila}
-Računamo integral
+\begin{theorem}
+    Naj bo $F f = \sum_{i=0}^{n} A_i f(x_i)$ Gaussovo integracijsko pravilo ($Sf = Ff = Rf$) reda $2n+1$. Uteži $A_i = \int_{a}^{b} \ell_{i, n}(x) dx$
+    so pozitivne. Za $f \in \mathscr{C}^{2n+2}([a, b])$ je napaka oblike
+    \begin{equation*}
+        Rf = \frac{f^{(2n+2)}(\xi)}{(2n+2)!} \int_{a}^{b} \omega^2 (x) dx
+    \end{equation*}
+\end{theorem}
+\begin{proof}
+    \begin{equation*}
+        \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) + Rf
+    \end{equation*}
+    Če za $f$ izberemo $f(x) = \ell_{j, n}^2 (x)$, je $Rf = 0$.
+    \begin{equation*}
+        \int_{a}^{b} \ell_{j, n}^2 (x) dx = \sum_{i = 0}^{n} A_i \ell_{j, n}^2 (x_i) = A_j
+    \end{equation*}
+    iz česar sledi $A_j > 0$ $\forall j = 0, 1, \dots, n$.
+
+    Naj bo $q$ interpolacijski polinom za $f$ na točkah $x_0, x_0, x_1, x_1, \dots, x_n, x_n$. Velja
+    \begin{equation*}
+        f(x) = q(x) + \omega^2(x) [x_0, x_0, x_1, x_1, \dots, x_n, x_n, x] f
+    \end{equation*}
+    Vemo tudi, da je $q \in Pp_{2n+1}$, zato sledi, da je
+    \begin{equation*}
+        \int_{a}^{b} q(x) dx = \sum_{i=0}^{n} A_i q(x_i)
+    \end{equation*}
+    kjer je $q(x_i) = f(x_i)$.
+
+    Če to formulo integriramo
+    \begin{equation*}
+        \int_{a}^{b} f(x) dx = \int_{a}^{b} q(x) dx +  \int_{a}^{b} \omega^2(x) [x_0, x_0, x_1, x_1, \dots, x_n, x_n, x] f dx
+    \end{equation*}
+    Leva stran je enaka $Sf$, desna stran pa $Ff + Rf$.
+    \begin{align*}
+        Sf =& \int_{a}^{b} f(x) dx\\
+        Ff =& \int_{a}^{b} q(x) dx\\
+        Rf =& \int_{a}^{b} \omega^2(x) [x_0, x_0, x_1, x_1, \dots, x_n, x_n, x] f dx
+    \end{align*}
+    Ker $\omega^2(x)$ ne spremeni predznaka na intervalu $[a, b]$, dobimo
+    \begin{align*}
+        Rf =& \int_{a}^{b} \omega^2(x) [x_0, x_0, x_1, x_1, \dots, x_n, x_n, x] f dx \\
+           =& [x_0, x_0, x_1, x_1, \dots, x_n, x_n, \tilde{\xi}] f \int_{a}^{b} \omega^2(x) dx \\
+           =& \frac{f^{(2n+2)} (\xi)}{(2n+2)!} \frac{a}{b} \omega^2(x) dx
+    \end{align*}
+\end{proof}
+
+\begin{ex}
+    Določite vozla $x_0$ in $x_1$ ter uteži $A_0$ in $A_1$ v Gaussovem integracijskem pravilu
+    \begin{equation*}
+        \int_{-1}^{1} f(x) dx = A_0 fx(x_0) + A_1 f(x_1) + Rf
+    \end{equation*}
+
+    \begin{equation*}
+        \omega(x) = (x-x_0)(x-x_1)
+    \end{equation*}
+    Enačbe: $\omega \perp 1, \omega \perp x$
+    \begin{equation*}
+        0 = \int_{-1}^{1}(x-x_0)(x-x_1) dx = \int_{-1}^{1} (x^2 - (x_0 + x_1) x + x_0x_1) dx = 2(\frac{1}{3} - x_0x_1)
+    \end{equation*}
+    \begin{equation*}
+        0 = \int_{-1}^{1}(x-x_0)(x-x_1)x dx = \int_{-1}^{1} (x^3 - (x_0 + x_1) x^2 + x_0x_1x) dx = -2(x_0 + x_1) \frac{1}{3}
+    \end{equation*}
+
+    Dobimo enačbi:
+    \begin{align*}
+        2(\frac{1}{3} - x_0x_1) =& 0\\
+        - \frac{2}{3}(x_0 + x_1) =& 0
+    \end{align*}
+    Dobimo vozla:
+    \begin{align*}
+        x_0 =& - \frac{\sqrt{3}}{3} \\
+        x_1 =& \frac{\sqrt{3}}{3}
+    \end{align*}
+    Poračunamo tudi uteži:
+    \begin{equation*}
+        A_0 = \int_{-1}^{1} \frac{x-x_1}{x_0-x_1} dx = \dots = 1 = A_1
+    \end{equation*}
+    kjer kot $x_0 in x_1$ vstavimo izračunani vozlišči.
+
+    Izračunamo še ostanek (za $f \in \mathscr{C}^4([-1, 1])$):
+    \begin{equation*}
+        Rf = \frac{f^{(4)} (\xi)}{4!} \int_{-1}^{1} (x-\frac{\sqrt{3}}{3})^2 (x + \frac{\sqrt{3}}{3})^2 dx = \dots = \frac{1}{135} f^{(4)} (\xi)
+    \end{equation*}
+\end{ex}
+
+\begin{rem}
+    V integral lahko dodamo tudi kako pozitivno utež $\rho$. Računamo torej približek za integral oblike $\int_{a}^{b} f(x) \rho(x) dx$.
+\end{rem}
+
+\subsection{Integrali v več dimenzijah}
+\subsubsection*{Dvojni integral}
+Za dano funkcijo $f$, zvezno na območju $\Omega = [a, b] \times [c, d]$ iščemo integral
 \begin{equation*}
-    \int_{a}^{b} f(x) dx
+    \iint_{\Omega} f(x, y) dx dy
+\end{equation*}
+Integracijsko pravilo je oblike
+\begin{equation*}
+    \iint_{\Omega} f(x, y) dx dy = \sum_{i=0}^{n} \sum_{j = 0}^{m} A_{i, j} f(x_i, y_j) + Rf
+\end{equation*}
+kjer velja $(x_i, y_j) \in \Omega$.
+
+\subsubsection*{Tenzorska pravila}
+(slikca)
+$[a, b]$ razdelimo s korakom $h$ na $n$ delov: $h = \frac{b-a}{n}, x_i = a + i \cdot h$ za $i = 0, 1, \dots, n$.
+$[c, d]$ razdelimo s korakom $k$ na $m$ delov: $k = \frac{d-c}{m}, y_j = c + j \cdot k$ za $j = 0, 1, \dots, m$.
+
+(mogoče bolje skica tu?)
+
+Dobili smo mrežne točke $(x_i, y_j)$, določiti pa moramo še pripadajoče uteži $A_{i, j}$. Za to bomo uporabili Fubinijev izrek
+\begin{equation*}
+    \iint_{\omega} f(x, y) dx dy = \int_{a}^{b} dx \int_{c}^{d} f(x, y) dy = \int_{c}^{d} dy \int_{a}^{b} f(x, y) dx
 \end{equation*}
 
-Ideja: Interval $[a, b]$ razdelimo na manjše podintervale in na vsakem od podintervalov uporabimo integracijsko pravilo nizkega reda in nato 
-rezultate seštejemo.
-
-Recimo, da želimo uporabiti $m$ osnovnih pravil, vsak osnovno pravilo pa "zahteva", da razdelimo podinterval na $n$ delov.
-Imamo korak $h = \frac{b-a}{m \cdot n}$ in točke $x_i = a + i\cdot h$, kjer gre $i$ od $1$ do $m\cdot n$.
-Sestavljeno pravilo bo potem oblike
-\begin{equation*}
-    \int_{a}^{b} f(x) dx = \sum_{i = 0}^{m \cdot n} A_i f(x_i) + Rf
-\end{equation*}
-
-Izpeljimo sestavljeno trapezno pravilo.
-
-Osnovno:
-\begin{equation*}
-    \int_{x_0}^{x_1} f(x) dx = \frac{h}{2} (f(x_0) - f(x_1)) - \frac{h^3}{12} f''(\xi)
-\end{equation*}
-kjer je $h = x_1 - x_0$.
-
-(skica)
-Sestavljeno pravilo:
-\begin{equation*}
-    \int_{a}^{b} f(x) dx = \sum_{i=0}^{m-1} \int_{x_i}^{x_i+1} f(x) dx = (vstavimo osnovno pravilo) = \sum_{i=0}^{m-1} (\frac{h}{2} (f(x_i) + f(x_{i+1})) - \frac{h^3}{12} f''(\xi_i)) =
-    (\x_i \in [x_i, x_{i+1}]) = \frac{h}{2}(1 \cdot f(x_0) + 2 \cdot f(x_1) + 2 \cdot f(x_2) + \dots + 2 \cdot f(x_{m-1}) + 1 \cdot f(x_m)) + Rf
-\end{equation*}
-Ostanek določimo
-\begin{equation*}
-    Rf = \sum_{i=0}^{m-1} (- \frac{h^3}{12} f''(\xi_i)) = - \frac{h^3}{12} \sum_{i=0}^{m-1} f''(\xi_i)  = - \frac{h^3}{12} m f''(\mu) = -\frac{h^3}{12} \frac{b-a}{h} f''(\mu) = -\frac{h^2}{12} (b-a) f''(\mu)
-\end{equation*}
-(op: nekaj je pisala spodaj, nisem prepisal)
-Ker predpostavimo, da je $f \in \mathscr{C}^2 ([a, b])$, obstaja $\mu \in [a, v]$, da je
-\begin{equation*}
-    \frac{1}{m} \sum_{i=0}^{m-1} f''(\xi_i) = f''(\mu)
-\end{equation*}
-
-\subsubsection{Sestavljeno Simpsonovo pravilo}
-Osnovno: $n=2$
-\begin{equation*}
-    \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2)) - \frac{h^5}{90} f^{(4)}(\xi)
-\end{equation*}
-kjer je $\xi \in [x_0, x_2]$ in $f \in \mathscr{C}^4([a, b])$
-
-(skica)
+Poglejmo si natančneje uporabo trapeznega pravila.
+\begin{align*}
+    \iint_{\Omega} f(x, y) dx dy =& \int_{a}^{b} dx \int_{c}^{d} f(x, y) dy \\
+                                 =& \frac{h}{2} (g(x_0) + 2 \sum_{i=1}^{n-1} g(x_i) + g(x_n)) - \frac{h^2}{12} (b-a) \frac{d^2}{dx^2} g(x) |_{x=1}
+\end{align*}
 
 \begin{equation*}
-    \int_{a}^{b} f(x) dx = \sum_{i = 0}^{m-1} \int_{x_{2i}}^{x_{2i+2}} f(x) dx = \sum_{i=0}^{m-1} (\frac{h}{3} (f(x_{2i}) + 4f(x_{2i+1}) + f(x_{2i+2})) - \frac{h^5}{90} f^{(4)}(\xi)) =
-    = \frac{h}{3} (f(x_0) + 4 \cdot f(x_1) +2 \cdot f(x_2) + 4 \cdot f(x_3) + 2\cdot f(x_4) + \dots + 2 \cdot f(x_{2m-2}) + 4 \cdot f(x_{2m-1}) + 1 \cdot f(x_{2m})) + Rf
-    = \frac{h}{3} f(x_0) + 4 \sum_{i=0}^{m-1} f(x_{2i+1}) + 2 \sum_{j = 1}^{m-1} f(x_{2i}) + f(x_{2m}) + Rf
+    g(x_i) = \int_{c}^{d} f(x_i, y) dy = \frac{k}{2} (f(x_i,y) + 2 \sum_{j=1}^{m-1} f(x_i, y_j) + f(x_i, y_m)) - \frac{k^2}{12}(d-c) \frac{d^2}{dx^2} f(x_i, y) |_{y=\mu}
+\end{equation*}
+
+Dobimo
+\begin{equation*}
+    \iint_{\Omega} f(x, y) dx dy = \frac{h \cdot k}{4} \sum_{i=0}^{n} \sum_{j=0}^{m} A_{i, j} f(x_i, y_j) + \mathcal{O}(h^2 + k^2)    
 \end{equation*}
 \begin{equation*}
-    Rf = - \frac{h^5}{90} \sum_{i=0}^{m-1} f^{(4)} (\xi_i) = - \frac{h^5}{90} m f^{(4)}(\mu) = - \frac{h^4}{180} (b-a) f^{(4)} (\mu)
+    A_{i, j} = \alpha_i \beta_j \\
+    \alpha = (\alpha_i)_{i=0}^n = (1, 2, 2, 2, \dots, 2, 1)
+    \beta = (\beta_j)_{j=0}^m = (1, 2, 2, 2, \dots, 2, 1)
 \end{equation*}
+kjer imamo $n-1$ dvojk pri $\alpha$ oziroma $m-1$ dvojk pri $\beta$.
 
-\subsubsection{Ocena napake in Richardsonova ekstrapolacija}
+(še ena slikca)
 
-Recimo, da računamo približek za integral s sestavljenim N-C pravilom s korakom $h$. Vprašanje je, kako v praksi določiti ta korak.
-
-Označimo $F_h$ približek, ki ga izračunamo s korakom $h$ za neko fiksno funkcijo $f$. Predpostavimo, da velja
-\begin{equation*}
-    I = F_h + c_0 \cdot h^p + \mathscr{O} (h^{p+1})
-\end{equation*}
-kjer je $c_0$ konstanta.
-
-Namesto s korakom $h$ računamo s korakom $\frac{h}{2}$:
-\begin{equation*}
-    I = F_{\frac{h}{2}} + c_0 (\frac{h}{2})^p + \mathscr{O} (h^{p+1})
-\end{equation*}
-\begin{equation*}
-    2^p I = 2^p F_{\frac{h}{2}} + c_0 h^p  + \mathscr{O} (h^{p+1})
-    (2^p - 1) I = 2^p F_{\frac{h}{2}} - F_h + \mathscr{O} (h^{p+1})
-\end{equation*}
-\begin{equation*}
-    I = \frac{2^p F_{\frac{h}{2}} - F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
-\end{equation*}
-
-Ulomku pravimo ekstrapoliran približek.
-\begin{equation*}
-    I = \frac{2^p F_{\frac{h}{2}} - F_{\frac{h}{2}} + F_{\frac{h}{2}} -  F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
-    = F_{\frac{h}{2}} + \frac{F_{\frac{h}{2}} - F_h}{2^p - 1}+ \mathscr{O} (h^{p+1})
-\end{equation*}
-
-Ulomek je ocena za napako približka $F_{\frac{h}{2}}$.
-
-Podobno:
-\begin{equation*}
-    I = \frac{2^p F_{\frac{h}{2}} - 2^p F_h + F_h - 2^p F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
-    = F_h + 2^p \frac{F_{\frac{h}{2}} - F_h}{2^p - 1} + \mathscr{O} (h^{p+1})
-\end{equation*}
-Ulomek je ocena za napako približka $F_h$.
-
-Pri sestavljenem Simpsonovem pravilu je $p = 4$ in
-\begin{equation*}
-    I = F_{\frac{h}{2}} + \frac{F_{\frac{h}{2}} - F_h}{15} + \mathscr{O} (h^{p+1})
-\end{equation*}
-
-Ekstrapoliran približek = $\frac{16 F_{\frac{h}{2}} - F_h}{15}$
-
-Ekstrapoliran približek za sestavljeno trapezno pravilo = $\frac{4 F_{\frac{h}{2}} - F_h}{3}$
-
-\subsection{Gaussova integracijska pravila}
-Ideja za izpeljavo: Uteži in vozle izračunamo tako, da je pravilo čim višjega reda oziroma da je pravilo točno za polinome čim višjih stopenj.
-\begin{equation*}
-    \int_{a}^{b} f(x) dx = \sum_{i=0}^{n} A_i f(x_i) + Rf
-\end{equation*}
-Temu rečemo metoda nedoločenih koeficientov:
-\begin{equation*}
-    f(x) = x^k
-    \int_{a}^{b} x^k dx = \sum_{i=0}^{n} A_i x_i^k ,k = 0, 1, \dots 2n + 1
-\end{equation*}
-Imamo neznanke $A_0, A_1, \dots A_n$, ki jim rečemo uteži, in $x_0, x_1, \dots, x_n$, ki jim pravimo vozli. Imamo torej $2n + 2$ neznank, torej rabimo tudi $2n + 2$ enačb.
-Zgornji sistem je nelinearen sistem $2n + 2$ enačb za $2n + 2$ neznank.
-
-Ideja je ločiti enačbe za neznane vozle od enačb za neznane uteži. Kako?
-\begin{equation*}
-    f(x) = p(x) + \omega(x) [x_0, x_1, \dots, x_n, x] f
-\end{equation*}
-Če je $f \in \Pp_{n+r}$, je $[x_0, x_1, \dots, x_n, x] f \in \Pp_{r-1}$
-\begin{equation*}
-    Rf = \int_{a}^{b} \omega (x) [x_0, x_1, \dots, x_n, x] f dx
-\end{equation*}
-
-Definiramo $\scalarproduct{f, g} = \int_{a}^{b} f(x) g(x) dx$
-
-
-
-
+Simpsonovo pravilo:
+(nova skica)
+Napaka: $Rf = \mathcal{O}(h^4 + k^4)$
 
 
 
