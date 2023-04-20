@@ -2120,11 +2120,12 @@ Dobimo
 \begin{equation*}
     \iint_{\Omega} f(x, y) dx dy = \frac{h \cdot k}{4} \sum_{i=0}^{n} \sum_{j=0}^{m} A_{i, j} f(x_i, y_j) + \mathcal{O}(h^2 + k^2)    
 \end{equation*}
-\begin{equation*}
+Za izračun $A_{i, j}$ se uporabi
+\begin{gather*}
     A_{i, j} = \alpha_i \beta_j \\
-    \alpha = (\alpha_i)_{i=0}^n = (1, 2, 2, 2, \dots, 2, 1)
+    \alpha = (\alpha_i)_{i=0}^n = (1, 2, 2, 2, \dots, 2, 1) \\
     \beta = (\beta_j)_{j=0}^m = (1, 2, 2, 2, \dots, 2, 1)
-\end{equation*}
+\end{gather*}
 kjer imamo $n-1$ dvojk pri $\alpha$ oziroma $m-1$ dvojk pri $\beta$.
 
 (še ena slikca)
