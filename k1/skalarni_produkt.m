@@ -10,5 +10,5 @@ function v = skalarni_produkt(f, g, a, b)
 %   v       izracunan skalarni produkt funkcij f in g
 %
     h = @(x) f(x).*g(x);
-    v = integral(h, a, b, ArrayValued=true)
+    v = integral(h, a, b, ArrayValued=true);
 end

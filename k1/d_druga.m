@@ -7,7 +7,7 @@ baza{4} = @(x) sin(x) * cos(x);
 
 [koef,gram,desna] = aproksimantMNK(F, baza, -1, 1);
 
-cond_st = cond(gram)
+cond_st = cond(gram);
 ff = @(x) 0;
 for i=1:length(koef)
     ff = @(x) ff(x) + koef(i) * baza{i}(x);
