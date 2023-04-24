@@ -2135,6 +2135,201 @@ kjer imamo $n-1$ dvojk pri $\alpha$ oziroma $m-1$ dvojk pri $\beta$.
 Napaka: $Rf = \mathcal{O}(h^4 + k^4)$
 
 
+% 24. 4. 2023
+Recimo, da računamo integral
+\begin{equation*}
+    \int_{\Omega} f(x) dx
+\end{equation*}
+kjer je $\Omega \subseteq \R^d$ in velja $\Omega = [0, 1]^d$. Recimo tudi, da v vsaki dimenziji uporabimo $n$ točk, v katerih evaluiramo funkcijo.
+Torej je korak $h = \frac{1}{n-1} \approx \frac{1}{n}$. Število vseh izračunov vrednosti funkcije je torej $N = n^d$ ($n = N^{\frac{1}{n}}$), torej
+$h \approx N^{-\frac{1}{n}}$. Pri sestavljenem trapeznem pravilu je napaka $\mathcal{O}(h^2) = \mathcal{O}(N^{-\frac{2}{d}})$. Pri sestavljenem Simpsonovem
+pravilu je napaka $\mathcal{O}(h^4) = \mathcal{O}(N^{-\frac{4}{d}})$.
+
+Pri velikih dimenzijah $d$ so alternativa determinističnim metodam verjetnostne metode.
+
+\subsubsection{Metoda Monte-Carlo}
+Z uporabo enakomerno porazdeljene slučajne spremenljivke na intervalu $[a, b]$ in krepkega zakona velikih števil pridemo do sledečega približka:
+
+\begin{equation*}
+    I = \int_{a}^{b} f(x) dx \approx \frac{b-a}{N} \sum_{i=1}^{N} f(x_i)
+\end{equation*}
+kjer so $x_i$ naključne vrednosti iz intervala $[a, b]$. Za napako velja $I - I_N = \mathcal{O}(N^{-\frac{1}{2}})$. Za integral na 
+$\Omega = [a_1, b_1] \times [a_2, b_2] \times \dots \times [a_d, b_d]$ velja enako, le da so sedaj $X_i$ slučajni vektorji z vrednostmi v $\Omega$.
+
+\begin{equation*}
+    I = \int_{\Omega} f(x) dx \approx \frac{\prod_{j=1}^{d} (b_j - a_j)}{N} \sum_{i=1}^{N} f(x_i)
+\end{equation*}
+
+Napaka je enaka kot prej, torej $I - I_N = \mathcal{O}(N^{-\frac{1}{2}})$.
+
+\section{Numerično reševanje navadnih diferencialnih enačb}
+
+Ponovitev teorije:
+\begin{itemize}
+    \item NDE je funkcijska enačba, v kateri poleg neznane funkcije nastopajo tudi njeni odvodi.
+    \item Red NDE je stopnja najvišjega odvoda, ki nastopa v enačbi.
+    \item Rešitev diferencialne enačbe reda $p$ je $p$-parametrična družina funkcij. Če hočemo točno določeno rešitev, moramo predpisati $p$ pogojev.
+\end{itemize}
+
+Ločimo začetne in robne probleme.
+
+\subsubsection*{Začetni problem reda 1}
+
+\begin{gather*}
+    y' = f(x, y) \\
+    y(a) = y_a
+\end{gather*}
+kjer je $y_a$ podana konstanta in $f: [a, b] \times \R \to \R$.
+
+\subsubsection*{Začetni problem reda $p$}
+\begin{gather*}
+    y^{(p)} = f(x, y, y', \dots, y^{(p-q)}) \\
+    y(a) = y_{a, 0} \\
+    y'(a) = y_{a, 1} \\
+    \vdots \\
+    y^{(p-q)}(a) = y_{a, p-1}
+\end{gather*}
+kjer so $y(a)$, $y'(a)$, \dots, $y^{(p-q)}(a)$ podane konstante.
+
+Pri numeričnem reševanju in analizi rešitev se bomo omejili na probleme, pri katerih so izpolnjeni pogoji eksistenčnega izreka (E.I.).
+
+\subsubsection*{Robni problemi}
+
+\begin{gather*}
+    x^{(4)} + x_y = 0 \\
+    y(a) = y_{a, 0} \\
+    y'(a) = y_{a, 1} \\
+    y(b) = y_{b, 0} \\
+    y'(b) = y_{b, 1}
+\end{gather*}
+
+Robnih primerov pri tem predmetu ne bomo reševali.
+
+Numerične metode za reševanje teh problemov delimo na:
+
+\begin{enumerate}
+    \item Diferenčne metode
+    
+    Približek k rešitvi iščemo diskretno. Numerična rešitev je sestavljena iz zaporedja točk $a = x_0 < x_1, < x_2 < \dots < x_m = b$ in pripadajočega
+    zaporedja vrednosti $y_0, y_1, \dots, y_m$, pri čemer je 
+    \begin{equation*}
+        y_n \approx y(x_n)
+    \end{equation*}
+    za $n = 0, 1, 2, \dots$, kjer je $y_n$ numerični približek, $y(x_n)$ pa točna rešitev pri $x_n$.
+    (slikca)
+    \item Metode, pri katerih iščemo približek k rešitvi kot funkcijo v nekem izbranem podprostoru funkcij
+    
+    Dve znani metodi sta kolokacija in metoda končnih elementov. Teh metod letos ne bomo obravnavali.
+\end{enumerate}
+
+
+Diferenčne metode delimo na
+\begin{enumerate}
+    \item enočlenske metode
+    
+    približek za $y_{n+1}$ izračunamo iz približka za $y_n$
+    \item veččlenske metode ($k$-členske metode)
+    
+    približek za $y_{n+1}$ izračunamo iz približkov za $y_n, y_{n-1}, \dots, y_{n-k+1}$
+\end{enumerate}
+in na
+\begin{enumerate}
+    \item eksplicitne metode
+    
+    imamo direktno formulo za izračun približka $y_{n+1}$
+    \item implicitne metode
+    
+    približek za $y_{n+1}$ izračunamo tako, da rešimo (nelinearno) enačbo.
+\end{enumerate}
+
+Poglejmo si izpeljavo najbolj preproste enočlenske metode za reševanje začetnega problema 1. reda oblike
+\begin{gather*}
+    y' = f(x, y) \\
+    y(a) = y_a
+\end{gather*}
+
+Na vsakem 'koraku' moramo iz točke $(x_n, y_n)$ določiti $(x_{n+1}, y_{n+1})$. Poznamo začetno točko $x_0 = a$ ter $y_0 = y_a$. Za premik v $x$ smeri
+uporabimo konstanten korak $h$ (poenostavljen pristop). Vemo torej $x_0 = a$, $x_1 = a+h$, $x_2 = a-2h$, \dots
+
+Kako do približka $y_1 \approx y(x_1)$?
+
+(slikca)
+
+Iz DE dobimo vrednost $y'(a)$, to je $y'(a) = f(a, y(a)) = f(x_0, y_0)$. Zdaj znamo narisat tangento na graf funkcije v točki $(x_0, y_0)$. Dobimo 
+dve novi točki: $(x_1, y(x_1))$, kar je točka na grafu funkcije $f$, in $(x_1, y_1)$, kar je točka na tangenti od prej, za njun izračun pa uporabimo
+\begin{align*}
+    p(x) =& y(x_0) + (x-x_0)y'(x_0) \\
+         =& y(x_0) + (x-x_0)f(x_0, y(x_0)) \\
+         =& y_0 + (x-x_0)f(x_0, y(x_0))
+\end{align*}
+
+Isto idejo uporabimo za izračun vseh naslednjih približkov in dobimo metodo:
+\begin{equation*}
+    y_{n+1} = y_n + h f(x_n, y_n)
+\end{equation*}
+To metodo imenujemo Eksplicitna Eulerjeva metoda.
+
+Drug način izpeljave te metode:
+
+\begin{gather*}
+    y' = f(x, y) \\
+    y(a) = y_a
+\end{gather*}
+
+Spomnimo se formule za aproksimacijo odvoda:
+\begin{equation*}
+    y(x_0) = \frac{y(x_1) - y(x_0)}{h} - \frac{h}{2} y''(\xi)
+\end{equation*}
+
+Vstavimo to aproksimacijo v diferencialno enačbo:
+\begin{gather*}
+    y'(x_n) = f(x_n, y(x_n)) \\
+    \frac{y(x_{n+1}) - y(x_n)}{h} - \frac{h}{2} y''(\xi) = f(x_n, y(x_n))
+\end{gather*}
+Napako zanemarimo in točne vrednosti nadomestimo s približki, da ohranimo enačaj:
+\begin{gather*}
+    \frac{y_{n+1}- y_n}{h} = f(x_n, y_n) \\
+    y_{n+1} = y_n + h f(x_n, y_n)
+\end{gather*}
+Dobimo torej isto enačbo kot prej.
+
+Če bi uporabili formulo
+\begin{equation*}
+    y'(x_{n+1}) = \frac{y(x_{n+1})-y(x_n)}{h} + \frac{h}{2} y''(\xi)
+\end{equation*}
+bi Dobili
+\begin{gather*}
+    y'(x_{n+1}) = f(x_{n+1}, y(x_{n+1})) \\
+    \frac{y(x_{n+1})-y(x_n)}{h} + \frac{h}{2} y''(\xi) = f(x_{n+1}, y(x_{n+1}))
+\end{gather*}
+
+Odrežemo napako in dobimo
+\begin{equation*}
+    \frac{y(x_{n+1})-y(x_n)}{h} = f(x_{n+1}, y(x_{n+1}))
+\end{equation*}
+oziroma
+\begin{equation*}
+    y_{n+1} = y_n + h f(x_{n+1}, y(x_{n+1}))
+\end{equation*}
+za $n = 0, 1, 2, \dots$ To je implicitna Eulerjeva metoda.
+
+Pri implicitnih metodah moramo za izračun $y_{n+1}$ rešiti (nelinearno) enačbo. Uporabimo lahko postopek navadne iteracije.
+
+\begin{equation*}
+    y_{n+1} = g(y_{n+1})
+\end{equation*}
+pri čemer je
+\begin{equation*}
+    g(y_{n+1}) = y_n + h f(x_{n+1}, y(x_{n+1}))
+\end{equation*}
+
+To računamo tako:
+\begin{gather*}
+    y_{n+1}^{(0)} = y_n \\
+    ponavljaj:
+        y_{n+1}^{(r)} = g(y_{n+1}^{(r-1)})
+    dokler \left| y_{n+1}^{(r)} - y_{n+1}^{(r-1)} \right| > toleranca \left| y_{n+1}^{(r)} \right|
+\end{gather*}
 
 
 
