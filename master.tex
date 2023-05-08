@@ -2332,6 +2332,191 @@ To računamo tako:
 \end{gather*}
 
 
+% 8.5.2023
+\begin{ex}
+    \begin{gather*}
+        y' = x^2 + y^2 \\
+        y(0) = 1
+    \end{gather*}
+    Z Eulerjevo metodo s korakom $h = \frac{1}{10}$ določi približek za $y_1 \approx y(0.1)$ in $y_2 \approx y(0.2)$.
+
+    \begin{gather*}
+        x_0 = 0, x_1 = 0.1, x_2 = 0.2, f(x, y) = x^2 + y^2 \\
+        y_0 = 1 \\
+        y_1 = y_0 + h(x_0^2 + y_0^2) = 1 + \frac{1}{10}(0 + 1^2) = 1.1 \\
+        y_2 = y_1 + h(x_1^2 + y_1^2) = 1.1 + \frac{1}{10}(0.1^2 + 1.1^2) = 1.222
+    \end{gather*}
+\end{ex}
+
+V splošnem bi do predpisov za približke $y_n$ lahko prišli na naslednje načine:
+
+\begin{enumerate}
+    \item Odvod $y'$ v DE aproksimiramo s približki izraženimi z vrednostmi funkcije $y$ v bližnjih točkah.
+    \item DE $y' = f(x, y)$ integriramo.
+\end{enumerate}
+
+
+\begin{ex}
+    \begin{gather*}
+        \int_{x_n}^{x_{n+1}} y'(x) dx = \int_{x_n}^{x_{n+1}} f(x, y(x)) dx \\
+        y(x_{n+1}) - y(x_n) = \frac{h}{2} (f(x_n, y(x_n)) + f(x_{n+1}, yx_{n+1})) + \frac{h^3}{12} f^{(2)}(\xi, y(\xi))
+    \end{gather*}
+    Napako odrežemo in točne vrednosti nadomestimo s približki in pridemo do metode:
+    \begin{gather*}
+        y_{n+1} = y_n + \frac{h}{2} (f(x_n, y(x_n)) + f(x_{n+1}, yx_{n+1}))
+    \end{gather*}
+    To je trapezna metoda za reševanje diferencialnih enačb.
+\end{ex}
+
+
+\subsection{Globalna in lokalna napaka}
+
+Rešujemo problem $y' = f(x, y)$, $y(a) = y_a$. Numerično rešitev iščemo na intervalu $[a, b]$, pri čemer predpostavimo, 
+da so na tem intervalu izpolnjeni pogoji eksistenčnega izreka.
+
+Interval $[a, b]$ razdelimo na $m$ ekvidistantnih delov s korakom $h = \frac{b-a}{m}$. Dobimo $x_n = a + n \cdot h, n = 0, 1, \dots, m$.
+Numerične približke $(y_n)_{n=0}^m$ povežemo z odsekoma linearno funkcijo $y_h$.
+
+(slikca)
+
+\begin{defn}
+    Metoda je konvergentna, če za vse DE, ki zadoščajo pogojem eksistenčnega izreka na $[a, b]$, velja
+    \begin{equation*}
+        \norm{y-y_h}_{\infty, [a, b]}
+    \end{equation*}
+    ko $h \to 0$ (oziroma $m \to \infty$)
+    
+    Ekvivalentno:
+    \begin{equation*}
+        \max_{0 \leq n \leq m} |y(x_n) - y_n|
+    \end{equation*}
+    ko $m \to \infty$
+\end{defn}
+
+\begin{defn}
+    Globalna napaka (na celem intervalu):
+    \begin{equation*}
+        \max_{0 \leq n \leq m} |y(x_n) - y_n|
+    \end{equation*}
+\end{defn}
+
+\begin{defn}
+    Globalna napaka v točki $x_n$ je $|y(x_n) - y_n|$
+\end{defn}
+
+\begin{defn}
+    Metoda je reda $r$, če velja
+    \begin{equation*}
+        \max_{0 \leq n \leq m} |y(x_n) - y_n| = c \cdot h^r + \mathcal{O} (h^{r+1})
+    \end{equation*}
+\end{defn}
+
+Pri določanju reda metode oziroma reda globalne napake si pomagamo z lokalno napako.
+
+\begin{defn}
+    Lokalna napaka v točki $x_n$ je razlika med točno rešitvijo v tej točki in njenim numeričnim približkom ob predpostavki,
+    da se točna in numerična rešitev ujemata na vseh prejšnih korakih.
+    \begin{equation*}
+        T_n(h) = y(x_n) - y_n
+    \end{equation*}
+    ob predpostavki
+    \begin{equation*}
+        y(x_{n-j}) = y_{n-j}, j=1, 2, \dots
+    \end{equation*}
+\end{defn}
+
+Z lokalno napako si pomagamo pri določanju reda globalne napake.
+
+Velja (brez dokaza): Metoda je reda $r$, brž ko je lokalna napaka reda $r+1$.
+
+Pri določanju reda lokalne napake si pomagamo z razvoji v Taylorjevo vrsto.
+
+\begin{equation*}
+    y(x_{n+1}) = y(x_n + h) = y_(x_n) + h y'(x_n) + \frac{h^2}{2} y''(x_n) + \frac{h^3}{6} y'''(x_n) + \mathhcal{O}(h^4)
+\end{equation*}
+
+\begin{equation*}
+    y'(x) = f(x, y(x))
+\end{equation*}
+
+\begin{gather*}
+    y' = f \\
+    y'' = f_x + f_y y' = f_x + f_yf \\
+    y''' = f_{xx} + 2 f_{xy} f^2 + f_y(f_x + f_y f)
+\end{gather*}
+
+\begin{equation*}
+    f(x ' \Delta x, y + \Delta y) = f(x, y) + f_x(x, y) \cdot \Delta x + f_y(x,y) \cdot \Delta y + \dots
+\end{equation*}
+
+Določi red lokalne napake eksplicitne Eulerjeve metode.
+\begin{gather*}
+    y_{n+1} = y_n + h f(x_n, y_n) \\
+    T_{n+1} = y(X_{n+1}) - y_{n+1} = y(x_n) + h f(x_n, y(x_n)) + \frac{h^2}{2} (f_x(x_n, y(x_n)) +  f_y(x_n, y(x_n))\cdot f(x_n, y(x_n))) +  \mathcal{O}(h^3) - y_n - h f(x_n, y_n)
+\end{gather*}
+
+Vstavimo $y(x_n) = y_n$ in dobimo
+\begin{equation*}
+    T_{n+1} = \frac{h^2}{2} (f_x(x_n, y_n) + f_y(x_n, y_n)f(x_n, y_n)) = \mathcal{O}(h^2)
+\end{equation*}
+
+Red lokalne napake je 2, torej je Eulerjeva metoda reda 1.
+
+\subsection{Runge-Kutta metode}
+s-stopenjska R_K metoda:
+Izračunamo s-koeficientov
+\begin{equation*}
+    k_i = h f(x_n + \alpha_i h, y_n + \sum_{j=1}^{s} \beta_{ij} k_j), i = 1, 2, \dots s    
+\end{equation*}
+
+\begin{equation*}
+    y_{n+1} = y_n + \sum_{i=1}^{s} \gamma_i k_i 
+\end{equation*}
+
+pri tem so $(\alpha_i)_{i=1}^s$, $(\beta_{ij})_{i, j=1}^s$ in $(\gamma_i)_{i=1}^s$ prosti koeficienti, ki jih izberemo tako,
+da bo metoda konvergentna in čim višjega reda.
+
+\begin{equation*}
+    \alpha_i \in [0, 1]
+\end{equation*}
+
+Velja še $\alpha_i = \sum_{j=1}^{s} \beta_{ij}$.
+
+Da bo metoda konvergentna oziroma reda vsaj 1, če bo $\sum_{i=1}^{s} \gamma_i = 1$.
+
+R-K metodo lahko predstavimo v t.i. Butcherjevi shemi
+
+(tabelca)
+
+\begin{equation*}
+    k_i = h f(x_n + \alpha_i h, y_n + \beta_{i1}k_1 + \beta_{i2}k_2 + \dots + \beta_{is}k_s)
+\end{equation*}
+
+\begin{equation*}
+    y_{n+1} = y_n + \gamma_1 k_1 + \gamma_2 k_2 + \dots + \gamma_s k_s
+\end{equation*}
+
+R-K metoda je eksplicitna, če bodo $\beta_{ij} = 0$ za vse $j \geq i$.
+
+R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in bo vsaj en $\beta_{ii} \neq 0$. Sicer je metoda implicitna.
+
+\subsubsection{Primeri R-K metod}
+\subsubsubsection{Modificirana Eulerjeva metoda}
+ (shema)
+
+\begin{gather*}
+    k_1 = h f(x_n, y_n) \\
+    k_2 = h f(x_n + \frac{1}{2} h, y_n + \frac{1}{2}k_1) \\
+    y_{n+1} = y_n + k_2
+\end{gather*}
+
+
+
+
+
+
+
+
 
 
 \end{document}
