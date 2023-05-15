@@ -2510,12 +2510,148 @@ R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in
     y_{n+1} = y_n + k_2
 \end{gather*}
 
+% 15. 5. 2023
+(metode)
+
+\subsubsection*{Sistemi diferencialnih enačb 1. reda}
+Začetni problem prvega reda za sistem je oblike
+\begin{align*}
+    y_1' =& f_1(x, y_1, x_2, \dots, y_d) +& y_1(a) = y_{1, a} \\
+    y_2' =& f_2(x, y_1, x_2, \dots, y_d) +& y_2(a) = y_{2, a} \\
+    \vdots& \\ +& \vdots
+    y_d' =& f_d(x, y_1, x_2, \dots, y_d) +& y_d(a) = y_{d, a}
+\end{align*}
+
+\begin{equation*}
+    f_j: [a, b] \times \R^d \to \R
+\end{equation*}
+
+Definiramo
+\begin{equation*}
+    y = [y_1, y_2, \dots, y_d]^T
+\end{equation*}
+
+\begin{equation*}
+    y: [a, b] \to \R^d
+\end{equation*}
+
+\begin{equation*}
+    F = [f_1, f_2, \dots, f_d]^T
+\end{equation*}
+
+\begin{equation*}
+    F: [a, b]\times \R^d \to \R^d
+\end{equation*}
+
+Sistem lahko sedaj zapišemo kot:
+\begin{align*}
+    y' = F(x, Y) \\
+    Y(a) = Y_a
+\end{align*}
+
+\begin{equation*}
+    Y_a = [y_{1, a}, y_{2, a}, \dots, y_{d, a}]^T
+\end{equation*}
+
+Vse metode, ki smo jih spoznali, lahko direktno uporabimo za rešenje sistemov diferencialnih enačb prvega reda.
+
+npr Euler:
+\begin{equation*}
+    Y_{n+1} = Y_n + h F(x, Y_n)
+\end{equation*}
+
+\subsubsection{Reševanje diferencialnih enačb višjega reda}
+Imamo začetni problem reda $p$:
+\begin{equation*}
+    y^{(p)} = f(x, y, y', y'', \dots, y^{(p)})
+    y(a) = y_{a, 1}
+    y'(a) = y_{a, 2}
+    \vdots
+    y'{(p-1)} = y_{a, p}
+\end{equation*}
+
+Problem prevedemo na sistem $p$ difeencialnih enačb prvega reda:
+
+Definiramo "nove" neznane funkcije $z_1, z_2, \dots, z_{p-1}$:
+\begin{align*}
+    z_1 = y'\\
+    z_2 = z_1' = y'' \\
+    z_3 = z_2' = y''' \\
+    \vdots \\
+    z_{p-1} = z_{p-1}' = y{(p-1)}
+    z_{p-1}' = y^{(p)} = f(x, y, z_1, z_2, \dots, z_{p-1})
+\end{align*}
+
+\begin{equation*}
+    [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T' = [z_1, z_2, \dots, z_{p-1}, f(x, y, z_1, z_2, \dots, z_{p-1})]
+\end{equation*}
+
+\begin{equation*}
+    Y = [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T = [Y(1), Y(2), \dots, Y(p)]^T
+\end{equation*}
+
+\begin{equation*}
+    F(x, Y) = [Y(2), Y(3), \dots, Y(p), f(x, Y(1), \dots, Y(p))]^T
+\end{equation*}
+
+primer (nisem prepisal)
+
+Matlab:
+\begin{equation*}
+    F = @(x, y)([y(2), x + y(2) + y(1)^2])
+\end{equation*}
+
+\begin{align*}
+    function [x, y] = IME(F, a, b, h, y0) \\
+    (komentar)
+    x = a:h:b;
+    y = zeros(length(y0), length(x)); \\
+    y(:, 1) = y0;
+    for n=2:length(x)\\
+        k1 = h * F(x(n-1), y(:, n-1)); \\
+        y(:, n) = y(:, n-1) + k1; \\
+    end
+\end{align*}
+
+\subsection{Veččlenske metode}
+$k$-členska metoda:
+pri izračunu približka $y_n \approx y(x_n)$ uporabimo $k$ vrednosti:
+\begin{equation*}
+    y_{n-1}, y_{n-}, y_{n-3}, \dots, y_{n-k}
+\end{equation*}
+
+Splošna linearna $k$-členska metoda je oblike:
+\begin{equation*}
+    y_n =& \sum_{i=1}^{k} \alpha_i y_{n-i} + h \sum_{i=0}^{k} \beta_i F(x_{n-i}, y_{n-i})
+\end{equation*}
+
+Pri tem so $\alpha_i$ in $\beta_i$ koeficienti, ki določajo metodo. Določimo jih tako, da je metoda konvergentna in čim višjega reda.
+Metoda je eksplicitna, če je $\beta_0 = 0$. Sicer je implicitna.
 
 
+$k$-členske metode so hitrejše od enočlenskih.
+Slabosti: spreminjanje koraka $h$ ni enostavno.
 
+Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}k$ moramo določiti z neko enočlensko metodo.
 
+PAZI: Izbrati moramo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
 
-
+Najbolj znani razredi teh metod so (probably na ustnih)
+\begin{itemize}
+    \item Adamsove metode:
+    \begin{equation*}
+        y' = f(x, y) \\
+        y(a) = y_a
+    \end{equation*}
+    Ideja je, da to enačbo integriramo:
+    \begin{equation*}
+        \int_{x_{n-1}}^{x_n} 
+    \end{equation*}
+    (skica)
+    brez $x_n$ je eksplicitna, z njo pa implicitna
+    \item Milneove metode
+    \item BDF metode
+\end{itemize}
 
 
 
