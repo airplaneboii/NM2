@@ -17,13 +17,7 @@ function [prb, nap, eks_prb] = richardson(f,a,b,m)
 %  prb      priblizek S_{h/2},
 %  nap      ocena za napako priblizka S_{h/2},
 %  eks_prb  ekstrapoliran priblizek za integral funkcije f.
-    p = 4;
-
-    prb = simpson(f, a, b, m*2);
-    nap = (prb - simpson(f, a, b, m))/((2^p)-1);
-    eks_prb = ((2^p)*prb - simpson(f, a, b, m))/((2^p)-1);
-
-
+    Sh2 = simpson(f, a, b, m*2) 
 
 
 end
