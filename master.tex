@@ -2648,10 +2648,153 @@ Najbolj znani razredi teh metod so (probably na ustnih)
         \int_{x_{n-1}}^{x_n} 
     \end{equation*}
     (skica)
-    brez $x_n$ je eksplicitna, z njo pa implicitna
+    brez $x_n$ je eksplicitna, z njo pa implicitna. Funkcijo $f(x, y(x))$ nadomestimo z interpolacijskim polinomom.
+    (primer)
     \item Milneove metode
+    Ideja za izpeljavo: doferencialno enačbo $y' = f(x, y)$ integriramo na $[x_{n-k}, x_n]$, integral funkcije $f(x, y(x))$ pa nadomestimo
+    z izbranim integracijskim pravilom.
+    \begin{itemize}
+        \item odprta pravila - eksplicitne metode
+        \item zaprta pravila - implicitne metode
+    \end{itemize}
+    (primer)
     \item BDF metode
+    Odvod $y'(x_n) = f(x_n, y(x_n))$ aproksimiramo z diferencami.
+    (primer?=)
+    \begin{equation*}
+        y_n = \frac{4}{3} y_{n-1} - \frac{1}{3} y_{n-1} + \frac{2}{3} h f_n
+    \end{equation*}
 \end{itemize}
+
+% 22. 5. 2023
+(primer - z dvočlensko eksplicitno adamsovo metodo določi približek)
+
+\section{Numerično računanje lastnih vrednosti}
+
+Naj bo $A \in \C^{n \times n}$. Če neničeln vektor $x \in \C^n$ in skalar $\lambda \in \C$ zadoščata enačbi
+\begin{equation*}
+    Ax = \lambda x
+\end{equation*}
+
+potem je $x$ (desni) lastni vektor za lastno vrednost $\lambda$.
+
+Levi lastni vektorji:
+\begin{equation*}
+    y^H A = \lambda y^H
+\end{equation*}
+
+Če to hermitsko transponiramo:
+\begin{equation*}
+    A^H y = \tilde{\lambda} y
+\end{equation*}
+
+Matriko $A$ se da diagonalizirati, če obstajata nesingularna matrika $X = [x_1, x_2, \dots, x_n]$ in diagonalna matrika $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n)$,
+da velja
+\begin{equation*}
+    A = X \Lambda X^{-1}
+\end{equation*}
+
+Če je $S$ nesingularna matrika, potem sta $A$ in $B = S^{-1}AS$ podobni matriki.
+
+\begin{gather*}
+    Ax = \lambda x \\
+    S^{-1} AS S^{-1} = S^{-1} \lambda x \\
+    B(S^{-1} x) = \lambda (S^{-1} x)
+\end{gather*}
+
+
+Lastne vrednosti so ničle karakterističnega polinoma
+\begin{equation*}
+    p(\lambda) = det(A - \lambda I)
+\end{equation*}
+
+Algebraična in geometrijska večkratnost lastne vrednosti:
+\begin{itemize}
+    \item algebraična - 
+    \item geometrijska - dimenzija jedra $A - \lambda I$
+\end{itemize}
+
+Ker so lastne vrednosti v bistvu ničle polinoma, so vsi algoritmi za računanje lastnih vrednosti iterativni. Numerično lastnih vrednosti ne računamo
+preko ničel karakterističnega polinoma. Zakaj? Ker je že računanje koeficientov karakterističnega polinoma težavno, ničle polinomov pa so zelo občutljive
+na minimalne spremembe koeficientov. Računanje preko karakterističnih polinomov je torej nestabilno.
+
+Računanje Jordanove kanonične forme ni obratno stabilno.
+
+\subsection{Schurova forma}
+
+\begin{theorem}
+    Za vsako $n \times n$ matriko $A$ obstajata unitarna matrika $U$ in zgornje trikotna matrika $T$, da je
+    \begin{equation*}
+        A = U T U^H
+    \end{equation*}
+
+    Temu pravimo Schurov razcep, $T$ pa imenujemo Schurova forma.
+\end{theorem}
+
+\begin{pro}
+    Z indukcijo na dimenzijo matrike
+
+    \begin{gather*}
+        A = [a_{11}], \\
+        A = [1] [a_{11}] [1]^H
+    \end{gather*}
+    
+    Recimo, da trditev velja za vse $(n-1)\times(n-1)$ matrike. Naj bo $A$ $n\times n$ matrika. Naj bo $x$ njen normiran lastni vektor in $\lambda$
+    pripadajoča lastna vrednost
+    \begin{equation*}
+        Ax = \lambda x
+    \end{equation*}
+    Naj bo $U_1$ taka unitarna matrika, da je $U_1^H x = e_1$. Naj bo $B = U_1^H A U_1$.
+    \begin{gather*}
+        B e_1 = U_1^H A U_1 e_1 = \lambda U_1^H x = \lambda e_1
+    \end{gather*}
+    torej je $B$ oblike
+    (prepiši matriko od Eme)
+
+    Po I.P. obstaja Schurov razcep matrike $C = V_1 T_1 V_1^H$.
+
+    \begin{gather*}
+        B = V T V^H \\
+        U_1^H A_1 U_1 = V T V^H /U_1^H \\
+        A = (U_1 V) T (U_1 V)^H \\
+        A = U T U^H
+    \end{gather*}
+\end{pro}
+
+Schurova forma ni enolična. Vrstni red diagonalnih elementov je lahko poljuben.
+
+Tudi če je $A \in \R^{n\times n}$, je lahko njen schurov razcep kompleksen. Da se izognemo kompleksni aritmetiki, uporabimo tako imenovani Realni Schurov razcep.
+
+\begin{theorem}
+    Za vsako matriko $A \in \R^{n\times n}$ obstajata ortogonalna matrika $Q$ in kvazi-zgornje trikotna matrika $R$, da je
+    \begin{equation*}
+        A = QRQ^T
+    \end{equation*}
+
+    To imenujemo realni Schurov razcep, $R$ pa imenujemo realna Schurova forma.
+\end{theorem}
+
+\begin{rem}
+    Matrika je kvazi-zgornje trikotna, če je bločno zgornje trikotna, pri čemer dopuščamo na diagonali $2 \times 2$ bloke, katerih lastne vrednosti
+    ustrezajo parom kompleksno konjugiranih lastnih vrednosti.
+\end{rem}
+
+\begin{pro}
+    Izpustimo.
+\end{pro}
+
+\subsection{Metode za računanje lastnih vrednosti}
+\begin{itemize}
+    \item Potenčna metoda
+    \item Inverzna iteracija (inverzna potenčna metoda)
+    \item Ortogonalna iteracija
+    \item QR metoda
+\end{itemize}
+
+
+
+
+
 
 
 
