@@ -18,7 +18,10 @@
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}
 \newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
 \usepackage{algorithm}
+\usepackage{algorithmicx}
 \usepackage{algpseudocode}
+
+\algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
 
 % encoding and language
 \usepackage{lmodern}
@@ -2173,7 +2176,7 @@ Ponovitev teorije:
 
 Ločimo začetne in robne probleme.
 
-\subsubsection*{Začetni problem reda 1}
+\subsubsection{Začetni problem reda 1}
 
 \begin{gather*}
     y' = f(x, y) \\
@@ -2181,7 +2184,7 @@ Ločimo začetne in robne probleme.
 \end{gather*}
 kjer je $y_a$ podana konstanta in $f: [a, b] \times \R \to \R$.
 
-\subsubsection*{Začetni problem reda $p$}
+\subsubsection{Začetni problem reda $p$}
 \begin{gather*}
     y^{(p)} = f(x, y, y', \dots, y^{(p-q)}) \\
     y(a) = y_{a, 0} \\
@@ -2193,7 +2196,7 @@ kjer so $y(a)$, $y'(a)$, \dots, $y^{(p-q)}(a)$ podane konstante.
 
 Pri numeričnem reševanju in analizi rešitev se bomo omejili na probleme, pri katerih so izpolnjeni pogoji eksistenčnega izreka (E.I.).
 
-\subsubsection*{Robni problemi}
+\subsubsection{Robni problemi}
 
 \begin{gather*}
     x^{(4)} + x_y = 0 \\
@@ -2270,7 +2273,6 @@ Isto idejo uporabimo za izračun vseh naslednjih približkov in dobimo metodo:
 To metodo imenujemo Eksplicitna Eulerjeva metoda.
 
 Drug način izpeljave te metode:
-
 \begin{gather*}
     y' = f(x, y) \\
     y(a) = y_a
@@ -2297,7 +2299,7 @@ Dobimo torej isto enačbo kot prej.
 \begin{equation*}
     y'(x_{n+1}) = \frac{y(x_{n+1})-y(x_n)}{h} + \frac{h}{2} y''(\xi)
 \end{equation*}
-bi Dobili
+bi dobili
 \begin{gather*}
     y'(x_{n+1}) = f(x_{n+1}, y(x_{n+1})) \\
     \frac{y(x_{n+1})-y(x_n)}{h} + \frac{h}{2} y''(\xi) = f(x_{n+1}, y(x_{n+1}))
@@ -2324,12 +2326,13 @@ pri čemer je
 \end{equation*}
 
 To računamo tako:
-\begin{gather*}
-    y_{n+1}^{(0)} = y_n \\
-    ponavljaj:
-        y_{n+1}^{(r)} = g(y_{n+1}^{(r-1)})
-    dokler \left| y_{n+1}^{(r)} - y_{n+1}^{(r-1)} \right| > toleranca \left| y_{n+1}^{(r)} \right|
-\end{gather*}
+\begin{algorithmic}
+    \State $y_{n+1}^{(0)} = y_n$
+    \Do
+        \State $y_{n+1}^{(r)} = g(y_{n+1}^{(r-1)})$
+    \doWhile{$\left| y_{n+1}^{(r)} - y_{n+1}^{(r-1)} \right| > toleranca \left| y_{n+1}^{(r)} \right|$}
+\end{algorithmic}
+
 
 
 % 8.5.2023
@@ -2431,9 +2434,10 @@ Velja (brez dokaza): Metoda je reda $r$, brž ko je lokalna napaka reda $r+1$.
 
 Pri določanju reda lokalne napake si pomagamo z razvoji v Taylorjevo vrsto.
 
-\begin{equation*}
-    y(x_{n+1}) = y(x_n + h) = y_(x_n) + h y'(x_n) + \frac{h^2}{2} y''(x_n) + \frac{h^3}{6} y'''(x_n) + \mathhcal{O}(h^4)
-\end{equation*}
+\begin{align*}
+    y(x_{n+1}) &= y(x_n + h) \\
+               &= y_(x_n) + h y'(x_n) + \frac{h^2}{2} y''(x_n) + \frac{h^3}{6} y'''(x_n) + \mathcal{O}(h^4)
+\end{align*}
 
 \begin{equation*}
     y'(x) = f(x, y(x))
@@ -2450,10 +2454,18 @@ Pri določanju reda lokalne napake si pomagamo z razvoji v Taylorjevo vrsto.
 \end{equation*}
 
 Določi red lokalne napake eksplicitne Eulerjeve metode.
-\begin{gather*}
-    y_{n+1} = y_n + h f(x_n, y_n) \\
-    T_{n+1} = y(X_{n+1}) - y_{n+1} = y(x_n) + h f(x_n, y(x_n)) + \frac{h^2}{2} (f_x(x_n, y(x_n)) +  f_y(x_n, y(x_n))\cdot f(x_n, y(x_n))) +  \mathcal{O}(h^3) - y_n - h f(x_n, y_n)
-\end{gather*}
+\begin{equation*}
+    y_{n+1} = y_n + h f(x_n, y_n)
+\end{equation*}
+
+% polepšaj
+\begin{align*}
+    T_{n+1} &= y(X_{n+1}) - y_{n+1} \\
+            &= y(x_n) + h f(x_n, y(x_n)) \\
+            &+ \frac{h^2}{2} (f_x(x_n, y(x_n)) \\
+            &+ f_y(x_n, y(x_n))\cdot f(x_n, y(x_n))) \\
+            &+ \mathcal{O}(h^3) - y_n - h f(x_n, y_n)
+\end{align*}
 
 Vstavimo $y(x_n) = y_n$ in dobimo
 \begin{equation*}
@@ -2463,7 +2475,7 @@ Vstavimo $y(x_n) = y_n$ in dobimo
 Red lokalne napake je 2, torej je Eulerjeva metoda reda 1.
 
 \subsection{Runge-Kutta metode}
-s-stopenjska R_K metoda:
+s-stopenjska R-K metoda:
 Izračunamo s-koeficientov
 \begin{equation*}
     k_i = h f(x_n + \alpha_i h, y_n + \sum_{j=1}^{s} \beta_{ij} k_j), i = 1, 2, \dots s    
@@ -2510,286 +2522,286 @@ R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in
     y_{n+1} = y_n + k_2
 \end{gather*}
 
-% 15. 5. 2023
-(metode)
-
-\subsubsection*{Sistemi diferencialnih enačb 1. reda}
-Začetni problem prvega reda za sistem je oblike
-\begin{align*}
-    y_1' =& f_1(x, y_1, x_2, \dots, y_d) +& y_1(a) = y_{1, a} \\
-    y_2' =& f_2(x, y_1, x_2, \dots, y_d) +& y_2(a) = y_{2, a} \\
-    \vdots& \\ +& \vdots
-    y_d' =& f_d(x, y_1, x_2, \dots, y_d) +& y_d(a) = y_{d, a}
-\end{align*}
-
-\begin{equation*}
-    f_j: [a, b] \times \R^d \to \R
-\end{equation*}
-
-Definiramo
-\begin{equation*}
-    y = [y_1, y_2, \dots, y_d]^T
-\end{equation*}
-
-\begin{equation*}
-    y: [a, b] \to \R^d
-\end{equation*}
-
-\begin{equation*}
-    F = [f_1, f_2, \dots, f_d]^T
-\end{equation*}
-
-\begin{equation*}
-    F: [a, b]\times \R^d \to \R^d
-\end{equation*}
-
-Sistem lahko sedaj zapišemo kot:
-\begin{align*}
-    y' = F(x, Y) \\
-    Y(a) = Y_a
-\end{align*}
-
-\begin{equation*}
-    Y_a = [y_{1, a}, y_{2, a}, \dots, y_{d, a}]^T
-\end{equation*}
-
-Vse metode, ki smo jih spoznali, lahko direktno uporabimo za rešenje sistemov diferencialnih enačb prvega reda.
-
-npr Euler:
-\begin{equation*}
-    Y_{n+1} = Y_n + h F(x, Y_n)
-\end{equation*}
-
-\subsubsection{Reševanje diferencialnih enačb višjega reda}
-Imamo začetni problem reda $p$:
-\begin{equation*}
-    y^{(p)} = f(x, y, y', y'', \dots, y^{(p)})
-    y(a) = y_{a, 1}
-    y'(a) = y_{a, 2}
-    \vdots
-    y'{(p-1)} = y_{a, p}
-\end{equation*}
-
-Problem prevedemo na sistem $p$ difeencialnih enačb prvega reda:
-
-Definiramo "nove" neznane funkcije $z_1, z_2, \dots, z_{p-1}$:
-\begin{align*}
-    z_1 = y'\\
-    z_2 = z_1' = y'' \\
-    z_3 = z_2' = y''' \\
-    \vdots \\
-    z_{p-1} = z_{p-1}' = y{(p-1)}
-    z_{p-1}' = y^{(p)} = f(x, y, z_1, z_2, \dots, z_{p-1})
-\end{align*}
-
-\begin{equation*}
-    [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T' = [z_1, z_2, \dots, z_{p-1}, f(x, y, z_1, z_2, \dots, z_{p-1})]
-\end{equation*}
-
-\begin{equation*}
-    Y = [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T = [Y(1), Y(2), \dots, Y(p)]^T
-\end{equation*}
-
-\begin{equation*}
-    F(x, Y) = [Y(2), Y(3), \dots, Y(p), f(x, Y(1), \dots, Y(p))]^T
-\end{equation*}
-
-primer (nisem prepisal)
-
-Matlab:
-\begin{equation*}
-    F = @(x, y)([y(2), x + y(2) + y(1)^2])
-\end{equation*}
-
-\begin{align*}
-    function [x, y] = IME(F, a, b, h, y0) \\
-    (komentar)
-    x = a:h:b;
-    y = zeros(length(y0), length(x)); \\
-    y(:, 1) = y0;
-    for n=2:length(x)\\
-        k1 = h * F(x(n-1), y(:, n-1)); \\
-        y(:, n) = y(:, n-1) + k1; \\
-    end
-\end{align*}
-
-\subsection{Veččlenske metode}
-$k$-členska metoda:
-pri izračunu približka $y_n \approx y(x_n)$ uporabimo $k$ vrednosti:
-\begin{equation*}
-    y_{n-1}, y_{n-}, y_{n-3}, \dots, y_{n-k}
-\end{equation*}
-
-Splošna linearna $k$-členska metoda je oblike:
-\begin{equation*}
-    y_n =& \sum_{i=1}^{k} \alpha_i y_{n-i} + h \sum_{i=0}^{k} \beta_i F(x_{n-i}, y_{n-i})
-\end{equation*}
-
-Pri tem so $\alpha_i$ in $\beta_i$ koeficienti, ki določajo metodo. Določimo jih tako, da je metoda konvergentna in čim višjega reda.
-Metoda je eksplicitna, če je $\beta_0 = 0$. Sicer je implicitna.
-
-
-$k$-členske metode so hitrejše od enočlenskih.
-Slabosti: spreminjanje koraka $h$ ni enostavno.
-
-Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}k$ moramo določiti z neko enočlensko metodo.
-
-PAZI: Izbrati moramo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
-
-Najbolj znani razredi teh metod so (probably na ustnih)
-\begin{itemize}
-    \item Adamsove metode:
-    \begin{equation*}
-        y' = f(x, y) \\
-        y(a) = y_a
-    \end{equation*}
-    Ideja je, da to enačbo integriramo:
-    \begin{equation*}
-        \int_{x_{n-1}}^{x_n} 
-    \end{equation*}
-    (skica)
-    brez $x_n$ je eksplicitna, z njo pa implicitna. Funkcijo $f(x, y(x))$ nadomestimo z interpolacijskim polinomom.
-    (primer)
-    \item Milneove metode
-    Ideja za izpeljavo: doferencialno enačbo $y' = f(x, y)$ integriramo na $[x_{n-k}, x_n]$, integral funkcije $f(x, y(x))$ pa nadomestimo
-    z izbranim integracijskim pravilom.
-    \begin{itemize}
-        \item odprta pravila - eksplicitne metode
-        \item zaprta pravila - implicitne metode
-    \end{itemize}
-    (primer)
-    \item BDF metode
-    Odvod $y'(x_n) = f(x_n, y(x_n))$ aproksimiramo z diferencami.
-    (primer?=)
-    \begin{equation*}
-        y_n = \frac{4}{3} y_{n-1} - \frac{1}{3} y_{n-1} + \frac{2}{3} h f_n
-    \end{equation*}
-\end{itemize}
-
-% 22. 5. 2023
-(primer - z dvočlensko eksplicitno adamsovo metodo določi približek)
-
-\section{Numerično računanje lastnih vrednosti}
-
-Naj bo $A \in \C^{n \times n}$. Če neničeln vektor $x \in \C^n$ in skalar $\lambda \in \C$ zadoščata enačbi
-\begin{equation*}
-    Ax = \lambda x
-\end{equation*}
-
-potem je $x$ (desni) lastni vektor za lastno vrednost $\lambda$.
-
-Levi lastni vektorji:
-\begin{equation*}
-    y^H A = \lambda y^H
-\end{equation*}
-
-Če to hermitsko transponiramo:
-\begin{equation*}
-    A^H y = \tilde{\lambda} y
-\end{equation*}
-
-Matriko $A$ se da diagonalizirati, če obstajata nesingularna matrika $X = [x_1, x_2, \dots, x_n]$ in diagonalna matrika $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n)$,
-da velja
-\begin{equation*}
-    A = X \Lambda X^{-1}
-\end{equation*}
-
-Če je $S$ nesingularna matrika, potem sta $A$ in $B = S^{-1}AS$ podobni matriki.
-
-\begin{gather*}
-    Ax = \lambda x \\
-    S^{-1} AS S^{-1} = S^{-1} \lambda x \\
-    B(S^{-1} x) = \lambda (S^{-1} x)
-\end{gather*}
-
-
-Lastne vrednosti so ničle karakterističnega polinoma
-\begin{equation*}
-    p(\lambda) = det(A - \lambda I)
-\end{equation*}
-
-Algebraična in geometrijska večkratnost lastne vrednosti:
-\begin{itemize}
-    \item algebraična - 
-    \item geometrijska - dimenzija jedra $A - \lambda I$
-\end{itemize}
-
-Ker so lastne vrednosti v bistvu ničle polinoma, so vsi algoritmi za računanje lastnih vrednosti iterativni. Numerično lastnih vrednosti ne računamo
-preko ničel karakterističnega polinoma. Zakaj? Ker je že računanje koeficientov karakterističnega polinoma težavno, ničle polinomov pa so zelo občutljive
-na minimalne spremembe koeficientov. Računanje preko karakterističnih polinomov je torej nestabilno.
-
-Računanje Jordanove kanonične forme ni obratno stabilno.
-
-\subsection{Schurova forma}
-
-\begin{theorem}
-    Za vsako $n \times n$ matriko $A$ obstajata unitarna matrika $U$ in zgornje trikotna matrika $T$, da je
-    \begin{equation*}
-        A = U T U^H
-    \end{equation*}
-
-    Temu pravimo Schurov razcep, $T$ pa imenujemo Schurova forma.
-\end{theorem}
-
-\begin{pro}
-    Z indukcijo na dimenzijo matrike
-
-    \begin{gather*}
-        A = [a_{11}], \\
-        A = [1] [a_{11}] [1]^H
-    \end{gather*}
-    
-    Recimo, da trditev velja za vse $(n-1)\times(n-1)$ matrike. Naj bo $A$ $n\times n$ matrika. Naj bo $x$ njen normiran lastni vektor in $\lambda$
-    pripadajoča lastna vrednost
-    \begin{equation*}
-        Ax = \lambda x
-    \end{equation*}
-    Naj bo $U_1$ taka unitarna matrika, da je $U_1^H x = e_1$. Naj bo $B = U_1^H A U_1$.
-    \begin{gather*}
-        B e_1 = U_1^H A U_1 e_1 = \lambda U_1^H x = \lambda e_1
-    \end{gather*}
-    torej je $B$ oblike
-    (prepiši matriko od Eme)
-
-    Po I.P. obstaja Schurov razcep matrike $C = V_1 T_1 V_1^H$.
-
-    \begin{gather*}
-        B = V T V^H \\
-        U_1^H A_1 U_1 = V T V^H /U_1^H \\
-        A = (U_1 V) T (U_1 V)^H \\
-        A = U T U^H
-    \end{gather*}
-\end{pro}
-
-Schurova forma ni enolična. Vrstni red diagonalnih elementov je lahko poljuben.
-
-Tudi če je $A \in \R^{n\times n}$, je lahko njen schurov razcep kompleksen. Da se izognemo kompleksni aritmetiki, uporabimo tako imenovani Realni Schurov razcep.
-
-\begin{theorem}
-    Za vsako matriko $A \in \R^{n\times n}$ obstajata ortogonalna matrika $Q$ in kvazi-zgornje trikotna matrika $R$, da je
-    \begin{equation*}
-        A = QRQ^T
-    \end{equation*}
-
-    To imenujemo realni Schurov razcep, $R$ pa imenujemo realna Schurova forma.
-\end{theorem}
-
-\begin{rem}
-    Matrika je kvazi-zgornje trikotna, če je bločno zgornje trikotna, pri čemer dopuščamo na diagonali $2 \times 2$ bloke, katerih lastne vrednosti
-    ustrezajo parom kompleksno konjugiranih lastnih vrednosti.
-\end{rem}
-
-\begin{pro}
-    Izpustimo.
-\end{pro}
-
-\subsection{Metode za računanje lastnih vrednosti}
-\begin{itemize}
-    \item Potenčna metoda
-    \item Inverzna iteracija (inverzna potenčna metoda)
-    \item Ortogonalna iteracija
-    \item QR metoda
-\end{itemize}
+%% 15. 5. 2023
+%(metode)
+%
+%\subsubsection*{Sistemi diferencialnih enačb 1. reda}
+%Začetni problem prvega reda za sistem je oblike
+%\begin{align*}
+%    y_1' =& f_1(x, y_1, x_2, \dots, y_d) +& y_1(a) = y_{1, a} \\
+%    y_2' =& f_2(x, y_1, x_2, \dots, y_d) +& y_2(a) = y_{2, a} \\
+%    \vdots& \\ +& \vdots
+%    y_d' =& f_d(x, y_1, x_2, \dots, y_d) +& y_d(a) = y_{d, a}
+%\end{align*}
+%
+%\begin{equation*}
+%    f_j: [a, b] \times \R^d \to \R
+%\end{equation*}
+%
+%Definiramo
+%\begin{equation*}
+%    y = [y_1, y_2, \dots, y_d]^T
+%\end{equation*}
+%
+%\begin{equation*}
+%    y: [a, b] \to \R^d
+%\end{equation*}
+%
+%\begin{equation*}
+%    F = [f_1, f_2, \dots, f_d]^T
+%\end{equation*}
+%
+%\begin{equation*}
+%    F: [a, b]\times \R^d \to \R^d
+%\end{equation*}
+%
+%Sistem lahko sedaj zapišemo kot:
+%\begin{align*}
+%    y' = F(x, Y) \\
+%    Y(a) = Y_a
+%\end{align*}
+%
+%\begin{equation*}
+%    Y_a = [y_{1, a}, y_{2, a}, \dots, y_{d, a}]^T
+%\end{equation*}
+%
+%Vse metode, ki smo jih spoznali, lahko direktno uporabimo za rešenje sistemov diferencialnih enačb prvega reda.
+%
+%npr Euler:
+%\begin{equation*}
+%    Y_{n+1} = Y_n + h F(x, Y_n)
+%\end{equation*}
+%
+%\subsubsection{Reševanje diferencialnih enačb višjega reda}
+%Imamo začetni problem reda $p$:
+%\begin{equation*}
+%    y^{(p)} = f(x, y, y', y'', \dots, y^{(p)})
+%    y(a) = y_{a, 1}
+%    y'(a) = y_{a, 2}
+%    \vdots
+%    y'{(p-1)} = y_{a, p}
+%\end{equation*}
+%
+%Problem prevedemo na sistem $p$ difeencialnih enačb prvega reda:
+%
+%Definiramo "nove" neznane funkcije $z_1, z_2, \dots, z_{p-1}$:
+%\begin{align*}
+%    z_1 = y'\\
+%    z_2 = z_1' = y'' \\
+%    z_3 = z_2' = y''' \\
+%    \vdots \\
+%    z_{p-1} = z_{p-1}' = y{(p-1)}
+%    z_{p-1}' = y^{(p)} = f(x, y, z_1, z_2, \dots, z_{p-1})
+%\end{align*}
+%
+%\begin{equation*}
+%    [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T' = [z_1, z_2, \dots, z_{p-1}, f(x, y, z_1, z_2, \dots, z_{p-1})]
+%\end{equation*}
+%
+%\begin{equation*}
+%    Y = [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T = [Y(1), Y(2), \dots, Y(p)]^T
+%\end{equation*}
+%
+%\begin{equation*}
+%    F(x, Y) = [Y(2), Y(3), \dots, Y(p), f(x, Y(1), \dots, Y(p))]^T
+%\end{equation*}
+%
+%primer (nisem prepisal)
+%
+%Matlab:
+%\begin{equation*}
+%    F = @(x, y)([y(2), x + y(2) + y(1)^2])
+%\end{equation*}
+%
+%\begin{align*}
+%    function [x, y] = IME(F, a, b, h, y0) \\
+%    (komentar)
+%    x = a:h:b;
+%    y = zeros(length(y0), length(x)); \\
+%    y(:, 1) = y0;
+%    for n=2:length(x)\\
+%        k1 = h * F(x(n-1), y(:, n-1)); \\
+%        y(:, n) = y(:, n-1) + k1; \\
+%    end
+%\end{align*}
+%
+%\subsection{Veččlenske metode}
+%$k$-členska metoda:
+%pri izračunu približka $y_n \approx y(x_n)$ uporabimo $k$ vrednosti:
+%\begin{equation*}
+%    y_{n-1}, y_{n-}, y_{n-3}, \dots, y_{n-k}
+%\end{equation*}
+%
+%Splošna linearna $k$-členska metoda je oblike:
+%\begin{equation*}
+%    y_n =& \sum_{i=1}^{k} \alpha_i y_{n-i} + h \sum_{i=0}^{k} \beta_i F(x_{n-i}, y_{n-i})
+%\end{equation*}
+%
+%Pri tem so $\alpha_i$ in $\beta_i$ koeficienti, ki določajo metodo. Določimo jih tako, da je metoda konvergentna in čim višjega reda.
+%Metoda je eksplicitna, če je $\beta_0 = 0$. Sicer je implicitna.
+%
+%
+%$k$-členske metode so hitrejše od enočlenskih.
+%Slabosti: spreminjanje koraka $h$ ni enostavno.
+%
+%Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}k$ moramo določiti z neko enočlensko metodo.
+%
+%PAZI: Izbrati moramo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
+%
+%Najbolj znani razredi teh metod so (probably na ustnih)
+%\begin{itemize}
+%    \item Adamsove metode:
+%    \begin{equation*}
+%        y' = f(x, y) \\
+%        y(a) = y_a
+%    \end{equation*}
+%    Ideja je, da to enačbo integriramo:
+%    \begin{equation*}
+%        \int_{x_{n-1}}^{x_n} 
+%    \end{equation*}
+%    (skica)
+%    brez $x_n$ je eksplicitna, z njo pa implicitna. Funkcijo $f(x, y(x))$ nadomestimo z interpolacijskim polinomom.
+%    (primer)
+%    \item Milneove metode
+%    Ideja za izpeljavo: doferencialno enačbo $y' = f(x, y)$ integriramo na $[x_{n-k}, x_n]$, integral funkcije $f(x, y(x))$ pa nadomestimo
+%    z izbranim integracijskim pravilom.
+%    \begin{itemize}
+%        \item odprta pravila - eksplicitne metode
+%        \item zaprta pravila - implicitne metode
+%    \end{itemize}
+%    (primer)
+%    \item BDF metode
+%    Odvod $y'(x_n) = f(x_n, y(x_n))$ aproksimiramo z diferencami.
+%    (primer?=)
+%    \begin{equation*}
+%        y_n = \frac{4}{3} y_{n-1} - \frac{1}{3} y_{n-1} + \frac{2}{3} h f_n
+%    \end{equation*}
+%\end{itemize}
+%
+%% 22. 5. 2023
+%(primer - z dvočlensko eksplicitno adamsovo metodo določi približek)
+%
+%\section{Numerično računanje lastnih vrednosti}
+%
+%Naj bo $A \in \C^{n \times n}$. Če neničeln vektor $x \in \C^n$ in skalar $\lambda \in \C$ zadoščata enačbi
+%\begin{equation*}
+%    Ax = \lambda x
+%\end{equation*}
+%
+%potem je $x$ (desni) lastni vektor za lastno vrednost $\lambda$.
+%
+%Levi lastni vektorji:
+%\begin{equation*}
+%    y^H A = \lambda y^H
+%\end{equation*}
+%
+%Če to hermitsko transponiramo:
+%\begin{equation*}
+%    A^H y = \tilde{\lambda} y
+%\end{equation*}
+%
+%Matriko $A$ se da diagonalizirati, če obstajata nesingularna matrika $X = [x_1, x_2, \dots, x_n]$ in diagonalna matrika $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n)$,
+%da velja
+%\begin{equation*}
+%    A = X \Lambda X^{-1}
+%\end{equation*}
+%
+%Če je $S$ nesingularna matrika, potem sta $A$ in $B = S^{-1}AS$ podobni matriki.
+%
+%\begin{gather*}
+%    Ax = \lambda x \\
+%    S^{-1} AS S^{-1} = S^{-1} \lambda x \\
+%    B(S^{-1} x) = \lambda (S^{-1} x)
+%\end{gather*}
+%
+%
+%Lastne vrednosti so ničle karakterističnega polinoma
+%\begin{equation*}
+%    p(\lambda) = det(A - \lambda I)
+%\end{equation*}
+%
+%Algebraična in geometrijska večkratnost lastne vrednosti:
+%\begin{itemize}
+%    \item algebraična - 
+%    \item geometrijska - dimenzija jedra $A - \lambda I$
+%\end{itemize}
+%
+%Ker so lastne vrednosti v bistvu ničle polinoma, so vsi algoritmi za računanje lastnih vrednosti iterativni. Numerično lastnih vrednosti ne računamo
+%preko ničel karakterističnega polinoma. Zakaj? Ker je že računanje koeficientov karakterističnega polinoma težavno, ničle polinomov pa so zelo občutljive
+%na minimalne spremembe koeficientov. Računanje preko karakterističnih polinomov je torej nestabilno.
+%
+%Računanje Jordanove kanonične forme ni obratno stabilno.
+%
+%\subsection{Schurova forma}
+%
+%\begin{theorem}
+%    Za vsako $n \times n$ matriko $A$ obstajata unitarna matrika $U$ in zgornje trikotna matrika $T$, da je
+%    \begin{equation*}
+%        A = U T U^H
+%    \end{equation*}
+%
+%    Temu pravimo Schurov razcep, $T$ pa imenujemo Schurova forma.
+%\end{theorem}
+%
+%\begin{pro}
+%    Z indukcijo na dimenzijo matrike
+%
+%    \begin{gather*}
+%        A = [a_{11}], \\
+%        A = [1] [a_{11}] [1]^H
+%    \end{gather*}
+%    
+%    Recimo, da trditev velja za vse $(n-1)\times(n-1)$ matrike. Naj bo $A$ $n\times n$ matrika. Naj bo $x$ njen normiran lastni vektor in $\lambda$
+%    pripadajoča lastna vrednost
+%    \begin{equation*}
+%        Ax = \lambda x
+%    \end{equation*}
+%    Naj bo $U_1$ taka unitarna matrika, da je $U_1^H x = e_1$. Naj bo $B = U_1^H A U_1$.
+%    \begin{gather*}
+%        B e_1 = U_1^H A U_1 e_1 = \lambda U_1^H x = \lambda e_1
+%    \end{gather*}
+%    torej je $B$ oblike
+%    (prepiši matriko od Eme)
+%
+%    Po I.P. obstaja Schurov razcep matrike $C = V_1 T_1 V_1^H$.
+%
+%    \begin{gather*}
+%        B = V T V^H \\
+%        U_1^H A_1 U_1 = V T V^H /U_1^H \\
+%        A = (U_1 V) T (U_1 V)^H \\
+%        A = U T U^H
+%    \end{gather*}
+%\end{pro}
+%
+%Schurova forma ni enolična. Vrstni red diagonalnih elementov je lahko poljuben.
+%
+%Tudi če je $A \in \R^{n\times n}$, je lahko njen schurov razcep kompleksen. Da se izognemo kompleksni aritmetiki, uporabimo tako imenovani Realni Schurov razcep.
+%
+%\begin{theorem}
+%    Za vsako matriko $A \in \R^{n\times n}$ obstajata ortogonalna matrika $Q$ in kvazi-zgornje trikotna matrika $R$, da je
+%    \begin{equation*}
+%        A = QRQ^T
+%    \end{equation*}
+%
+%    To imenujemo realni Schurov razcep, $R$ pa imenujemo realna Schurova forma.
+%\end{theorem}
+%
+%\begin{rem}
+%    Matrika je kvazi-zgornje trikotna, če je bločno zgornje trikotna, pri čemer dopuščamo na diagonali $2 \times 2$ bloke, katerih lastne vrednosti
+%    ustrezajo parom kompleksno konjugiranih lastnih vrednosti.
+%\end{rem}
+%
+%\begin{pro}
+%    Izpustimo.
+%\end{pro}
+%
+%\subsection{Metode za računanje lastnih vrednosti}
+%\begin{itemize}
+%    \item Potenčna metoda
+%    \item Inverzna iteracija (inverzna potenčna metoda)
+%    \item Ortogonalna iteracija
+%    \item QR metoda
+%\end{itemize}
 
 
 
