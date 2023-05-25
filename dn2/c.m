@@ -1,4 +1,4 @@
-function y = %rk4(x, f, y0)
+function y = c(x, f, y0)
 % Opis:
 %  Funkcija rk4 vrne numericno resitev sistema navadnih diferencialnih enacb
 %  y' = f(x, y) pri pogoju y(x(1)) = y0, ki je izracunana z Runge-Kutta metodo stopnje 4.
