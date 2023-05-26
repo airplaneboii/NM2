@@ -19,7 +19,7 @@ function y = navadnaIteracija(xn, xn1, yn, f, tol)
     yp = yn;
     h = xn1 - xn;
 
-    while nap > tol*norm(yn) && k < 100
+    while k < 3%ap > tol*norm(yn) && k <= 3
         ynk = yp + (h/2)* (f(xn, yp) + f(xn1, yn));
         nap = norm(ynk - yn);
         yn = ynk;
