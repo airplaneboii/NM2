@@ -20,6 +20,28 @@
 \usepackage{algorithm}
 \usepackage{algorithmicx}
 \usepackage{algpseudocode}
+\usepackage{listings}
+
+\lstdefinestyle{matlab}{
+  language=Matlab,
+  basicstyle=\ttfamily,
+  keywordstyle=\color{blue},
+  commentstyle=\color{green!50!black},
+  stringstyle=\color{red},
+  showstringspaces=false,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  stepnumber=1,
+  numbersep=5pt,
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=2,
+  frame=single,
+  captionpos=b,
+  columns=fullflexible
+}
+
+
 
 \algdef{SE}[DOWHILE]{Do}{doWhile}{\algorithmicdo}[1]{\algorithmicwhile\ #1}%
 
@@ -2536,7 +2558,7 @@ R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in
 % 15. 5. 2023
 %(metode)
 
-\subsubsection*{Sistemi diferencialnih enačb 1. reda}
+\subsubsection{Sistemi diferencialnih enačb 1. reda}
 Začetni problem prvega reda za sistem je oblike
 \begin{align*}
     y_1' =& f_1(x, y_1, x_2, \dots, y_d) + y_1(a) = y_{1, a} \\
@@ -2544,113 +2566,198 @@ Začetni problem prvega reda za sistem je oblike
     \vdots& \\
     y_d' =& f_d(x, y_1, x_2, \dots, y_d) + y_d(a) = y_{d, a}
 \end{align*}
-
+pri čemer za $j \in [1, d]$ velja
 \begin{equation*}
     f_j: [a, b] \times \R^d \to \R
 \end{equation*}
 
-
-
-% od tu naprej
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-
 Definiramo
-\begin{equation*}
-    y = [y_1, y_2, \dots, y_d]^T
-\end{equation*}
-
-\begin{equation*}
-    y: [a, b] \to \R^d
-\end{equation*}
-
-\begin{equation*}
-    F = [f_1, f_2, \dots, f_d]^T
-\end{equation*}
-
-\begin{equation*}
+\begin{gather*}
+    y = \begin{bmatrix}
+        y_1 \\
+        y_2 \\
+        \vdots \\
+        y_d
+    \end{bmatrix}, y: [a, b] \to \R^d \\
+    F = \begin{bmatrix}
+        f_1 \\
+        f_2 \\
+        \vdots \\
+        f_d
+    \end{bmatrix}, 
     F: [a, b]\times \R^d \to \R^d
-\end{equation*}
+\end{gather*}
 
 Sistem lahko sedaj zapišemo kot:
-\begin{align*}
+\begin{gather*}
     y' = F(x, Y) \\
-    Y(a) = Y_a
-\end{align*}
-
-\begin{equation*}
-    Y_a = [y_{1, a}, y_{2, a}, \dots, y_{d, a}]^T
-\end{equation*}
+    Y(a) = Y_a \\
+    Y_a = \begin{bmatrix}
+        y_{1, a} \\
+        y_{2, a} \\
+        \vdots \\
+        y_{d, a}
+    \end{bmatrix}
+\end{gather*}
 
 Vse metode, ki smo jih spoznali, lahko direktno uporabimo za rešenje sistemov diferencialnih enačb prvega reda.
 
-npr Euler:
+Uporabimo na primer Eulerjevo metodo:
 \begin{equation*}
     Y_{n+1} = Y_n + h F(x, Y_n)
 \end{equation*}
 
 \subsubsection{Reševanje diferencialnih enačb višjega reda}
 Imamo začetni problem reda $p$:
-\begin{equation*}
-    y^{(p)} = f(x, y, y', y'', \dots, y^{(p)})
-    y(a) = y_{a, 1}
-    y'(a) = y_{a, 2}
-    \vdots
+\begin{gather*}
+    y^{(p)} = f(x, y, y', y'', \dots, y^{(p)}) \\
+    y(a) = y_{a, 1} \\
+    y'(a) = y_{a, 2} \\
+    \vdots \\
     y'{(p-1)} = y_{a, p}
-\end{equation*}
+\end{gather*}
 
 Problem prevedemo na sistem $p$ difeencialnih enačb prvega reda:
 
-Definiramo "nove" neznane funkcije $z_1, z_2, \dots, z_{p-1}$:
+Definiramo ``nove'' neznane funkcije $z_1, z_2, \dots, z_{p-1}$:
 \begin{align*}
-    z_1 = y'\\
-    z_2 = z_1' = y'' \\
-    z_3 = z_2' = y''' \\
+    z_1 &= y'\\
+    z_2 &= z_1' = y'' \\
+    z_3 &= z_2' = y''' \\
     \vdots \\
-    z_{p-1} = z_{p-1}' = y{(p-1)}
-    z_{p-1}' = y^{(p)} = f(x, y, z_1, z_2, \dots, z_{p-1})
+    z_{p} &= z_{p-1}' = y^{(p-1)} \\
+    z_{p-1}' &= y^{(p)} = f(x, y, z_1, z_2, \dots, z_{p-1})
 \end{align*}
 
+Zgornje funkcije spravimo v vektorsko obliko
 \begin{equation*}
-    [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^{T'} = [z_1, z_2, \dots, z_{p-1}, f(x, y, z_1, z_2, \dots, z_{p-1})]
+    \begin{bmatrix}
+        y \\
+        z_1 \\
+        z_2 \\
+        \vdots \\
+        z_{p-2} \\
+        z_{p-1}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        z_1 \\
+        z_2 \\
+        \vdots \\
+        z_{p-1} \\
+        f(x, y, z_1, z_2, \dots, z_{p-1})
+    \end{bmatrix}
+\end{equation*}
+Zapišemo
+\begin{equation*}
+    Y = \begin{bmatrix}
+        y \\
+        z_1 \\
+        z_2 \\
+        \vdots \\
+        z_{p-2} \\
+        z_{p-1}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        Y(1) \\
+        Y(2) \\
+        \vdots \\
+        Y(p)
+    \end{bmatrix}
+\end{equation*}
+Z uporabo $Y$ dobimo funkcijo $F$
+\begin{equation*}
+    F(x, Y) = \begin{bmatrix}
+        Y(2) \\
+        Y(3) \\
+        \vdots \\
+        Y(p) \\
+        f(x, Y(1), \dots, Y(p))
+    \end{bmatrix}
 \end{equation*}
 
-\begin{equation*}
-    Y = [y, z_1, z_2, \dots, z_{p-2}, z_{p-1}]^T = [Y(1), Y(2), \dots, Y(p)]^T
-\end{equation*}
+\begin{ex}
+    \begin{gather*}
+        y'' = xy' + y^2 \\
+        y(0) = 1 \\
+        y'(0) = 2
+    \end{gather*}
+    Reševanje:
+    \begin{gather*}
+        z = y' \\
+        z' = y'' = xz + y^2
+    \end{gather*}
 
-\begin{equation*}
-    F(x, Y) = [Y(2), Y(3), \dots, Y(p), f(x, Y(1), \dots, Y(p))]^T
-\end{equation*}
+    Dobimo sistem:
+    \begin{gather*}
+        \begin{bmatrix}
+            y \\
+            z
+        \end{bmatrix}' = \begin{bmatrix}
+            z \\
+            xz + y^2
+        \end{bmatrix} \\
+        Y = \begin{bmatrix}
+            y \\
+            z
+        \end{bmatrix}, F(x, y) = \begin{bmatrix}
+            Y[2] \\
+            x Y[2] + Y[1]^2
+        \end{bmatrix} \\
+        Y_0 = \begin{bmatrix}
+            1 \\
+            2
+        \end{bmatrix}
+    \end{gather*}
+    Izberimo $h = \frac{1}{10}$ in shemo
+    \begin{center}
+        \begin{tabular}{c|c c}
+            $0$ & $0$ & $0$ \\
+            $\frac{1}{2}$ & $\frac{1}{2}$ & $0$ \\
+            \hline
+            & $0$ & $1$
+        \end{tabular}
+    \end{center}
+    Izračunamo
+    \begin{gather*}
+        y_1 \approx y(\frac{1}{10}), z_1 \approx y'(\frac{1}{10}) \\
+        K_1 = h F(x_0, Y_0) = \frac{1}{10} F(0, \begin{bmatrix}
+            1 \\
+            2
+        \end{bmatrix}) = \begin{bmatrix}
+            0.2 \\
+            0.1
+        \end{bmatrix} \\
+        K_2 = h F(x_0 + \frac{1}{2}h, Y_0 + \frac{1}{2} K_1) = \dots = \begin{bmatrix}
+            0.205 \\
+            0.13125
+        \end{bmatrix} \\
+        Y_1 = Y_0 + K_2 = \begin{bmatrix}
+            1.205 \\
+            2.13125
+        \end{bmatrix} = \begin{bmatrix}
+            y(\frac{1}{10}) \\
+            y'(\frac{1}{10})
+        \end{bmatrix}
+    \end{gather*}
+\end{ex}
 
-primer (nisem prepisal)
-
-Matlab:
-\begin{equation*}
+Zgornji primer rešimo v Matlab-u s kodo:
+\begin{lstlisting}[style=matlab, label=matlab-code]
     F = @(x, y)([y(2), x + y(2) + y(1)^2])
-\end{equation*}
-
-\begin{align*}
-    function [x, y] = IME(F, a, b, h, y0) \\
-    (komentar)
-    x = a:h:b;
-    y = zeros(length(y0), length(x)); \\
-    y(:, 1) = y0;
-    for n=2:length(x)\\
-        k1 = h * F(x(n-1), y(:, n-1)); \\
-        y(:, n) = y(:, n-1) + k1; \\
+    
+    function [x, y] = IME(F, a, b, h, y0) % (komentar)
+        x = a:h:b;
+        y = zeros(length(y0), length(x));
+        y(:, 1) = y0;
+        for n=2:length(x)
+            k1 = h * F(x(n-1), y(:, n-1));
+            y(:, n) = y(:, n-1) + k1;
+        end
     end
-\end{align*}
+    \end{lstlisting}
+    
 
 \subsection{Veččlenske metode}
 $k$-členska metoda:
@@ -2667,13 +2774,9 @@ Splošna linearna $k$-členska metoda je oblike:
 Pri tem so $\alpha_i$ in $\beta_i$ koeficienti, ki določajo metodo. Določimo jih tako, da je metoda konvergentna in čim višjega reda.
 Metoda je eksplicitna, če je $\beta_0 = 0$. Sicer je implicitna.
 
+Prednost $k$-členskih metod je, da so hitrejše od enočlenskih. Slabost pa je, da spreminjanje koraka $h$ ni enostavno.
 
-$k$-členske metode so hitrejše od enočlenskih.
-Slabosti: spreminjanje koraka $h$ ni enostavno.
-
-Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}k$ moramo določiti z neko enočlensko metodo.
-
-PAZI: Izbrati moramo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
+Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}k$ moramo določiti z neko enočlensko metodo. Pri tem moramo paziti, da izberemo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
 
 Najbolj znani razredi teh metod so (probably na ustnih)
 \begin{itemize}
