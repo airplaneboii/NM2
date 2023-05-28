@@ -725,7 +725,7 @@ $X \in \mathscr{C}([a, b])$
 \begin{figure}[h]
     \center
     \includegraphics[scale=0.25]{mnk_tretja.png}
-    \caption{Druga norma, porojena iz zveznega (levo) in diskretnega (desno) skalarnega produkta}
+    \caption{Druga norma, porojena iz zveznega (levo) in diskretnega (desno) skalarnega produkta.}
 \end{figure}
 
 \subsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
@@ -740,7 +740,17 @@ Problem: Za dano funkcijo $f \in \mathscr{C} ([a, b])$ iščemo polinom $p^* \in
 $p^*$ imenujemo $\textbf{polinom najboljše enakomerne aproksimacije (PNEA)}$.
 Problem je nelinearen.
 
-(vstavi skico)
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.25]{poly_1.jpg}
+    \caption{Iščemo polinom $p$, ki se bo funkciji $f$ najbolje prilegal po neskončni normi.}
+\end{figure}
+
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.25]{poly_diff.jpg}
+    \caption{Prikaz razlike med drugo in neskončno normo. Medtem ko je druga norma tu relativno nizka, je neskončna zelo velika.}
+\end{figure}
 
 Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PNEA za neko funkcijo.
 \begin{theorem}
@@ -762,7 +772,11 @@ in
     r(x_i)r(x_{i+1}) < 0 \forall i
 \end{equation*}
 
-(vstavi graf)
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.25]{residual.jpg}
+    \caption{Graf residuala.}
+\end{figure}
 
 \begin{proof}
     Dokaz s protislovjem.
@@ -833,8 +847,16 @@ ter koeficient $m$, za katerega velja
     \left| m \right| = M_n (f, E)
 \end{equation*}
 
-(vstavi slikco)
+\begin{figure}[h]
+    \center
+    \includegraphics[scale=0.25]{residual_build.jpg}
+    \caption{Iskanje PNEA s pomočjo residuala.}
+\end{figure}
 
+V prvem koraku normalno pričnemo z ekvidistantnimi točkami. V drugem koraku poiščemo dejanski ekstrem in eno točko pomaknemo tja, pri čemer pazimo na alteriranje. Tako dobimo nov polinom.
+
+
+\newpage
 \section{Interpolacija}
 Problem: Podane imamo vrednosti izbrane funkcije $f$ v $n+1$ paroma različnih točkah $x_0, x_1, \dots, x_n$ na realni osi. Te točke bomo imenovali
 $\textbf{interpolacijske}$ $\textbf{točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pohojem
@@ -995,6 +1017,7 @@ kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
 \end{lemma}
 \begin{proof}
     Sledi iz enoličnosti interpolacijskega polinoma.
+    % (morda preprost primer enoličnosti?) TODO
 \end{proof}
 
 \begin{conseq}
