@@ -2992,10 +2992,217 @@ Tudi če je $A \in \R^{n\times n}$, je lahko njen schurov razcep kompleksen. Da 
     \item QR metoda
 \end{itemize}
 
+% 29.5.2023
+\subsubsection{Potenčna metoda}
+Za dano matriko $A \in \R^{n \times m}$ iščemo dominantno lastno vrednost in pripadajoč lastni vektor.
+
+\rem{Dominantna lastna vrednost je tista, ki je po absolutni vrednosti največja.}
+
+\begin{algorithm}
+    \caption{Osnovna različica algoritma}
+    \begin{algorithmic}[1]
+        \State $z_0 \in \mathbb{R}^n$
+        \State $k \gets 0$
+        \While{true}
+            \State $y_{k+1} = A z_k$
+            \State $z_{k+1} = \frac{y_{k+1}}{\|y_{k+1}\|}$
+            \State $k \gets k + 1$
+            \If{$\norm{A z_k - \rho_k z_k} < \epsilon$} \Comment{Stop condition}
+                \State \textbf{break}
+            \EndIf
+        \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+Dobimo zaporedje vektorjev $z_0, z_1, z_2, \dots$
+
+\begin{theorem}
+    Naj bo $A \in \R^{n \times m}$ in naj bo $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \dots \geq |\lambda_n| \geq 0$ njene lastne vrednosti.
+    Potem za poljubni začetni vektor $z_0$ zaporednje vektorjev $(z_k)_k$, ki ga tvori potenčna metoda, konvergira (numerično) proti dominantnemu lastnemu 
+    vektorju, to je lastnemz vektorju za $\lambda_1$.
+\end{theorem}
+
+\begin{proof}
+    Izrek velja za poljubno matriko, dokazali pa ga bomo za matriko $A$, ki se da diagonalizirati. To je
+    \begin{gather*}
+        A = X \Lambda X^{-1}, \Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n), X = [x_1, x_2, \dots, x_n] \in \R^{n \times m}
+    \end{gather*}
+    Začetni vektor $z_0$ razvijemo po bazi lastnih vektorjev:
+    \begin{gather*}
+        z_0 = \sum_{i = 1}^{n} \alpha_i x_i \\
+        z_k = \frac{A z_{k-1}}{\norm{A z_{k-1}}} = \frac{A (\frac{A z_{k-1}}{\norm{A z_{k-2}}})}{A (\frac{A z_{k-2}}{\norm{A z_{k-2}}})} = \dots \frac{A^k z_0}{\norm{A^k z_0}} = (*) \\ 
+        A^k z_0 = \sum_{i=1}^{n} \alpha_i A^k x_i = \sum_{i=1}^{n} \alpha_i \lambda_i^k x_i \\
+        z_k = \frac{\alpha_1 \lambda_1^k x_1 + \sum_{i=1}^{n}\alpha_i \lambda_i^k x_i}{\norm{\alpha_1 \lambda_1^k x_1 + \sum_{i=1}^{n}\alpha_i \lambda_i^k x_i}} = \pm \frac{\alpha_1 x_1 + \sum_{i=1}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}{\norm{\alpha_1 x_1 + \sum_{i=1}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}} \\
+        \xrightarrow[k \to \infty]{} \pm \frac{\alpha_1 x_1}{\norm{\alpha_1 x_1}} = \pm \frac{x_1}{\norm{x_1}}
+    \end{gather*}
+    Pri čemer mora veljati, da $\alpha_1 \neq 0$.
+\end{proof}
+
+\rem{V izreku nismo navedli predpostavke, da mora biti $\alpha_1 \neq 0$, saj je ta predpostavka vedno izpolnjena zaradi zaokrožitvenih napak.}
+
+Potrebujemo še približek za lastno vrednost (da bomo lahko ugotovili, ali je postopek že skonvergiral).
+
+Naj bo $x$ približek za lastni vektor.
+\begin{equation*}
+    Ax = \lambda x
+\end{equation*}
+Imamo sistem $n$ enačb z eno neznanko, torej predoločen sistem enačb. Zapišemo ga lahko kot
+\begin{gather*} % poskusi polepšati, da bo kot je bilo na tabli
+    x \lambda = A x \\
+    \begin{bmatrix}
+        x
+    \end{bmatrix} \begin{bmatrix}
+        \lambda
+    \end{bmatrix} = \begin{bmatrix}
+        Ax
+    \end{bmatrix}
+\end{gather*}
+
+Rešitev po metodi najmanjših kvadratov:
+\begin{gather*}
+    min_{\lambda \in \R} \norm{Ax - \lambda x}_2 \\
+    x^T x \lambda = x^T A x \\
+    \lambda = \frac{x^T A x}{x^T x}
+\end{gather*}
+
+Označimo $\rho (x, A) = \frac{x^T A x}{x^T x}$, kar imenujemo Rayleighov kvocient.
+
+Zaustavitveni kriterij pri potenčni metodi:
+\begin{gather*}
+    z_k \\
+    \rho_k = z_k^T A z_k \\
+    \norm{A z_k - \rho_k z_k} < toleranca
+\end{gather*}
+
+%Algoritem:
+%Vhodni podatki: $A$, toleranca $tol$
+%Izberi normiran vektor $z_0$
+%$y_1 = A z_0$
+%$\rho_0 = z_0^T y_1$
+%k = 0
+%while ($\norm{y_{k+1} - \rho_k z_k} > tol$) and ($k < max_koraki$):
+%    k = k + 1
+%    $z_k = \frac{y_k}{\norm{y_k}}$
+%    $y_{k+1} = A z_k$
+%    $\rho_k = z_k^T y_{k+1}$
+%end
 
 
+\begin{algorithm}
+    \caption{Potenčna metoda}
+    \begin{algorithmic}[1]
+    \State \textbf{Input:} $A$, toleranca $tol$
+    \State Izberi normiran vektor $z_0$
+    \State $y_1 = A z_0$
+    \State $\rho_0 = z_0^T y_1$
+    \State $k = 0$
+    \While{$(\|y_{k+1} - \rho_k z_k\| > tol)$ and $(k < \text{max\_steps})$}
+        \State $k = k + 1$
+        \State $z_k = \frac{y_k}{\|y_k\|}$
+        \State $y_{k+1} = A z_k$
+        \State $\rho_k = z_k^T y_{k+1}$
+    \EndWhile
+    \end{algorithmic}
+\end{algorithm}
 
 
+Konvergenca potenčne metode je linearna in je odvisna od razmerja $|\frac{\lambda_1}{\lambda_2}|$.
 
+\subsubsection{Inverzna iteracija (inverzna potenčna metoda)}
+
+Naj bo$\sigma$ približek za lastno vrednost. Kako bi izračunali tisto lastno vrednost, ki je najbližja $\sigma$ in pripadajoč lastni vektor.
+
+Naj velja
+\begin{equation*}
+    \| \lambda_i - \sigma \| < \| \lambda_j - \sigma\|, j \neq i
+\end{equation*}
+
+Poglejmo si matriki $(A - \sigma I)^{-1}$. Naj velja $A = X \Lambda X^{-1}$.
+\begin{align*}
+    (A - \sigma I)^{-1} &= (X \Lambda X^{-1} - \sigma X X^{-1})^{-1} \\
+                        &= X (\Lambda - \sigma I^{-1})^{-1} X^{-1} \\
+                        &= X \begin{bmatrix}
+                            \frac{1}{\lambda_1 - \sigma} & & & & \\
+                            & \ddots & & & \\
+                            & & \frac{1}{\lambda_i - \sigma} & & \\
+                            & & & \ddots & \\
+                            & & & & \frac{1}{\lambda_n - \sigma}
+                        \end{bmatrix} X^{-1}
+\end{align*}
+
+Vidimo, da je $\frac{1}{\lambda_i - \sigma}$ dominantna lastna vrednost za $(A - \sigma I)^{-1}$. Lastni vektorji matrike $A$ in $(A - \sigma I)^{-1}$ so enaki.
+
+%Inverzna iteracija:
+%Izberi začetni vektor $z_0$ (normiran).
+%ponavljaj k = 0, 1, 2, \dots
+%    $y_{k+1} = (A - \sigma I)^{-1} z_k$  KOMENTAR: numerično: Repimo sistem linearnih enačb $(A - \sigma I) y_{k+1} = z_k$
+%    $z_{k+1} = \frac{y_{k+1}}{\norm{y_{k+1}}}$
+
+\begin{algorithm}
+    \caption{Inverzna iteracija}
+    \begin{algorithmic}[1]
+    \State Izberi normiran vektor $z_0$ (normaliziran).
+    \While{$k = 0, 1, 2, \dots$}
+        \State $y_{k+1} = (A - \sigma I)^{-1} z_k$ \Comment{numerično: rešimo sistem linearnih enačb $(A - \sigma I) y_{k+1} = z_k$.}
+        \State $z_{k+1} = \frac{y_{k+1}}{\|y_{k+1}\|}$
+    \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+\rem{Če inverzno iteracijo kombiniramo z Rayleighovim kvocientom dobimo Rayleighovo iteracijo}
+%Izberi normiran $z_0$
+%ponavljaj $k = 0, 1, 2, \dots$
+%    $\sigma_k = \rho(z_k, A)$
+%    reši sistem $(A - \sigma_k I) y_{k+1} = z_k$
+%    $z_{k+1} = \frac{y_{k+1}}{\|y_{k+1}\|}$
+
+\begin{algorithm}
+    \caption{Rayleighovo iteracija}
+    \begin{algorithmic}[1]
+    \State Izberi normiran vektor $z_0$
+    \While{$k = 0, 1, 2, \dots$}
+        \State $\sigma_k = \rho(z_k, A)$
+        \State Reši sistem $(A - \sigma_k I) y_{k+1} = z_k$
+        \State $z_{k+1} = \frac{y_{k+1}}{\|y_{k+1}\|}$
+    \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+\subsubsection{Ortogonalna iteracija}
+
+Podprostor $N \subseteq \R^n$ je invarianten za $A \in \R^{n \times n}$, če je $A N \subseteq N$.
+
+Naj za $A$ velja $|\lambda_1| \geq |\lambda_2| \geq \dots \geq |\lambda_p| > |\lambda_{p+1}| \geq \dots \geq |\lambda_n| \geq 0$
+
+Podprostor $Lin\{x_1, x_2, \dots, x_p\}$ se imenuje dominantni invariantni podprostor. Izračunamo ga z ortogonalno iteracijo.
+
+%Algoritem (ortogonalna iteracija)
+%Vhodni podatki: matrika $A \in \R^{n \times n}$, $p \in {1, 2, \dots, n}$
+%Izberi začetno matriko $T_o \in \R^{n \times p}$ z ortonormiranimi stolpci
+%ponavljaj $k = 0, 1, 2, ...$
+%    $Y_{k+1} = A Z_k$
+%    Izračunaj QR razcep matrike $Y_{k+1}$, torej $Y_{k+1} = QR$
+%    $Z_{k+1} = Q$
+
+\begin{algorithm}
+    \caption{Ortogonalna iteracija}
+    \begin{algorithmic}[1]
+    \Require Matrika $A \in \mathbb{R}^{n \times n}$, $p \in \{1, 2, \dots, n\}$
+    \State Izberi začetno matriko $T_0 \in \mathbb{R}^{n \times p}$ z ortonormiranimi stolpci
+    \While{$k = 0, 1, 2, \dots$}
+        \State $Y_{k+1} = A Z_k$
+        \State Izračunaj QR razcep matrike $Y_{k+1}$, torej $Y_{k+1} = QR$
+        \State $Z_{k+1} = Q$
+    \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{theorem}
+    Naj bo $A = X \Lambda X^{-1}$, $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n)$, $X = \begin{bmatrix}
+        x_1 & x_2 & \dots & x_n
+    \end{bmatrix}$ in naj velja $|\lambda_1| \geq |\lambda_2| \geq \dots \geq |\lambda_p| > |\lambda_{p+1}| \geq \dots \geq |\lambda_n| \geq 0$.
+    Potem za poljubno začetno matriko $Z_0 \in \R^{n \times p}$, $Z_0^T Z_0 = I$, zaporedje matrik $(Z_k)_k$ konvergira protu matriki,
+    katere stolpci tvorijo bazo za dominantni invariantni podprostor $Lin\{x_1, x_2, \dots, x_p\}$.
+\end{theorem}
 
 \end{document}
