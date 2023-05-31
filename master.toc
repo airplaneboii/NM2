@@ -1,0 +1,49 @@
+\babel@toc {slovene}{}\relax 
+\contentsline {section}{\numberline {1}Teorija aproksimacije}{1}{section.1}%
+\contentsline {subsection}{\numberline {1.1}Aproksimacija funkcij}{1}{subsection.1.1}%
+\contentsline {subsubsection}{\numberline {1.1.1}Splo"sen optimalni aproksimacijski problem}{3}{subsubsection.1.1.1}%
+\contentsline {subsection}{\numberline {1.2}Aproksimacija po metodi najmanjših kvadratov (MNK)}{4}{subsection.1.2}%
+\contentsline {subsubsection}{\numberline {1.2.1}Normalni oziroma Gramov sistem enačb}{6}{subsubsection.1.2.1}%
+\contentsline {subsubsection}{\numberline {1.2.2}Povezava s predoločenimi sistemi enačb}{10}{subsubsection.1.2.2}%
+\contentsline {subsection}{\numberline {1.3}Enakomerna aproksimacija zveznih funkcij s polinomi}{12}{subsection.1.3}%
+\contentsline {section}{\numberline {2}Interpolacija}{16}{section.2}%
+\contentsline {subsection}{\numberline {2.1}Polinomska interpolacija}{16}{subsection.2.1}%
+\contentsline {subsubsection}{\numberline {2.1.1}Lagrangeva oblika zapisa interpolacijskega polinoma}{17}{subsubsection.2.1.1}%
+\contentsline {subsubsection}{\numberline {2.1.2}Newtonova oblika zapisa interpolacijskega polinoma}{21}{subsubsection.2.1.2}%
+\contentsline {subsubsubsection}{\numberline {2.1.2.1}Trikotna shema}{24}{subsubsubsection.2.1.2.1}%
+\contentsline {subsubsubsection}{\numberline {2.1.2.2}Posplošitev deljene diference}{26}{subsubsubsection.2.1.2.2}%
+\contentsline {subsubsubsection}{\numberline {2.1.2.3}Posplošitev rekurzivne formule}{26}{subsubsubsection.2.1.2.3}%
+\contentsline {subsubsubsection}{\numberline {2.1.2.4}Odsekoma polinomske funkcije (zlepki)}{27}{subsubsubsection.2.1.2.4}%
+\contentsline {section}{\numberline {3}Numerično odvajanje}{28}{section.3}%
+\contentsline {subsection}{\numberline {3.1}Ideja za izpeljavo aproksimacijskih formul}{28}{subsection.3.1}%
+\contentsline {section}{\numberline {4}Numerična integriracija}{31}{section.4}%
+\contentsline {subsection}{\numberline {4.1}Nekaj osnovnih Newton-Cotesovih (N-C) pravil}{33}{subsection.4.1}%
+\contentsline {subsubsection}{\numberline {4.1.1}Alternativna izpeljava integracijskih pravil - metoda nedoločenih koeficientov}{36}{subsubsection.4.1.1}%
+\contentsline {subsection}{\numberline {4.2}Numerične napake pri integracijskih pravilih}{37}{subsection.4.2}%
+\contentsline {subsection}{\numberline {4.3}Sestavljena integracijska pravila}{38}{subsection.4.3}%
+\contentsline {subsubsection}{\numberline {4.3.1}Sestavljeno trapezno pravilo}{38}{subsubsection.4.3.1}%
+\contentsline {subsubsection}{\numberline {4.3.2}Sestavljeno Simpsonovo pravilo}{39}{subsubsection.4.3.2}%
+\contentsline {subsubsection}{\numberline {4.3.3}Ocena napake in Richardsonova ekstrapolacija}{40}{subsubsection.4.3.3}%
+\contentsline {subsection}{\numberline {4.4}Gaussova integracijska pravila}{41}{subsection.4.4}%
+\contentsline {subsection}{\numberline {4.5}Integrali v več dimenzijah}{44}{subsection.4.5}%
+\contentsline {subsubsection}{\numberline {4.5.1}Dvojni integral}{44}{subsubsection.4.5.1}%
+\contentsline {subsubsection}{\numberline {4.5.2}Tenzorska pravila}{45}{subsubsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.3}Simpsonovo pravilo}{46}{subsubsection.4.5.3}%
+\contentsline {subsubsection}{\numberline {4.5.4}Metoda Monte-Carlo}{46}{subsubsection.4.5.4}%
+\contentsline {section}{\numberline {5}Numerično reševanje navadnih diferencialnih enačb}{46}{section.5}%
+\contentsline {subsubsection}{\numberline {5.0.1}Začetni problem reda 1}{47}{subsubsection.5.0.1}%
+\contentsline {subsubsection}{\numberline {5.0.2}Začetni problem reda $p$}{47}{subsubsection.5.0.2}%
+\contentsline {subsubsection}{\numberline {5.0.3}Robni problemi}{47}{subsubsection.5.0.3}%
+\contentsline {subsection}{\numberline {5.1}Globalna in lokalna napaka}{51}{subsection.5.1}%
+\contentsline {subsection}{\numberline {5.2}Runge-Kutta metode}{53}{subsection.5.2}%
+\contentsline {subsubsection}{\numberline {5.2.1}Primeri R-K metod}{54}{subsubsection.5.2.1}%
+\contentsline {subsubsection}{\numberline {5.2.2}Sistemi diferencialnih enačb 1. reda}{54}{subsubsection.5.2.2}%
+\contentsline {subsubsection}{\numberline {5.2.3}Reševanje diferencialnih enačb višjega reda}{55}{subsubsection.5.2.3}%
+\contentsline {subsection}{\numberline {5.3}Veččlenske metode}{57}{subsection.5.3}%
+\contentsline {section}{\numberline {6}Numerično računanje lastnih vrednosti}{59}{section.6}%
+\contentsline {subsection}{\numberline {6.1}Schurova forma}{60}{subsection.6.1}%
+\contentsline {subsection}{\numberline {6.2}Metode za računanje lastnih vrednosti}{61}{subsection.6.2}%
+\contentsline {subsubsection}{\numberline {6.2.1}Potenčna metoda}{62}{subsubsection.6.2.1}%
+\contentsline {subsubsection}{\numberline {6.2.2}Inverzna iteracija (inverzna potenčna metoda)}{64}{subsubsection.6.2.2}%
+\contentsline {subsubsection}{\numberline {6.2.3}Ortogonalna iteracija}{65}{subsubsection.6.2.3}%
+\contentsline {subsubsection}{\numberline {6.2.4}QR iteracija (osnovna različica)}{66}{subsubsection.6.2.4}%

@@ -3205,4 +3205,139 @@ Podprostor $Lin\{x_1, x_2, \dots, x_p\}$ se imenuje dominantni invariantni podpr
     katere stolpci tvorijo bazo za dominantni invariantni podprostor $Lin\{x_1, x_2, \dots, x_p\}$.
 \end{theorem}
 
+% 31.5.2023
+\begin{theorem}
+    Naj bo $p = n$ in naj velja $| \lambda_1 | > | \lambda_2 | > \dots > | \lambda_n | \geq 0$. Definiramo matriko $A_k = Z_k€T A Z_k \in \R^{n \times n}$.
+    Potem zaporedje matrike $(A_k)_k$ konvergira proti zgornje trikotni matriki (iz Schurovega razcepa).
+\end{theorem}
+
+\begin{proof}
+    Izpustimo.
+\end{proof}
+
+
+\subsubsection{QR iteracija (osnovna različica)}
+
+
+%QR iteracija:
+%ALgoritem:
+%Vhodni podatki: matrika $A$
+%$A_0 = A$
+%$k = 0, 1, 2, \dots$:
+%    Izračunaj OR razcep matrike A: $A_k = Q_k R_k$
+%    $A_{k+1} = R_k Q_k$
+
+
+\begin{algorithm}
+\caption{QR iteracija}
+\begin{algorithmic}[1]
+\Require Matrika $A$
+\State $A_0 = A$
+\State $k = 0$
+\While{$k = 0, 1, 2, \dots$}
+    \State Izračunaj OR razcep matrike A: $A_k = Q_k R_k$
+    \State $A_{k+1} = R_k Q_k$
+    \State $k = k + 1$
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+
+
+Matriki $A_k$ in $A_{k+1}$ sta ortogonalno podobni matriki:
+\begin{gather*}
+    A_{k+1} = R_k Q_k = Q_k^T A_k Q_k\\
+\end{gather*}
+Notri smo vstavili
+\begin{equation*}
+    Q_k^T A_k = Q_k^T Q_k R_k = I R_k
+\end{equation*}
+
+$QR$ iteracija tvori zaporedje ortogonalnih podobnih matrik, ki so ortogonalno podobne matriki $A$.
+
+\begin{theorem}
+    Za matriko $A_k$ iz $QR$ iteracije velja, da je enaka matriki $Z_k^T A Z_k$, kjer je $Z_k$ matrika, ki jo dobimo pri postopku ortogonalne iteracije,
+    če postopek začnemo z matriko $Z_0 = I$.
+\end{theorem}
+
+\begin{proof}
+    Z indukcijo in primerjavo obeh algoritmov.
+\end{proof}
+
+\begin{conseq}
+    Če velja $| \lambda_1 | > | \lambda_2 | > \dots > | \lambda_n | \geq 0$, potem zaporedje matrik $(A_k)_k$ konvergira proti zgornje trikotni matriki.
+\end{conseq}
+
+Zaustavitveni kriterij:
+\begin{equation*}
+    \max_{1 \leq j < i \leq n} |a_{ij}| < tol
+\end{equation*}
+
+Za izračun $QR$ razcepa $n \times n$ matrike potrebujemo $\mathcal{O}(n^3)$ operacij.
+
+Izboljšave:
+\begin{enumerate}
+    \item Redukcija na zgornje Hessenbergovo matriko
+    \item Uporaba premikov
+\end{enumerate}
+
+Zgornje Hessenbergova matrika je matrika z ničelnimi elementi pod prvo poddiagonalo ($a_{ij} = 0$ za $i \geq j+2$).
+
+\begin{rem}
+    Ta oblika se tekom $QR$ iteracije ohranja.
+\end{rem}
+
+Vsako matriko $A$ se da z direktnim algoritmom pretvoriti v ortogonalno podobno zgornje Hessenbergovo matriko:
+\begin{gather*}
+    A = Q H Q^T \\
+    Q Q^T = Q^T Q = I
+\end{gather*}
+
+Do tega pridemo z uporabo Householderjevih zrcaljenj.
+
+Skica algoritma:
+\begin{gather*}
+    A = 
+    \begin{bmatrix}
+        * & * & * & * & * \\
+        * & * & * & * & * \\
+        * & * & * & * & * \\
+        * & * & * & * & * \\
+        * & * & * & * & *
+    \end{bmatrix}
+
+
+\end{gather*}
+Na podlagi tega vektorja določimo Householderjevo zrcaljenje, ki uniči elemente od prvega (v tem vektorju) navzdol, torej od drugega navzdol v celotnem stolpcu.
+Dobimo $\tilde{P}_1$, ki je $4 \times 4$ matrika.
+
+%(prepiši od Eme)
+
+Postopek nadaljujemo ... Za $n \times n$ matriko potrebujemo $n-2$ korakov. Dobimo:
+\begin{gather*}
+    P_3 P_2 P_1 A P_1^T P_2^T P_3^T = Q A Q^T = H
+\end{gather*}
+
+Potrebujemo $\mathcal{O}(n^2)$ operacij.
+
+Premiki:
+Algoritem (QR iteracija s premiki)
+Vhodni podatki: zgornje Hessenbergova matrika $H$
+$A_0 = H$
+while $k = 0, 1, 2, \dots$
+    Izberi premik $\sigma_k$
+    Izračunaj $QR$ razcep matrike $A_k - \sigma_k I = Q_k R_k$
+    $A_{k+1} = R_k Q_k + \sigma_k I$
+
+Enostavni premik:
+\begin{equation*}
+    \sigma_k = A_k(n, n)
+\end{equation*}
+
+Dvojni premik
+(prepiši od Eme)
+Vzamemo 2x2 matriko v spodnjem desnem kotu, izračunamo lastne vrednosti, 
+
+ČE imamo na prvi poddiagonali v zgornji Hessenbergovi matriki pojavi 0, problem razpade na dva problema.
+
 \end{document}
