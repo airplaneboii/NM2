@@ -15,6 +15,7 @@
 \usepackage{amsmath,amssymb,amsfonts,amsthm}
 \usepackage{mathtools}
 \usepackage{tikz}
+\usetikzlibrary{arrows,matrix,positioning}
 \DeclarePairedDelimiter\norm{\lVert}{\rVert}
 \newcommand{\innerproduct}[2]{\langle #1, #2 \rangle}
 \usepackage{algorithm}
@@ -3295,39 +3296,106 @@ Vsako matriko $A$ se da z direktnim algoritmom pretvoriti v ortogonalno podobno 
 
 Do tega pridemo z uporabo Householderjevih zrcaljenj.
 
-Skica algoritma:
-\begin{gather*}
-    A = 
-    \begin{bmatrix}
-        * & * & * & * & * \\
-        * & * & * & * & * \\
-        * & * & * & * & * \\
-        * & * & * & * & * \\
-        * & * & * & * & *
-    \end{bmatrix}
+\subsubsubsection{Householderjeva zrcaljenja}
+%Skica algoritma:
+%\begin{gather*}
+%    A = 
+%    \begin{bmatrix}
+%        * & * & * & * & * \\
+%        * & * & * & * & * \\
+%        * & * & * & * & * \\
+%        * & * & * & * & * \\
+%        * & * & * & * & *
+%    \end{bmatrix}
+%\end{gather*}
+$A$ zapišemo kot 
+\begin{center}
+    \begin{tikzpicture}
+        \matrix [matrix of math nodes,left delimiter=\lbrack,right delimiter=\rbrack] (m)
+        {
+            * & * & * & * & * \\
+            * & * & * & * & * \\
+            * & * & * & * & * \\
+            * & * & * & * & * \\
+            * & * & * & * & * \\       
+        };  
+        \draw[color=red] (m-2-1.north west) -- (m-2-1.north east) -- (m-5-1.south east) -- (m-5-1.south west) -- (m-2-1.north west);
+        \draw[color=blue, dashed] (m-3-1.north west) -- (m-3-1.north east) -- (m-5-1.south east) -- (m-5-1.south west) -- (m-3-1.north west);
+    \end{tikzpicture}
+\end{center}
 
-
-\end{gather*}
-Na podlagi tega vektorja določimo Householderjevo zrcaljenje, ki uniči elemente od prvega (v tem vektorju) navzdol, torej od drugega navzdol v celotnem stolpcu.
+Na podlagi rdeče obkroženega vektorja določimo Householderjevo zrcaljenje, ki uniči elemente od prvega navzdol, torej od drugega navzdol v celotnem stolpcu.
 Dobimo $\tilde{P}_1$, ki je $4 \times 4$ matrika.
 
-%(prepiši od Eme)
+$P_1 A$ izgleda tako:
 
-Postopek nadaljujemo ... Za $n \times n$ matriko potrebujemo $n-2$ korakov. Dobimo:
+\begin{center}
+    \begin{tikzpicture}
+        \matrix [matrix of math nodes,left delimiter=\lbrack,right delimiter=\rbrack] (m)
+        {
+            * & * & * & * & * \\
+            * & * & * & * & * \\
+            0 & * & * & * & * \\
+            0 & * & * & * & * \\
+            0 & * & * & * & * \\       
+        };  
+        \draw[color=blue, dashed] (m-1-1.north west) -- (m-1-5.north east) -- (m-1-5.south east) -- (m-1-1.south west) -- (m-1-1.north west);
+    \end{tikzpicture}
+\end{center}
+
+Obkroženi elementi se pri tem ne spremenijo.
+
+Iz tega sledi, da $(P_1 A) P_1^T$ izgleda tako:
+
+\begin{center}
+    \begin{tikzpicture}
+        \matrix [matrix of math nodes,left delimiter=\lbrack,right delimiter=\rbrack] (m)
+        {
+            * & * & * & * & * \\
+            * & * & * & * & * \\
+            0 & * & * & * & * \\
+            0 & * & * & * & * \\
+            0 & * & * & * & * \\       
+        };  
+        \draw[color=blue, dashed] (m-1-1.north west) -- (m-1-1.north east) -- (m-5-1.south east) -- (m-5-1.south west) -- (m-1-1.north west);
+    \end{tikzpicture}
+\end{center}
+
+Prvi stolpec se pri tem ne spremeni.
+
+Postopek nadaljujemo. Za $n \times n$ matriko potrebujemo $n-2$ korakov. Dobimo:
 \begin{gather*}
     P_3 P_2 P_1 A P_1^T P_2^T P_3^T = Q A Q^T = H
 \end{gather*}
 
 Potrebujemo $\mathcal{O}(n^2)$ operacij.
 
-Premiki:
-Algoritem (QR iteracija s premiki)
-Vhodni podatki: zgornje Hessenbergova matrika $H$
-$A_0 = H$
-while $k = 0, 1, 2, \dots$
-    Izberi premik $\sigma_k$
-    Izračunaj $QR$ razcep matrike $A_k - \sigma_k I = Q_k R_k$
-    $A_{k+1} = R_k Q_k + \sigma_k I$
+\subsubsubsection{Premiki}
+%Algoritem (QR iteracija s premiki)
+%Vhodni podatki: zgornje Hessenbergova matrika $H$
+%$A_0 = H$
+%while $k = 0, 1, 2, \dots$
+%    Izberi premik $\sigma_k$
+%    Izračunaj $QR$ razcep matrike $A_k - \sigma_k I = Q_k R_k$
+%    $A_{k+1} = R_k Q_k + \sigma_k I$
+
+
+\begin{algorithm}
+    \caption{QR iteracija s premiki}
+    \begin{algorithmic}[1]
+    \Require Zgornje Hessenbergova matrika $H$
+    \State $A_0 = H$
+    \State $k = 0$
+    \While{$k = 0, 1, 2, \dots$}
+        \State Izberi premik $\sigma_k$
+        \State Izračunaj $QR$ razcep matrike $A_k - \sigma_k I = Q_k R_k$
+        \State $A_{k+1} = R_k Q_k + \sigma_k I$
+        \State $k = k + 1$
+    \EndWhile
+    \end{algorithmic}
+\end{algorithm}
+
+
 
 Enostavni premik:
 \begin{equation*}
@@ -3335,9 +3403,8 @@ Enostavni premik:
 \end{equation*}
 
 Dvojni premik
-(prepiši od Eme)
-Vzamemo 2x2 matriko v spodnjem desnem kotu, izračunamo lastne vrednosti, 
+Vzamemo 2x2 matriko v spodnjem desnem kotu, izračunamo lastne vrednosti in iz njih dobimo $\sigma$. (ne vem, kako)
 
-ČE imamo na prvi poddiagonali v zgornji Hessenbergovi matriki pojavi 0, problem razpade na dva problema.
+Če se na prvi poddiagonali v zgornji Hessenbergovi matriki pojavi 0, problem razpade na dva problema.
 
 \end{document}
