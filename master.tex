@@ -76,8 +76,9 @@
 \theoremstyle{remark}
 \newtheorem*{ex}{Primer}
 \newtheorem*{rem}{Opomba}
+%\newtheorem*{problem}{Problem}
 \newtheorem{rem*}[counter]{Opomba}
-\newtheorem{ex*}[counter]{Primer}
+%\newtheorem{ex*}[counter]{Primer}
 
 % I like my squares DARK
 \renewcommand\qedsymbol{$\blacksquare$}
@@ -578,7 +579,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
     \end{equation*}
 
     % previdno - zna skociti izven tega obmocja
-    \begin{figure}[h]
+    \begin{figure}[H]
         \center
         \includegraphics[scale=0.15]{mnk_geo_final.jpg}
         \caption{Z MNK želimo minimizirati ploščino sivega območja.}
@@ -637,7 +638,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
     \begin{equation*}
         \min_{p \in \Pp_1} \norm{f - p}_2 =\sqrt[]{\sum_{i = 1}^{4} (y_i -p(x_i))^2}
     \end{equation*}
-    \begin{figure}[h]
+    \begin{figure}[H]
         \center
         \includegraphics[scale=0.25]{mnk_geo_druga.png}
         \caption{Z MNK želimo najti temnosivo premico, ki minimizira svetlosive razdalje.}
@@ -723,7 +724,7 @@ bazo izračunamo z $\textbf{modificiranim Gram-Scmidtovim algoritmom}$.
 
 
 $X \in \mathscr{C}([a, b])$
-\begin{figure}[h]
+\begin{figure}[H]
     \center
     \includegraphics[scale=0.25]{mnk_tretja.png}
     \caption{Druga norma, porojena iz zveznega (levo) in diskretnega (desno) skalarnega produkta.}
@@ -741,13 +742,13 @@ Problem: Za dano funkcijo $f \in \mathscr{C} ([a, b])$ iščemo polinom $p^* \in
 $p^*$ imenujemo $\textbf{polinom najboljše enakomerne aproksimacije (PNEA)}$.
 Problem je nelinearen.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \center
     \includegraphics[scale=0.25]{poly_1.jpg}
     \caption{Iščemo polinom $p$, ki se bo funkciji $f$ najbolje prilegal po neskončni normi.}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \center
     \includegraphics[scale=0.25]{poly_diff.jpg}
     \caption{Prikaz razlike med drugo in neskončno normo. Medtem ko je druga norma tu relativno nizka, je neskončna zelo velika.}
@@ -773,7 +774,7 @@ in
     r(x_i)r(x_{i+1}) < 0 \forall i
 \end{equation*}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \center
     \includegraphics[scale=0.25]{residual.jpg}
     \caption{Graf residuala.}
@@ -848,7 +849,7 @@ ter koeficient $m$, za katerega velja
     \left| m \right| = M_n (f, E)
 \end{equation*}
 
-\begin{figure}[h]
+\begin{figure}[H]
     \center
     \includegraphics[scale=0.25]{residual_build.jpg}
     \caption{Iskanje PNEA s pomočjo residuala.}
@@ -1121,7 +1122,12 @@ Sledi, da lahko $p_k(x)$ zapišemo kot
     p_k(x) = p_{k-1}(x) + [x_0, x_1, \dots, x_k]f \cdot (x-x_0)(x-x_1) \dots (x-x_{k-1})
 \end{equation*}
 
-(vstavi graf)
+\begin{figure}[H]
+    \center
+    \includegraphics[scale=0.25]{diferenca.jpg}
+    %\caption{Iskanje PNEA s pomočjo residuala.}
+\end{figure}
+
 V grafu: $p_0 \in \Pp_p$, $p_0(x) = x_0 \cdot 1$.
 Po definiciji je $[x_0]f = f(x_0)$.
 
@@ -1145,7 +1151,7 @@ Kako izračunati deljene diference?
     \item $[x_0, x_1] f = \text{?}$
 \end{itemize}
 
-(vstavi graf)
+% (vstavi graf) - niti ni potrebno
 
 \begin{align*}
     p_1 (x) =& f(x_0) + \frac{f(x_1)- f(x_0)}{x_1 - x_0} (x-x_0) \\
@@ -1225,7 +1231,7 @@ V zgornji enačbi je $\frac{f(x_1)- f(x_0)}{x_1 - x_0}$ vodilni koeficient, $1$ 
     \end{equation*}
     Na desni strani:
     \begin{equation*}
-        \frac{1}{x_0-x_k} \cdot v.k. (q_0) + \frac{1}{x_k - x_0} \cdot v.k. (q_1) = \frac{[x_1, x_2, ..., x_k] f - [x_0, x_1, ..., x_{k-1}] f}{x_k - x_0}
+        \frac{1}{x_0-x_k} \cdot v.k. (q_0) + \frac{1}{x_k - x_0} \cdot v.k. (q_1) = \frac{[x_1, x_2, \dots, x_k] f - [x_0, \dots, x_{k-1}] f}{x_k - x_0}
     \end{equation*}
 \end{proof}
 
@@ -1233,16 +1239,18 @@ V zgornji enačbi je $\frac{f(x_1)- f(x_0)}{x_1 - x_0}$ vodilni koeficient, $1$ 
 \begin{equation*}
     [x_0, x_1, x_2] f = \frac{[x_1, x_2]f - [x_0, x_1] f}{x_2 - x_0}
 \end{equation*}
-Deljive diference, ki jih potrebujemo v zapisu interpolacijskega polinoma, računamo v $\textbf{trikotni shemi}$ (primer za $n = 3$):
-(vstavi shemo)
-%\begin{tabular}{ c c c }
-%    \cdot & [\cdot] f & [\cdot, \cdot]f \\ 
-%    x_0 & [x_0] f & cell6 \\  
-%    x_1 & [x_1] f & cell9     \\
-%    x_2 & [x_2] f &       \\
-%    x_3 & [x_3] f &
-%\end{tabular}
-
+Deljive diference, ki jih potrebujemo v zapisu interpolacijskega polinoma, računamo v $\textbf{trikotni shemi}$:
+\begin{center}
+    \begin{tabular}{c|c c c c c}
+        & $[\cdot]f$ & $[\cdot, \cdot] f$ & $[\cdot, \cdot, \cdot] f$ & $\dots$ & $[\cdot,  \dots, \cdot] f$ \\
+       \hline
+       $x_0$ & $[x_0]f$ \\
+       $x_1$ & $[x_1]f$ & $[x_0, x_1] f$ \\
+       $x_2$ & $[x_2]f$ & $[x_1, x_2] f$ & $[x_0, x_1, x_2] f$ \\
+       $\vdots$ & $\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ \\
+       $x_n$ & $[x_n]f$ & $[x_{n-1}, x_n] f$ & $[x_{n-2}, x_{n-1}, x_n] f$ & $\dots$ & $[x_0, x_1, \dots, x_n] f$
+   \end{tabular}
+\end{center}
 
 \begin{ex}
     Poišči polinom $p$, za katerega velja $p(0) = 1$, $p(1) = 3$, $p(3) = 5$ in $p(4) = 2$.
@@ -1252,14 +1260,18 @@ Deljive diference, ki jih potrebujemo v zapisu interpolacijskega polinoma, raču
     \begin{equation*}
         \{1, x, x(x-1), x(x-1)(x-3)\}
     \end{equation*}
-    (tabela)
+    \begin{center}
+        \begin{tabular}{c|c c c c}
+            $0$ & $1$ \\
+            $1$ & $3$ & $\frac{3-1}{1-0} = 2$ \\
+            $3$ & $5$ & $\frac{5-3}{3-1} = 1$ & $\frac{1-2}{3-0} = -\frac{1}{3}$ \\
+            $4$ & $2$ & $\frac{2-5}{4-3} = -3$ & $\frac{-3-1}{4-1} = -\frac{4}{3}$ & $\frac{-\frac{4}{3}+\frac{1}{3}}{4-0} = -\frac{1}{4}$
+        \end{tabular}
+    \end{center}
     \begin{equation*}
         p(x) = 1 \cdot 1 + 2 \cdot x - \frac{1}{3} \cdot x(x-1) - \frac{1}{4} \cdot x(x-1)(x-3)
     \end{equation*}
 \end{ex}
-
-Za splošen $n$:
-(shema)
 
 Kako izračunati vrednost polinoma v Newtonovi bazi pri izbranem $x$?
 
@@ -1304,8 +1316,8 @@ Poglejmo si za $n = 1$
 
 \begin{align*}
     p(x) =& f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) \\
-         =& f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) - (x_1 \to x_0) \\
-         \longrightarrow& f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0)
+         =& f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) \\
+         \xrightarrow{x_1 \to x_0}& f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0)
     p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
 \end{align*}
 Iz tega dobimo sistem enačb:
