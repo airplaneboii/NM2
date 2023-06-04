@@ -1306,25 +1306,39 @@ zapišemo
     \hspace*{\algorithmicindent} \textbf{Output} $v_0$
 \end{algorithm}
 
-% pazi, da bo tabelca na pravem mestu
-(tabelca za hronerja)
+To lahko rešimo tudi z uporabo tabele:
+\begin{center}
+    \begin{tabular}{c|c c c c c}
+            & $d_n$ & $d_{n-1}$                  & $\dots$ & $d_1$              & $d_0$ \\
+        \hline
+        $x$ &       & $v_n(x - x_{n-1})$         & $\dots$ & $v_2(x-x_1)$       & $v_1(x-x_0)$ \\
+            & $d_n$ & $d_{n-1} + v_n(x-x_{n-1})$ & $\dots$ & $d_1 + v_2(x-x_1)$ & $d_0 + v_1(x-x_0)$ \\
+        \hline
+            & $v_n$ & $v_{n-1}$                  & $\dots$ & $v_1$              & $v_0$
+    \end{tabular}
+\end{center}
+
+
 
 % 13. 3. 2023
-Poglejmo si za $n = 1$
+\begin{ex}
+    Poglejmo si za $n = 1$
 
-(slikca)
+    %(slikca)
+    
+    \begin{align*}
+        p(x) =& f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) \\
+             =& f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) \\
+             \xrightarrow{x_1 \to x_0}& f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0)
+        p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
+    \end{align*}
+    Iz tega dobimo sistem enačb:
+    \begin{align*}
+        p(x_0) =& f(x_0) \\
+        p'(x_0) =& f'(x_0)
+    \end{align*}
+\end{ex}
 
-\begin{align*}
-    p(x) =& f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) \\
-         =& f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) \\
-         \xrightarrow{x_1 \to x_0}& f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0)
-    p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
-\end{align*}
-Iz tega dobimo sistem enačb:
-\begin{align*}
-    p(x_0) =& f(x_0) \\
-    p'(x_0) =& f'(x_0)
-\end{align*}
 
 \begin{defn}
     Pravimo, da se polinom $p$ s funkcijo $f$ ujema v točki $x_i$ ($k+1$)-kratno, če se ujema v vrednosti in prvih $k$ odvodih.
@@ -1377,10 +1391,22 @@ Naj velja $x_i \leq x_{i+1} \leq x_{i+2} \leq \dots \leq x_{i+k}$. Potem je
     \end{equation*}
     Potem sestavimo bazo:
     \begin{equation*}
-        \{1, c, x^2, x^3, x^3(x-1), x^3(x-1)^2\}
+        \{\underbrace{1}_{\text{vedno}}, \underbrace{x, x^2, x^3}_{\text{od }x=0}, \underbrace{x^3(x-1), x^3(x-1)^2}_{\text{od } x=1}\}
     \end{equation*}
     Z uporabo trikotne sheme izračunamo koeficiente za polinom:
-    (trikotna shema)
+    
+    \begin{center}
+        \begin{tabular}{c|c c c}
+            $0$ & $1$ \\
+            $0$ & $1$  & $[0, 0]f = 2$\\
+            $0$ & $1$  & $[0, 0]f = 2$ & $[0, 0, 0]f = \frac{3}{2!}$ \\
+            $1$ & $-1$ & $[0, 1]f =-2$ & $[0, 0, 1]f =$ (naprej po že poznanem postopku)\\
+            $1$ & $-1$ & $[1, 1]f = 3$ & $[0, 1, 1]f =$ (naprej po že poznanem postopku)\\
+            $2$ & $4$  & $[1, 2]f = 5$ & $[1, 1, 2]f =$ (naprej po že poznanem postopku)
+            
+        \end{tabular}
+    \end{center}
+
     Iz trikotne sheme preberemo koeficiente in sestavimo interpolacijski polinom:
     \begin{equation*}
         p(x) = 1 \cdot 1 + 2 \cdot x + \frac{3}{2} x^2 - \frac{11}{2}x^3 + \frac{29}{2}x^3(x-1) - \frac{79}{8} x^3(x-1)^2
@@ -1415,8 +1441,9 @@ Kako izbrati interpolacijske točke na $[a, b]$? Obstaja več možnosti:
     \end{equation*}
     kjer je $h = \frac{b-a}{n}$ in velja za $i = 0, 1, \dots, n$.
 
-    (slikca)
-    \item Čebiševe točke
+    %(slikca)
+    \item Čebiševe točke:
+    
     Izbira, pri kateri je neskončna norma polinoma $\omega$ najmanjša možna.
     \begin{equation*}
         \min_{a \leq x_0 < x_1 < \dots < x_n \leq b} \norm{\omega}_{\infty, [a, b]} = \min_{a \leq x_0 < x_1 < \dots < x_n \leq b} \max_{x \in [a, b]} | \omega(x) |
@@ -1430,9 +1457,9 @@ Kako izbrati interpolacijske točke na $[a, b]$? Obstaja več možnosti:
 
 Recimo, da izberemo $f \in \mathscr{C}([a, b])$, izberemo zaporedje interpolacijskih točk $(\{x_0, x_1, \dots, x_n\})_n$ in
 povečujemo stopnjo $n$. Dobimo zaporedje interpolacijskih polinomov $(p_n)_n$. Zanima nas, kaj se dogaja z napako
-\begin{equation}
+\begin{equation*}
     \norm{f-p}_{\infty, [a, b]} \xrightarrow{n \to \infty} ?? 
-\end{equation}
+\end{equation*}
 Žal ne velja nujno, da bi šla ta napaka proti 0.
 
 Protiprimer: (Rungejev primer)
@@ -1442,12 +1469,12 @@ proti $\infty$.
 
 \subsubsubsection{Odsekoma polinomske funkcije (zlepki)}
 
-IDEJA: Interval $[a, b]$ razdelimo na $m$ delov s stičnimi točkami 
+Ideja: Interval $[a, b]$ razdelimo na $m$ delov s stičnimi točkami 
 \begin{equation*}
     a = x_0 < x_q < \dots < x_m = b
 \end{equation*}
 
-(slikca)
+%(slikca)
 
 \begin{align*}
     s: [a, b] \to \R \\
@@ -1456,7 +1483,7 @@ IDEJA: Interval $[a, b]$ razdelimo na $m$ delov s stičnimi točkami
 V stičnih točkah predpišemo red gladkosti.
 
 \begin{ex}
-    Odsekoma linearne interpolacijske tunkcije (slikca) - funkcija, označene točke, vmes povezane s premicami
+    Odsekoma linearne interpolacijske funkcije - funkcija, označene točke, vmes povezane s premicami. %(slikca)
 \end{ex}
 
 \begin{ex}
@@ -1473,6 +1500,7 @@ V stičnih točkah predpišemo red gladkosti.
 
 
 % 20. 3. 2023
+\newpage
 \section{Numerično odvajanje}
 
 Naloga: Iščemo približek za vrednost odvoda funkcije $f$ pri nekem izbranem $x$-u. Približek bi radi izrazili s kombinacijo vrednosti funkcije $f$
