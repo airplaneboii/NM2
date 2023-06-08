@@ -224,7 +224,7 @@ ki vsakemu elementu $f \in X$ priredi aproksimacijski element (aproksimant)
         \begin{equation*}
             S = \{ \sum_{i = 0}^{n} a_i x^i; a_i \in \R \}
         \end{equation*}
-        \item $\textbf{triginimetri"cni polinomi}$
+        \item $\textbf{trigonometri"cni polinomi}$
         \begin{equation*}
             S = Lin\{1, \sin x, \cos x, \sin 2x, \cos 2x, \dots, \sin nx, \cos nx\}
         \end{equation*}
@@ -255,10 +255,10 @@ Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksim
     \end{equation*}
     Primeri skalarnih produktov:
     \begin{enumerate}
-        \item[$\cdot$] $\innerproduct{f}{g} = \int_{a}^{b} f(x) g(x) \rho(x) dx$, $f, g \in \ell_{\rho}^2 ([a, b])$
+        \item[$\cdot$] $\innerproduct{f}{g} = \int_{a}^{b} f(x) g(x) \rho(x) dx$, $f, g \in \mathscr{L}{\rho}^2 ([a, b])$
         \item[$\cdot$] $\norm{f}_2 = \sqrt[]{\int_{a}^{b} f^2(x)\rho(x)dx }$
         
-        Za $f(x) \equiv 1$ to imenujemo $\textbf{standardni skalarni produkt}$
+        Za $\rho(x) \equiv 1$ to imenujemo $\textbf{standardni skalarni produkt}$
     \end{enumerate}
 
     \item diskretni semi-skalarni produkt
@@ -509,7 +509,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
 
     Rešitev:
     Definirajmo X in S
-    \[X = \mathscr{C} ([0, \pi]) (X = \ell^2 ([0, \pi]))\]
+    \[X = \mathscr{C} ([0, \pi]) (X = \mathscr{L}^2 ([0, \pi]))\]
     \[S = \Pp_1 = Lin\{1, x\}, \varphi_1(x) = 1, \varphi_2 (x) = x\]
     Zdaj definiramo $f^*$
     \[f^*(x) = \alpha_1 \varphi_1(x) + \alpha_2 \varphi_2(x)\]
@@ -653,7 +653,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
     \end{bmatrix} \text{, }  b \in R^m
 \end{equation*}
 \begin{equation*}
-    \min_{x \in \R^n} \norm{Ax - b}_2 = \min_{z \in ImA} \norm{b - z}
+    \min_{x \in \R^n} \norm{Ax - b}_2 = \min_{z \in ImA} \norm{b - z}_2
 \end{equation*}
 
 Aproksimiramo vektor $b \in \R^m (X = \R^m)$
@@ -771,7 +771,7 @@ Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PNEA za nek
 \end{equation*}
 in
 \begin{equation*}
-    r(x_i)r(x_{i+1}) < 0 \forall i
+    r(x_i)r(x_{i+1}) < 0 \; \forall i
 \end{equation*}
 
 \begin{figure}[H]
@@ -861,7 +861,7 @@ V prvem koraku normalno pričnemo z ekvidistantnimi točkami. V drugem koraku po
 \newpage
 \section{Interpolacija}
 Problem: Podane imamo vrednosti izbrane funkcije $f$ v $n+1$ paroma različnih točkah $x_0, x_1, \dots, x_n$ na realni osi. Te točke bomo imenovali
-$\textbf{interpolacijske}$ $\textbf{točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pohojem
+$\textbf{interpolacijske}$ $\textbf{točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pogojem
 \begin{equation*}
     g(x_i) = f(x_i) \forall i \in [n]
 \end{equation*}
@@ -933,9 +933,9 @@ Spoznali bomo dva druga zapisa interpolacijskega polinoma:
 Definiramo naslednje polinome:
 \begin{align*}
     \ell_{0, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_0 - x_1)(x_0 - x_2) \dots (x_0 - x_n)} \\
-    \ell_{1, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_1 - x_0)(x_1 - x_2) \dots (x_1 - x_n)} \\
+    \ell_{1, n} (x) =& \frac{(x-x_0)(x-x_2) \dots (x - x_n)}{(x_1 - x_0)(x_1 - x_2) \dots (x_1 - x_n)} \\
     \vdots &\\
-    \ell_{n, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_n - x_0)(x_n - x_1) \dots (x_n - x_{n-1})}
+    \ell_{n, n} (x) =& \frac{(x-x_0)(x-x_1) \dots (x - x_{n-1})}{(x_n - x_0)(x_n - x_1) \dots (x_n - x_{n-1})}
 \end{align*}
 
 oziroma
@@ -946,7 +946,7 @@ za $i = 0, 1, \dots, n$. To imenujemo $\textbf{Lagrangevi bazni polinomi}$.
 
 Velja:
 \begin{equation*}
-    \ell_{i, n} (x) = \delta_{i, j} = \begin{cases}
+    \ell_{i, n} (x_j) = \delta_{i, j} = \begin{cases}
         1 &; i = j \\
         0 &; i \neq j
     \end{cases}
@@ -958,8 +958,8 @@ Vsi ti polinomi so stopnje točno $n$.
 \end{theorem}
 
 \begin{proof}
-    Dokazati moramo le, da so linearno neodvisni. Preveriti moramo, da je $\alpha_0 \ell_{i, n} +  \alpha_1 \ell_{i, n} + \dots +
-    \alpha_n \ell_{i, n} = 0 <=> \alpha_0 = \alpha_1 = \dots = \alpha_n = 0$.
+    Dokazati moramo le, da so linearno neodvisni. Preveriti moramo, da je $\alpha_0 \ell_{0, n} +  \alpha_1 \ell_{1, n} + \dots +
+    \alpha_n \ell_{n, n} = 0 <=> \alpha_0 = \alpha_1 = \dots = \alpha_n = 0$.
 
     ($\Longrightarrow$)
     \begin{equation*}
@@ -1026,7 +1026,7 @@ kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
     \begin{equation}
         \sum_{i = 0}^{n} \ell_{i, n}(x) = 1
     \end{equation}
-    Lagrangevi bazni polinomi tvorijo $\textbf{razčlenitev}$ oziroma $\textbf{razčlenitev enote}$, ki pozitivno vpliva na stabilnost baze.
+    Lagrangevi bazni polinomi tvorijo $\textbf{razčlenitev}$ oziroma $\textbf{particijo enote}$, ki pozitivno vpliva na stabilnost baze.
 \end{conseq}
 
 \begin{theorem}[O napaki interpolacije.]
@@ -1059,11 +1059,12 @@ kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
     \begin{equation*}
         c = \frac{1}{(n+1)!}f^{(n+1)}(\xi_x)
     \end{equation*}
+    Vstavimo c in dobimo želeno enakost
 \end{proof}
 
 Za poljuben $c \in [a, b]$ po izreku velja
 \begin{equation*}
-    \left| f(x) - p(x) \right| = \left| \omega \right| \frac{1}{(n+1)!} \left| f^{(n+1)}(\xi_x) \right| \leq \norm{\omega}_{\infty, [a, b]} \frac{1}{(n+1)!} \norm{f^{(n+1)}}_{\infty, [a, b]}
+    \left| f(x) - p(x) \right| = \left| \omega(x) \right| \frac{1}{(n+1)!} \left| f^{(n+1)}(\xi_x) \right| \leq \norm{\omega}_{\infty, [a, b]} \frac{1}{(n+1)!} \norm{f^{(n+1)}}_{\infty, [a, b]}
 \end{equation*}
 Iz tega sledi
 \begin{equation*}
@@ -1075,7 +1076,8 @@ Lagrangeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za n
 \begin{itemize}
     \item numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
     \item Numerične težave, če so interpolacijske točke preblizu skupaj
-    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno.
+    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno
+    \item ne moremo interpolirati odvodov
 \end{itemize}
 
 \subsubsection{Newtonova oblika zapisa interpolacijskega polinoma}
@@ -1128,14 +1130,14 @@ Sledi, da lahko $p_k(x)$ zapišemo kot
     %\caption{Iskanje PNEA s pomočjo residuala.}
 \end{figure}
 
-V grafu: $p_0 \in \Pp_p$, $p_0(x) = x_0 \cdot 1$.
+V grafu: $p_0 \in \Pp_0$, $p_0(x) = x_0 \cdot 1$.
 Po definiciji je $[x_0]f = f(x_0)$.
 
 Iz te rekurzivne konstrukcije dobimo
 \begin{align*}
     p_n(x) = & p_{n-1}(x) + [x_0, x_1, \dots, x_n] f (x-x_0)(x-x_1) \dots (x-x_{n-1}) \\
            = & \dots \\
-           = & p_o(x) + [x_0, x_1] f (x-x_0) + [x_0, x_1, x_2] f (x-x_0)(x-x_1) + \\
+           = & p_0(x) + [x_0, x_1] f (x-x_0) + [x_0, x_1, x_2] f (x-x_0)(x-x_1) + \\
             & + \dots + [x_0, x_1, \dots, x_n] f (x-x_0)(x-x_1) \dots (x-x_{n-1})
 \end{align*}
 \begin{equation*}
@@ -1464,7 +1466,7 @@ povečujemo stopnjo $n$. Dobimo zaporedje interpolacijskih polinomov $(p_n)_n$. 
 
 Protiprimer: (Rungejev primer)
 
-Za funkcijo $f(x) = \frac{1}{1-x^2}$ na interalu $[-5, 5]$ interpoliramo z ekvidistantnimi točkami. Z večanjem $n$-ja gre napaka
+Za funkcijo $f(x) = \frac{1}{1+x^2}$ na interalu $[-5, 5]$ interpoliramo z ekvidistantnimi točkami. Z večanjem $n$-ja gre napaka
 proti $\infty$.
 
 \subsubsubsection{Odsekoma polinomske funkcije (zlepki)}
@@ -1492,8 +1494,8 @@ V stičnih točkah predpišemo red gladkosti.
     \begin{align*}
         p_i(x_i) =& f(x_i) \\
         p_i'(x_i) =& f'(x_i) \\
-        p_i(x_[i+1]) =& f(x_{i+1}) \\
-        p_i'(x_[i+1]) =& f'(x_{i+1}), p_i \in \Pp_3
+        p_i(x_{i+1}) =& f(x_{i+1}) \\
+        p_i'(x_{i+1}) =& f'(x_{i+1}), p_i \in \Pp_3
     \end{align*}
 \end{ex}
 
@@ -1531,7 +1533,7 @@ označujemo z $R(f)$ oziroma $Rf$.
 Interpolacijske točke običajno izberemo $\textbf{ekvidistantno}$, za $x$ pa izberemo eno od interpolacijskih točk, na primer 
 $x_k$, $k \in \{0, 1, \dots, n\}$. Tedaj dobimo:
 \begin{equation*}
-    f'(x_k) = \sum_{i=0}^{n}f(x_i) \ell_{i, n}(x_k) + \omega'(x_k) [x_0, x_1, \dots, x_k] f + \omega(x_k) [x_0, x_1, \dots, x_k] f
+    f'(x_k) = \sum_{i=0}^{n}f(x_i) \ell_{i, n}'(x_k) + \omega'(x_k) [x_0, x_1, \dots, x_k] f + \omega(x_k) [x_0, x_1, \dots, x_k] f
 \end{equation*}
 kjer je prvi sumand približek, drugi napaka, tretji pa je enak nič. Napako zapišemo kot
 \begin{equation*}
@@ -1545,7 +1547,7 @@ kjer je prvi sumand približek, drugi napaka, tretji pa je enak nič. Napako zap
     \end{equation*}
     \begin{align*}
         f'(x_0) =& f(x_0) \frac{1}{(-h)} + f(x_1) \frac{1}{h} + ((x_0 - x_1)+0)\frac{f''(\xi)}{2} + 0 \\
-                =& \frac{f(x_1)-f(x_0)}{h} - \frac{h}{2} f''(\xi), \xi in [x_0, x_1]
+                =& \frac{f(x_1)-f(x_0)}{h} - \frac{h}{2} f''(\xi), \; \xi \in [x_0, x_1]
     \end{align*}
     Ulomku, ki se pojavi v formuli, pravimo $\textbf{enostranska diferenca}$.
 \end{ex}
@@ -1638,7 +1640,7 @@ IDEJA: Namesto funkcije $f$ integriramo interpolacijski polinom za $f$ na točka
 
 Vemo že:
 \begin{equation}
-    f(x) = p(x) + \omega(x) [x_0, x_1, \dots, x_n, x] f (za f \in \mathscr{C}^{n+1}([a, b])) \label{eq:integriranje}
+    f(x) = p(x) + \omega(x) [x_0, x_1, \dots, x_n, x] f (\; za \; f \in \mathscr{C}^{n+1}([a, b])) \label{eq:integriranje}
 \end{equation}
 \begin{equation*}
     p(x) = \sum_{i=0}^{n} f(x_i) \ell_{i, n}(x)
@@ -1647,7 +1649,7 @@ Integriramo ~\ref{eq:integriranje}:
 \begin{gather*}
     \int_{a}^{b} f(x) dx = \int_{a}^{b} p(x) dx + \int_{a}^{b} \omega(x) [x_0, x_1, \dots, x_n, x] f dx \\
     Sf = \text{približek za integral} + \text{napaka} \\
-    Sf = Ff - Rf
+    Sf = Ff + Rf
 \end{gather*}
 To je integracijsko pravilo oziroma kvadratna formula.
 
@@ -1771,7 +1773,7 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
 
 
     \begin{gather*}
-        \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2) + Rf) \\
+        \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2)) + Rf \\
         Rf = \int_{x_0}^{x_2} (x-x_0)(x-x_1)(x-x_2)[x_0, x_1, x_2, x] f dx = ??
     \end{gather*}
 
@@ -1802,7 +1804,7 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
 
     Za $f$ izberemo $f(x) = (x-x_0)^4$ in dobimo
     \begin{equation*}
-        F(x-x_0)^4 = C \cdot f^{(4)} (\xi) = C\cdot4!
+        R(x-x_0)^4 = C \cdot f^{(4)} (\xi) = C\cdot4!
     \end{equation*}
     Sledi
     \begin{equation*}
@@ -1907,7 +1909,7 @@ Ideja: Interval $[a, b]$ razdelimo na manjše podintervale in na vsakem od podin
 rezultate seštejemo.
 
 Recimo, da želimo uporabiti $m$ osnovnih pravil, vsak osnovno pravilo pa zahteva, da razdelimo podinterval na $n$ delov.
-Imamo korak $h = \frac{b-a}{m \cdot n}$ in točke $x_i = a + i\cdot h$, kjer gre $i$ od $1$ do $mn$.
+Imamo korak $h = \frac{b-a}{m \cdot n}$ in točke $x_i = a + i\cdot h$, kjer gre $i$ od $0$ do $mn$.
 Sestavljeno pravilo bo potem oblike
 \begin{equation*}
     \int_{a}^{b} f(x) dx = \sum_{i = 0}^{m \cdot n} A_i f(x_i) + Rf
@@ -2103,7 +2105,7 @@ Iz pogojev sestavimo sistem nelinearnih enačb:
     \begin{equation*}
         f(x) = q(x) + \omega^2(x) [x_0, x_0, x_1, x_1, \dots, x_n, x_n, x] f
     \end{equation*}
-    Vemo tudi, da je $q \in Pp_{2n+1}$, zato sledi, da je
+    Vemo tudi, da je $q \in \Pp_{2n+1}$, zato sledi, da je
     \begin{equation*}
         \int_{a}^{b} q(x) dx = \sum_{i=0}^{n} A_i q(x_i)
     \end{equation*}
@@ -2130,7 +2132,7 @@ Iz pogojev sestavimo sistem nelinearnih enačb:
 \begin{ex}
     Določite vozla $x_0$ in $x_1$ ter uteži $A_0$ in $A_1$ v Gaussovem integracijskem pravilu
     \begin{equation*}
-        \int_{-1}^{1} f(x) dx = A_0 fx(x_0) + A_1 f(x_1) + Rf
+        \int_{-1}^{1} f(x) dx = A_0 f(x_0) + A_1 f(x_1) + Rf
     \end{equation*}
 
     \begin{equation*}
@@ -2197,7 +2199,7 @@ Dobili smo mrežne točke $(x_i, y_j)$, določiti pa moramo še pripadajoče ute
 Poglejmo si natančneje uporabo trapeznega pravila.
 \begin{align*}
     \iint_{\Omega} f(x, y) dx dy =& \int_{a}^{b} dx \int_{c}^{d} f(x, y) dy \\
-                                 =& \frac{h}{2} (g(x_0) + 2 \sum_{i=1}^{n-1} g(x_i) + g(x_n)) - \frac{h^2}{12} (b-a) \frac{d^2}{dx^2} g(x) \restr{}{x=1}
+                                 =& \frac{h}{2} (g(x_0) + 2 \sum_{i=1}^{n-1} g(x_i) + g(x_n)) - \frac{h^2}{12} (b-a) \frac{d^2}{dx^2} g(x) \restr{}{x=\xi}
 \end{align*}
 
 \begin{align*}
@@ -2272,20 +2274,20 @@ kjer je $y_a$ podana konstanta in $f: [a, b] \times \R \to \R$.
 
 \subsubsection{Začetni problem reda $p$}
 \begin{gather*}
-    y^{(p)} = f(x, y, y', \dots, y^{(p-q)}) \\
+    y^{(p)} = f(x, y, y', \dots, y^{(p-1)}) \\
     y(a) = y_{a, 0} \\
     y'(a) = y_{a, 1} \\
     \vdots \\
-    y^{(p-q)}(a) = y_{a, p-1}
+    y^{(p-1)}(a) = y_{a, p-1}
 \end{gather*}
-kjer so $y(a)$, $y'(a)$, \dots, $y^{(p-q)}(a)$ podane konstante.
+kjer so $y(a)$, $y'(a)$, \dots, $y^{(p-1)}(a)$ podane konstante.
 
 Pri numeričnem reševanju in analizi rešitev se bomo omejili na probleme, pri katerih so izpolnjeni pogoji eksistenčnega izreka (E.I.).
 
 \subsubsection{Robni problemi}
 
 \begin{gather*}
-    x^{(4)} + x_y = 0 \\
+    x^{(4)} + xy = 0 \\
     y(a) = y_{a, 0} \\
     y'(a) = y_{a, 1} \\
     y(b) = y_{b, 0} \\
@@ -2448,7 +2450,7 @@ V splošnem bi do predpisov za približke $y_n$ lahko prišli na naslednje nači
 \begin{ex}
     \begin{gather*}
         \int_{x_n}^{x_{n+1}} y'(x) dx = \int_{x_n}^{x_{n+1}} f(x, y(x)) dx \\
-        y(x_{n+1}) - y(x_n) = \frac{h}{2} (f(x_n, y(x_n)) + f(x_{n+1}, yx_{n+1})) + \frac{h^3}{12} f^{(2)}(\xi, y(\xi))
+        y(x_{n+1}) - y(x_n) = \frac{h}{2} (f(x_n, y(x_n)) + f(x_{n+1}, yx_{n+1})) - \frac{h^3}{12} f^{(2)}(\xi, y(\xi))
     \end{gather*}
     Napako odrežemo in točne vrednosti nadomestimo s približki in pridemo do metode:
     \begin{gather*}
@@ -2471,7 +2473,7 @@ Numerične približke $(y_n)_{n=0}^m$ povežemo z odsekoma linearno funkcijo $y_
 \begin{defn}
     Metoda je konvergentna, če za vse DE, ki zadoščajo pogojem eksistenčnega izreka na $[a, b]$, velja
     \begin{equation*}
-        \norm{y-y_h}_{\infty, [a, b]}
+        \norm{y-y_h}_{\infty, [a, b]} \to 0
     \end{equation*}
     ko $h \to 0$ (oziroma $m \to \infty$)
     
@@ -2546,7 +2548,7 @@ Določi red lokalne napake eksplicitne Eulerjeve metode.
 
 % polepšaj
 \begin{align*}
-    T_{n+1} &= y(X_{n+1}) - y_{n+1} \\
+    T_{n+1} &= y(x_{n+1}) - y_{n+1} \\
             &= y(x_n) + h f(x_n, y(x_n)) \\
             &+ \frac{h^2}{2} (f_x(x_n, y(x_n)) \\
             &+ f_y(x_n, y(x_n))\cdot f(x_n, y(x_n))) \\
@@ -2555,7 +2557,7 @@ Določi red lokalne napake eksplicitne Eulerjeve metode.
 
 Vstavimo $y(x_n) = y_n$ in dobimo
 \begin{equation*}
-    T_{n+1} = \frac{h^2}{2} (f_x(x_n, y_n) + f_y(x_n, y_n)f(x_n, y_n)) = \mathcal{O}(h^2)
+    T_{n+1} = \frac{h^2}{2} (f_x(x_n, y_n) + f_y(x_n, y_n)f(x_n, y_n)) = \mathcal{O}(h^3)
 \end{equation*}
 
 Red lokalne napake je 2, torej je Eulerjeva metoda reda 1.
@@ -2599,6 +2601,8 @@ R-K metodo lahko predstavimo v t.i. Butcherjevi shemi
 \begin{equation*}
     k_i = h f(x_n + \alpha_i h, y_n + \beta_{i1}k_1 + \beta_{i2}k_2 + \dots + \beta_{is}k_s)
 \end{equation*}
+
+za $i = 1 \dots s$
 
 \begin{equation*}
     y_{n+1} = y_n + \gamma_1 k_1 + \gamma_2 k_2 + \dots + \gamma_s k_s
@@ -2674,11 +2678,11 @@ Uporabimo na primer Eulerjevo metodo:
 \subsubsection{Reševanje diferencialnih enačb višjega reda}
 Imamo začetni problem reda $p$:
 \begin{gather*}
-    y^{(p)} = f(x, y, y', y'', \dots, y^{(p)}) \\
+    y^{(p)} = f(x, y, y', y'', \dots, y^{(p-1)}) \\
     y(a) = y_{a, 1} \\
     y'(a) = y_{a, 2} \\
     \vdots \\
-    y'{(p-1)} = y_{a, p}
+    y^{(p-1)}(a) = y_{a, p}
 \end{gather*}
 
 Problem prevedemo na sistem $p$ difeencialnih enačb prvega reda:
@@ -2689,7 +2693,7 @@ Definiramo ``nove'' neznane funkcije $z_1, z_2, \dots, z_{p-1}$:
     z_2 &= z_1' = y'' \\
     z_3 &= z_2' = y''' \\
     \vdots \\
-    z_{p} &= z_{p-1}' = y^{(p-1)} \\
+    z_{p} &= z_{p-1}' = y^{(p)} \\
     z_{p-1}' &= y^{(p)} = f(x, y, z_1, z_2, \dots, z_{p-1})
 \end{align*}
 
@@ -2840,15 +2844,15 @@ Metoda je eksplicitna, če je $\beta_0 = 0$. Sicer je implicitna.
 
 Prednost $k$-členskih metod je, da so hitrejše od enočlenskih. Slabost pa je, da spreminjanje koraka $h$ ni enostavno.
 
-Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}k$ moramo določiti z neko enočlensko metodo. Pri tem moramo paziti, da izberemo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
+Prvih $k$ vrednosti $y_0, y_1, \dots, y_{k-1}$ moramo določiti z neko enočlensko metodo. Pri tem moramo paziti, da izberemo tako, ki ima enak ali višji red kot izbrana $k$-členska metoda.
 
 Najbolj znani razredi teh metod so (probably na ustnih)
 \begin{itemize}
     \item Adamsove metode:
-    \begin{equation*}
-        y' = f(x, y) \\
-        y(a) = y_a
-    \end{equation*}
+    \begin{align*}
+        &y' = f(x, y) \\
+        &y(a) = y_a
+    \end{align*}
     Ideja je, da to enačbo integriramo:
     \begin{equation*}
         \int_{x_{n-1}}^{x_n} 
@@ -3060,7 +3064,7 @@ Dobimo zaporedje vektorjev $z_0, z_1, z_2, \dots$
 \begin{theorem}
     Naj bo $A \in \R^{n \times m}$ in naj bo $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \dots \geq |\lambda_n| \geq 0$ njene lastne vrednosti.
     Potem za poljubni začetni vektor $z_0$ zaporednje vektorjev $(z_k)_k$, ki ga tvori potenčna metoda, konvergira (numerično) proti dominantnemu lastnemu 
-    vektorju, to je lastnemz vektorju za $\lambda_1$.
+    vektorju, to je lastnemu vektorju za $\lambda_1$.
 \end{theorem}
 
 \begin{proof}
@@ -3151,7 +3155,7 @@ Konvergenca potenčne metode je linearna in je odvisna od razmerja $|\frac{\lamb
 
 \subsubsection{Inverzna iteracija (inverzna potenčna metoda)}
 
-Naj bo$\sigma$ približek za lastno vrednost. Kako bi izračunali tisto lastno vrednost, ki je najbližja $\sigma$ in pripadajoč lastni vektor.
+Naj bo $\sigma$ približek za lastno vrednost. Kako bi izračunali tisto lastno vrednost, ki je najbližja $\sigma$ in pripadajoč lastni vektor.
 
 Naj velja
 \begin{equation*}
@@ -3274,11 +3278,9 @@ Podprostor $Lin\{x_1, x_2, \dots, x_p\}$ se imenuje dominantni invariantni podpr
 \begin{algorithmic}[1]
 \Require Matrika $A$
 \State $A_0 = A$
-\State $k = 0$
 \While{$k = 0, 1, 2, \dots$}
-    \State Izračunaj OR razcep matrike A: $A_k = Q_k R_k$
+    \State Izračunaj OR razcep matrike $A_k$: $A_k = Q_k R_k$
     \State $A_{k+1} = R_k Q_k$
-    \State $k = k + 1$
 \EndWhile
 \end{algorithmic}
 \end{algorithm}
@@ -3425,12 +3427,10 @@ Potrebujemo $\mathcal{O}(n^2)$ operacij.
     \begin{algorithmic}[1]
     \Require Zgornje Hessenbergova matrika $H$
     \State $A_0 = H$
-    \State $k = 0$
     \While{$k = 0, 1, 2, \dots$}
         \State Izberi premik $\sigma_k$
-        \State Izračunaj $QR$ razcep matrike $A_k - \sigma_k I = Q_k R_k$
+        \State Izračunaj $QR$ razcep matrike $A_k$: $A_k - \sigma_k I = Q_k R_k$
         \State $A_{k+1} = R_k Q_k + \sigma_k I$
-        \State $k = k + 1$
     \EndWhile
     \end{algorithmic}
 \end{algorithm}
