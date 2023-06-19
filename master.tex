@@ -178,7 +178,7 @@
 \section{Teorija aproksimacije}
 
 \subsection{Aproksimacija funkcij}
-Denimo, da imamo podano funkcijo $f$. Radi bi jo aproksimirali s kak"sno 'preprostej"so' funkcijo $\tilde{f}$, ki bi bila la"zje izra"cunljiva, bi se jo dalo enostavno odvajati, integrirati \dots
+Denimo, da imamo podano funkcijo $f$. Radi bi jo aproksimirali s kak"sno 'preprostej"so' funkcijo $\tilde{f}$, ki bi bila la"zje izra"cunljiva, bi se jo dalo enostavno odvajati, integrirati ...
 
 \begin{ex}
     \[\sin(x) \sim x - \frac{x^3}{3!} + \frac{x^5}{5!}\]
@@ -190,14 +190,13 @@ Klju"cna vpra"sanja, ki se nam postavijo, so:
     \item V kak"sni mno"zici/podprostoru naj i"s"cemo aproksimant $\tilde{f}$?
     \item V "cem naj si bo $\tilde{f}$ podobna/sorodna z $f$?
     \item Ali $\tilde{f}$ obstaja (v mno"zici, kjer jo i"s"cemo)?
-    \item "ce obstaja, ali je dolo"cen enoli"cno?
+    \item "Ce obstaja, ali je dolo"cen enoli"cno?
     \item Kako konstruirati aproksimant $\tilde{f}$?
     \item Kako dobro nadomestilo za $f$ je izra"cunan $\tilde{f}$?
 \end{itemize}
 
-V splo"snem aproksimacijski problem formaliramo takole:
-
-z $X$ ozna"cimo vektorski prostor, katerega elemente "zelimo aproksimirati, $S \subseteq X$ naj ozna"cuje podprostor/podmno"zico v $X$, v katerem i"s"cemo aproksimante. Aproksimacijska shema je operator 
+V splo"snem aproksimacijski problem formaliramo takole: z $X$ ozna"cimo vektorski prostor, katerega elemente "zelimo aproksimirati, $S \subseteq X$ naj ozna"cuje podprostor/podmno"zico v $X$,
+v katerem i"s"cemo aproksimante. Aproksimacijska shema je operator 
 \begin{equation*}
     \mathscr{A}\colon X \to S
 \end{equation*}
@@ -278,7 +277,7 @@ Da bomo lahko definirali aproksimacijski problem in tudi ocenili napako aproksim
 Za dolo"canje aproksimanta $\tilde{f}$ lo"cimo dva primera:
 \begin{enumerate}
     \item Optimalni aproksimacijski problemi
-    \item interpolacija
+    \item Interpolacija
 \end{enumerate}
 
 
@@ -295,7 +294,8 @@ Pri tem predmetu si bomo ogledali:
     \item aproksimacijo po metodi najmanj"sih kvadratov
     
     (za normo izberemo drugo normo - normo iz skalarnega produkta)
-    \item enakomerna polinomska aproksimacija ($X = C([a, b])$, $S = \Pp_n$, $\norm{\cdot}_{\infty}$)
+    \item enakomerna polinomska aproksimacija
+    \[X = C([a, b]), S = \Pp_n, \norm{\cdot}_{\infty}\]
 \end{enumerate}
 
 Polinomi so zelo uporabni pri aproksimaciji funkcij, saj so gosti v prostoru zveznih funkcij.
@@ -338,7 +338,7 @@ Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskon"cni normi, "za
 
 
 % 20. 2. 2023
-\subsection{Aproksimacija po metodi najmanjših kvadratov (MNK)}
+\subsection{Aproksimacija po metodi najmanjših kvadratov \- (MNK)}
 Sodi pod optimalne aproksimacijske probleme.
 
 Naj bo $X$ normiran vektorski prostor nad $\R$ s skalarnim produktom $\innerproduct{\cdot}{\cdot}$ in naj bo $\norm{\cdot}_2 = \sqrt[]{\innerproduct{\cdot}{\cdot}}$.
@@ -374,7 +374,7 @@ $f^*$ naj bo element najbližje aproksimacije (ENA) po MNK za $f \in X$.
                          \label{eq:dokazNeenakost1}
                          &\geq \norm{f - f^*}_2^2 
     \end{align}
-    Neenakost~\ref{eq:dokazNeenakost1} velja, saj zato, ker velja tako $f^* \in S$ kot $s \in S$ velja tudi $(f^* - s) \in S$,
+    Neenakost~\ref{eq:dokazNeenakost1} velja, saj zato, ker velja tako $f^* \in S$ kot $s \in S$, velja tudi $(f^* - s) \in S$,
     torej veljata tudi enakost $\innerproduct{f^* - s}{f - f^*} = 0$ in neenakost $\norm{f^* - s}_2 \geq 0$.
 
     ($\Longrightarrow$)
