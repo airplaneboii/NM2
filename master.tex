@@ -920,7 +920,7 @@ Matriko, ki jo uporabimo, imenujemo $\textbf{vandermondova matrika}$.
 
 Ker je Vandermondova matrika obrnljiva, sledi, da imamo enolično rešitev. Torej obstaja $\textbf{enoličen}$ polinom stopnje $n$, ki interpolira $n+1$ paroma
 različnih točk.
-Tak interpolacijski problem imenujemo $\textbf{korenten}$ interpolacijski problem.
+Tak interpolacijski problem imenujemo $\textbf{korekten}$ interpolacijski problem.
 Vandermondova matrika je primer $\textbf{zelo občutljive}$ matrike.
 Poleg tega nimamo rešitve v $\textbf{zaključeni obliki}$.
 Spoznali bomo dva druga zapisa interpolacijskega polinoma:
@@ -959,7 +959,7 @@ Vsi ti polinomi so stopnje točno $n$.
 
 \begin{proof}
     Dokazati moramo le, da so linearno neodvisni. Preveriti moramo, da je $\alpha_0 \ell_{0, n} +  \alpha_1 \ell_{1, n} + \dots +
-    \alpha_n \ell_{n, n} = 0 <=> \alpha_0 = \alpha_1 = \dots = \alpha_n = 0$.
+    \alpha_n \ell_{n, n} = 0 \iff \alpha_0 = \alpha_1 = \dots = \alpha_n = 0$.
 
     ($\Longrightarrow$)
     \begin{equation*}
@@ -1074,10 +1074,10 @@ Ta ocena je uporabna v teoriji, ne pa tudi v praksi.
 
 Lagrangeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za numerično integracijo, odvajanje \dots, ima pa tudi nekaj pomankljivosti pri praktični uporabi:
 \begin{itemize}
-    \item numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
-    \item Numerične težave, če so interpolacijske točke preblizu skupaj
-    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno
-    \item ne moremo interpolirati odvodov
+    \item Numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
+    \item Numerične težave, če so interpolacijske točke preblizu skupaj.
+    \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno.
+    \item Ne moremo interpolirati odvodov.
 \end{itemize}
 
 \subsubsection{Newtonova oblika zapisa interpolacijskega polinoma}
@@ -1638,9 +1638,9 @@ Približek za integral bi radi izrazili s kombinacijo vrednosti funkcije $f$ v i
 
 IDEJA: Namesto funkcije $f$ integriramo interpolacijski polinom za $f$ na točkah $a \leq x_0 < x_1 < \dots < x_n \leq b$.
 
-Vemo že:
+Za $f \in \mathscr{C}^{n+1}([a, b])$ vemo že:
 \begin{equation}
-    f(x) = p(x) + \omega(x) [x_0, x_1, \dots, x_n, x] f (\; za \; f \in \mathscr{C}^{n+1}([a, b])) \label{eq:integriranje}
+    f(x) = p(x) + \omega(x) [x_0, x_1, \dots, x_n, x] f  \label{eq:integriranje}
 \end{equation}
 \begin{equation*}
     p(x) = \sum_{i=0}^{n} f(x_i) \ell_{i, n}(x)
@@ -1745,7 +1745,7 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
                          =& - \frac{h^3}{6} \\
                          \neq& 0
         \end{align*}
-        Red pravila je torej 1
+        Red pravila je torej 1.
     \end{itemize}
 \end{ex}
 
@@ -1816,12 +1816,12 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
     \end{equation*}
 
     \begin{rem}
-        Ta nastavek sledi iz razvoja funkcije $f$ v Taylorjevo vrsto
+        Ta nastavek sledi iz razvoja funkcije $f$ v Taylorjevo vrsto:
         \begin{multline*}
             f(x) = f(a) + f(a)'(x-a) + \frac{f''(a)}{2!} (x-a)^2 + \dots + \\
             + \frac{f^{(m)}(a)}{m!} (x-a)^m + \frac{f^{(m+1)}(\xi)}{(m+1)!} (x-a)^{m+1}
         \end{multline*}
-        Ostanek je
+        Ostanek je tu
         \begin{equation*}
             Rf = \frac{f^{(m+1)}(\xi)}{(m+1)!} R(x-a)^{m+1}
         \end{equation*}
@@ -2573,7 +2573,7 @@ Izračunamo s-koeficientov
     y_{n+1} = y_n + \sum_{i=1}^{s} \gamma_i k_i 
 \end{equation*}
 
-pri tem so $(\alpha_i)_{i=1}^s$, $(\beta_{ij})_{i, j=1}^s$ in $(\gamma_i)_{i=1}^s$ prosti koeficienti, ki jih izberemo tako,
+Pri tem so $(\alpha_i)_{i=1}^s$, $(\beta_{ij})_{i, j=1}^s$ in $(\gamma_i)_{i=1}^s$ prosti koeficienti, ki jih izberemo tako,
 da bo metoda konvergentna in čim višjega reda.
 
 \begin{equation*}
@@ -2582,7 +2582,7 @@ da bo metoda konvergentna in čim višjega reda.
 
 Velja še $\alpha_i = \sum_{j=1}^{s} \beta_{ij}$.
 
-Da bo metoda konvergentna oziroma reda vsaj 1, če bo $\sum_{i=1}^{s} \gamma_i = 1$.
+Metoda bo konvergentna oziroma reda vsaj 1, če bo $\sum_{i=1}^{s} \gamma_i = 1$.
 
 R-K metodo lahko predstavimo v t.i. Butcherjevi shemi
 
