@@ -1,3 +1,3 @@
 # Numerične metode 2 2022/2023
 
-Feel free to contribute anyway you can.
+Feel free to contribute any way you can.
