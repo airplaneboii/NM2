@@ -419,9 +419,9 @@ Iščemo $f^* \in S$ ENA po MNK.
     f^* = \sum_{j = 1}^{n} \alpha_j \varphi_j
 \end{equation*}
 
-kjer so $(\alpha_j)_{j = 1}^n$ neznani koeficienti. Iz izreka sledi, da mora biti $f - f^* \perp S$. To bo res, ko bo
+kjer so $(\alpha_j)_{j = 1}^n$ neznani koeficienti. Iz izreka sledi, da mora biti $f - f^* \perp S$. To bo res, ko bo za $i = 1, \dots, n$ veljalo
 \begin{equation*}
-    f - f^* \perp \varphi_i, i \in [n]
+    f - f^* \perp \varphi_i
 \end{equation*}
 \begin{align*}
     0 =& \innerproduct{f - f^*}{\varphi_i}\\
@@ -487,9 +487,9 @@ je $\textbf{simetrična}$ matrika. Gramova matrika je tudi pozitivno definitna. 
         \vdots \\
         \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_n}
     \end{bmatrix} \nonumber \\
-    =& \sum_{i = 1}^{n} x_i \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_1} \nonumber \\
-    =& \sum_{i = 1}^{n} \sum_{j = 1}^{n} \innerproduct{x_j \varphi_j}{x_i \varphi_1} \nonumber \\
-    =& \innerproduct{\sum_{j = 1}^{n} x_j \varphi_j}{\sum_{i = 1}^{n} x_i \varphi_1} \nonumber\\
+    =& \sum_{i = 1}^{n} x_i \sum_{j = 1}^{n} x_j \innerproduct{\varphi_j}{\varphi_i} \nonumber \\
+    =& \sum_{i = 1}^{n} \sum_{j = 1}^{n} \innerproduct{x_j \varphi_j}{x_i \varphi_i} \nonumber \\
+    =& \innerproduct{\sum_{j = 1}^{n} x_j \varphi_j}{\sum_{i = 1}^{n} x_i \varphi_i} \nonumber\\
     =& \norm{\sum_{i = 1}^{n} x_i \varphi_i}_2^2 \nonumber \\
     >& 0 \label{eq:grammNeenacaj}
 \end{align}
@@ -760,24 +760,25 @@ Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PNEA za nek
     \begin{equation}
         r = f - p
     \end{equation}
-    alternirajoče doseže svojo normo $\norm{p}_{\infty, [a, b]}$ v vsaj $n + 2$ različnih točkah $(x_i)_{i=0}^{n+1}$
+    alternirajoče doseže svojo normo $\norm{r}_{\infty, [a, b]}$ v vsaj $n + 2$ različnih točkah $(x_i)_{i=0}^{n+1}$
     \[a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\]
     Potem je $p$ polinom najboljše enakomerne aproksimacije za $f$ na $[a, b]$.
 \end{theorem}
 
-\rem{Kaj pomeni "alternirajoče doseže svojo normo"?}
+\rem{Kaj pomeni `alternirajoče doseže svojo normo'?} \\
+Za $i = 0, \dots, n+1$ mora veljati
 \begin{equation*}
-    \norm{r}_{\infty, [a, b]} = \left| r(x_i) \right| \forall i \in [n]
+    \norm{r}_{\infty, [a, b]} = \left| r(x_i) \right|
 \end{equation*}
-in
+in za $i = 0, \dots, n$ mora veljati
 \begin{equation*}
-    r(x_i)r(x_{i+1}) < 0 \; \forall i
+    r(x_i)r(x_{i+1}) < 0
 \end{equation*}
 
 \begin{figure}[H]
     \center
     \includegraphics[scale=0.25]{residual.jpg}
-    \caption{Graf residuala.}
+    \caption{Graf residuala. Absolutne vrednosti ekstremov se ujemajo.}
 \end{figure}
 
 \begin{proof}
@@ -788,19 +789,20 @@ in
         \left| f(x_i) - q(x_i) \right| \leq& \max_{x \in [a, b]} \left| f(x) - q(x) \right| \\
                              =& \norm{f - q}_{\infty, [a, b]} \\
                              <& \norm{f - p}_{\infty, [a, b]} \\
-                             =& \left| f(x_i) - p(x_i) \right| \text{  } \forall i = 0, 1, 2, \dots, n+1
+                             =& \left| f(x_i) - p(x_i) \right|
     \end{align*}
+    kjer je $i = 0, 1, 2, \dots, n+1$.
     Torej za $\forall i $ velja:
     \begin{equation*}
         \left| f(x_i) - q(x_i) \right| < \left| f(x_i) - p(x_i) \right|
     \end{equation*}
     To razvijemo v neenakosti
     \begin{equation*}
-        - sign(f(x_i) - p(x_i)) (f(x_i) - p(x_i)) < f(x_i) - q(x_i)
+        - sign(f(x_i) - p(x_i)) \cdot (f(x_i) - p(x_i)) < f(x_i) - q(x_i)
     \end{equation*}
     in
     \begin{equation*}
-        f(x_i) - q(x_i) < sign(f(x_i) - p(x_i)) (f(x_i) - p(x_i))
+        f(x_i) - q(x_i) < sign(f(x_i) - p(x_i)) \cdot (f(x_i) - p(x_i))
     \end{equation*}
     Če v neenakostih $x_i$ spremenimo v $x_{i+1}$ ter upoštevamo enakost
     \begin{equation*}
@@ -808,11 +810,11 @@ in
     \end{equation*}
     dobimo neenakosti
     \begin{equation*}
-        sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1})) < f(x_{i+1}) - q(x_{i+1})
+        sign(f(x_i) - p(x_i)) \cdot (f(x_{i+1}) - p(x_{i+1})) < f(x_{i+1}) - q(x_{i+1})
     \end{equation*}
     in
     \begin{equation*}
-        f(x_{i+1}) - q(x_{i+1}) < - sign(f(x_i) - p(x_i)) (f(x_{i+1}) - p(x_{i+1}))
+        f(x_{i+1}) - q(x_{i+1}) < - sign(f(x_i) - p(x_i)) \cdot (f(x_{i+1}) - p(x_{i+1}))
     \end{equation*}
 
     Brez škode za splošnost (BŠS) lahko rečemo, da je $sign(f(x_i) - p(x_i)) = 1$. Potem je $f(x_i) - q(x_i) < f(x_i) - p(x_i)$, $p(x_i) - q(x_i) < 0$ in
@@ -827,17 +829,16 @@ Izkaže se, da je pogoj tudi potreben (torej da velja ekvivalenca), a je dokaz t
 Iskanje/računanje PNEA se prevede na iskanje ustrezne množice točk $\{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$.
 
 \begin{defn}
-    Naj bo $E = \{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$. Definirajmo $\textbf{minimaks}$ za $f$ na $E$ konstruirati
+    Naj bo $E = \{x_i, a \leq x_0 < x_1 < \dots < x_{n+1} \leq b\}$. $\textbf{Minimaks}$ za $f$ na $E$ je
     \begin{equation*}
         M_n (f, E) = \min_{p \in \Pp_n} \max_{x_i \in E} \left| f(x_i) - p(x_i) \right|
     \end{equation*}
 \end{defn}
 
 Polinom, pri katerem je ta minimum dosežen, imenujemo $\textbf{polinom}$ $\textbf{najboljše}$ $\textbf{enakomerne}$ $\textbf{aproksimacije}$ $\textbf{za}$ $f$
-$\textbf{na}$ $\textbf{množici}$ $E$. Izračunamo ga tako,
-da rešimo naslednji sistem linearnih enačb: (brez izpeljave)
+$\textbf{na}$ $\textbf{množici}$ $E$. Izračunamo ga tako, da rešimo naslednji sistem linearnih enačb za $i = 1, \dots, n+1$: (brez izpeljave)
 \begin{equation*}
-    f(x_i) - p(x_i) = (-1)^i m, i \in [n+1] 
+    f(x_i) - p(x_i) = (-1)^i m
 \end{equation*}
 
 Imamo torej $n+2$ enačb in $n+2$ neznank ($n + 1$ v polinomu $p$ in eno v $m$):
@@ -877,9 +878,9 @@ Interpolacija se uporablja za
 \end{itemize}
 
 \subsection{Polinomska interpolacija}
-Za $f \in \mathscr{C}([a, b])$ in interpolacijske točke $a \leq x_0 < x_1 < \dots < x_m \leq b$ iščemo $\textbf{polinom}$ $p_i$, ki zadošča enačbam
+Za $f \in \mathscr{C}([a, b])$ in interpolacijske točke $a \leq x_0 < x_1 < \dots < x_n \leq b$ iščemo $\textbf{polinom}$ $p_i$, ki za $i = 0, \dots, n$ zadošča enačbam
 \begin{equation*}
-    p(x_i) = f(x_i), i = a, \dots, n
+    p(x_i) = f(x_i)
 \end{equation*}
 Enačb je $n+1$. Da dobimo enako število enačb, moramo izbrati $p \in \Pp_n$.
 
@@ -887,11 +888,11 @@ Enačb je $n+1$. Da dobimo enako število enačb, moramo izbrati $p \in \Pp_n$.
     p(x) = a_0 + a_1 x + a_2 x^2 + \dots + a_n x^n
 \end{equation*}
 
-Enačbe (za $i = 0, 1, \dots, n$)
+Za  $i = 0, 1, \dots, n$ dobimo enačbe
 \begin{equation*}
     a_0 + a_1 x_i + a_2 x_i^2 + \dots + a_n x_i^n
 \end{equation*}
-lahko zapišemo matrično
+ki jih lahko zapišemo matrično
 \begin{equation*}
     \begin{bmatrix}
         1 & x_0 & x_0^2 & \dots & x_0^n \\
@@ -925,11 +926,11 @@ Vandermondova matrika je primer $\textbf{zelo občutljive}$ matrike.
 Poleg tega nimamo rešitve v $\textbf{zaključeni obliki}$.
 Spoznali bomo dva druga zapisa interpolacijskega polinoma:
 \begin{itemize}
-    \item Lagrangeva oblika zapisa
+    \item Lagrangeeva oblika zapisa
     \item Newtonova oblika zapisa
 \end{itemize}
 
-\subsubsection{Lagrangeva oblika zapisa interpolacijskega polinoma}
+\subsubsection{Lagrangeeva oblika zapisa interpolacijskega polinoma}
 Definiramo naslednje polinome:
 \begin{align*}
     \ell_{0, n} (x) =& \frac{(x-x_1)(x-x_2) \dots (x - x_n)}{(x_0 - x_1)(x_0 - x_2) \dots (x_0 - x_n)} \\
@@ -942,7 +943,7 @@ oziroma
 \begin{equation*}
     \ell_{i, n} (x) = \prod_{j = 0, j \neq i}^{n} \frac{(x - x_j)}{(x_i - x_j)}
 \end{equation*}
-za $i = 0, 1, \dots, n$. To imenujemo $\textbf{Lagrangevi bazni polinomi}$.
+za $i = 0, 1, \dots, n$. To imenujemo $\textbf{Lagrangeevi bazni polinomi}$.
 
 Velja:
 \begin{equation*}
@@ -962,10 +963,11 @@ Vsi ti polinomi so stopnje točno $n$.
     \alpha_n \ell_{n, n} = 0 \iff \alpha_0 = \alpha_1 = \dots = \alpha_n = 0$.
 
     ($\Longrightarrow$)
+    Za vsak $x$ velja
     \begin{equation*}
-        \sum_{j = 0}^{n} \alpha_j \ell_{j, n} (x) = 0 \text{ }\forall x
+        \sum_{j = 0}^{n} \alpha_j \ell_{j, n} (x) = 0
     \end{equation*}
-    Vstavimo $x = x_i$ in dobimo
+    Ko vstavimo $x = x_i$, dobimo
     \begin{equation*}
         0 = \sum_{j = 0}^{n} \alpha_j \ell_{j, n} (x_i) = \sum_{j = 0}^{n} \alpha_j \delta_{i, j} = \alpha_i
     \end{equation*}
@@ -988,7 +990,7 @@ Dobili smo
 \begin{equation*}
     p(x) = \sum_{j = 0}^{n} f(x_j) \ell_{j, n}(x)
 \end{equation*}
-kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
+kar je Lagrangeeva oblika zapisa interpolacijskega polinoma.
 
 \begin{ex}
     Naj bo $f(x) = e^x$. Pošiči interpolacijski polinom za $f$ na točkah $x_0 = 0, x_1 = 1, x_2 = 3, x_3 = 4$.
@@ -1026,7 +1028,7 @@ kar je Lagrangeva oblika zapisa interpolacijskega polinoma.
     \begin{equation}
         \sum_{i = 0}^{n} \ell_{i, n}(x) = 1
     \end{equation}
-    Lagrangevi bazni polinomi tvorijo $\textbf{razčlenitev}$ oziroma $\textbf{particijo enote}$, ki pozitivno vpliva na stabilnost baze.
+    Lagrangeevi bazni polinomi tvorijo $\textbf{razčlenitev}$ oziroma $\textbf{particijo enote}$, ki pozitivno vpliva na stabilnost baze.
 \end{conseq}
 
 \begin{theorem}[O napaki interpolacije.]
@@ -1072,9 +1074,9 @@ Iz tega sledi
 \end{equation*}
 Ta ocena je uporabna v teoriji, ne pa tudi v praksi.
 
-Lagrangeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za numerično integracijo, odvajanje \dots, ima pa tudi nekaj pomankljivosti pri praktični uporabi:
+Lagrangeeva oblika je zaradi enostavnosti zelo uporabna pri izpeljavi formul za numerično integracijo, odvajanje \dots, ima pa tudi nekaj pomankljivosti pri praktični uporabi:
 \begin{itemize}
-    \item Numerično računanje vrednosti polinoma v Lagrangevi obliki \dots
+    \item Numerično računanje vrednosti polinoma v Lagrangeevi obliki \dots
     \item Numerične težave, če so interpolacijske točke preblizu skupaj.
     \item Konstrukcija ni rekurzivna. Dodajanje novih točk je zahtevno.
     \item Ne moremo interpolirati odvodov.
@@ -1096,7 +1098,6 @@ Iščemo koeficiente $(c_i)_{i=0}^n$, da bo $p$ interpolacijski.
 Ta $p$ bomo konstruirali $\textbf{rekurzivno}$.
 Naj bo $p_{k-1}$ interpolacijski polinom za $f$ na točkah $x_0$, $x_1$, $\dots$, $x_{k-1}$. Kako poiskati $p_k$, ki bo interpolacijski za $f$ na točkah
 $x_0, x_1, \dots, x_k$, kjer bo $p_{k-1} \in \Pp_{k-1} \text{ in } p_k \in \Pp_k$?
-
 \begin{equation*}
     p_k (x) = p_{k-1}(x) + c (x-x_0)(x-x_1)\cdots(x-x_{k-1})
 \end{equation*}
@@ -1187,8 +1188,9 @@ V zgornji enačbi je $\frac{f(x_1)- f(x_0)}{x_1 - x_0}$ vodilni koeficient, $1$ 
     \begin{equation*}
         p(x) = \ell_0(x) q_0(x) + \ell_1(x) q_1(x), \ell_0, \ell_1 \in \Pp_1, \ell_0, \ell_1 = ?
     \end{equation*}
+    kjer za $x_j \in \{x_1, x_2, \dots, x_{k-1}\}$ upoštevamo
     \begin{equation*}
-        x = x_j, j \in \{x_1, x_2, \dots, x_{k-1}\}
+        x = x_j
     \end{equation*}
     Dobimo tri pogoje:
     \begin{itemize}
@@ -1467,7 +1469,7 @@ povečujemo stopnjo $n$. Dobimo zaporedje interpolacijskih polinomov $(p_n)_n$. 
 Protiprimer: (Rungejev primer)
 
 Za funkcijo $f(x) = \frac{1}{1+x^2}$ na interalu $[-5, 5]$ interpoliramo z ekvidistantnimi točkami. Z večanjem $n$-ja gre napaka
-proti $\infty$.
+proti $\infty$. Z Čebiševimi točkami gre napaka proti 0, a v resnici je napaka pri krajiščih ogromna.
 
 \subsubsubsection{Odsekoma polinomske funkcije (zlepki)}
 
@@ -1595,8 +1597,8 @@ kjer je prvi sumand približek, drugi napaka, tretji pa je enak nič. Napako zap
 
 Imamo dve vrsti napake:
 \begin{itemize}
-    \item napaka metode - $Rf$ (Pada, ko $h$ pada)
-    \item neodstranljiva napaka - napake pri izračunu vrednosti funkcije (Raste, ko $h$ pada)
+    \item napaka metode - $Rf$ (pada, ko $h$ pada)
+    \item neodstranljiva oziroma aritmetična napaka - napaka pri izračunu vrednosti funkcije (raste, ko $h$ pada)
 \end{itemize}
 
 Ko računamo vrednosti funkcije $f(x_i)$, zaradi zaokrožitvenih napak aritmetike dobimo približek $\tilde{f}(x_i)$, da velja
@@ -1626,6 +1628,7 @@ Ko računamo vrednosti funkcije $f(x_i)$, zaradi zaokrožitvenih napak aritmetik
     (slikca)
 \end{ex}
 
+\newpage
 \section{Numerična integriracija}
 Naloga: Radi bi izračunali približek za integral
 \begin{gather*}
@@ -2253,6 +2256,7 @@ $\Omega = [a_1, b_1] \times [a_2, b_2] \times \dots \times [a_d, b_d]$ velja ena
 
 Napaka je enaka kot prej, torej $I - I_N = \mathcal{O}(N^{-\frac{1}{2}})$.
 
+\newpage
 \section{Numerično reševanje navadnih diferencialnih enačb}
 
 Ponovitev teorije:
@@ -2896,6 +2900,7 @@ Najbolj znani razredi teh metod so (probably na ustnih)
     \end{itemize}
 \end{ex}
 
+\newpage
 \section{Numerično računanje lastnih vrednosti}
 
 Naj bo $A \in \C^{n \times n}$. Če neničeln vektor $x \in \C^n$ in skalar $\lambda \in \C$ zadoščata enačbi
