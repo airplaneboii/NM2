@@ -190,7 +190,7 @@ Klju"cna vpra"sanja, ki se nam postavijo, so:
     \item V kak"sni mno"zici/podprostoru naj i"s"cemo aproksimant $\tilde{f}$?
     \item V "cem naj si bo $\tilde{f}$ podobna/sorodna z $f$?
     \item Ali $\tilde{f}$ obstaja (v mno"zici, kjer jo i"s"cemo)?
-    \item "Ce obstaja, ali je dolo"cen enoli"cno?
+    \item "Ce obstaja, ali je dolo"cena enoli"cno?
     \item Kako konstruirati aproksimant $\tilde{f}$?
     \item Kako dobro nadomestilo za $f$ je izra"cunan $\tilde{f}$?
 \end{itemize}
@@ -2629,10 +2629,10 @@ R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in
 \subsubsection{Sistemi diferencialnih enačb 1. reda}
 Začetni problem prvega reda za sistem je oblike
 \begin{align*}
-    y_1' =& f_1(x, y_1, x_2, \dots, y_d) + y_1(a) = y_{1, a} \\
-    y_2' =& f_2(x, y_1, x_2, \dots, y_d) + y_2(a) = y_{2, a} \\
+    y_1' =& f_1(x, y_1, y_2, \dots, y_d) + y_1(a) = y_{1, a} \\
+    y_2' =& f_2(x, y_1, y_2, \dots, y_d) + y_2(a) = y_{2, a} \\
     \vdots& \\
-    y_d' =& f_d(x, y_1, x_2, \dots, y_d) + y_d(a) = y_{d, a}
+    y_d' =& f_d(x, y_1, y_2, \dots, y_d) + y_d(a) = y_{d, a}
 \end{align*}
 pri čemer za $j \in [1, d]$ velja
 \begin{equation*}
@@ -2860,8 +2860,8 @@ Najbolj znani razredi teh metod so (probably na ustnih)
     (skica)
     brez $x_n$ je eksplicitna, z njo pa implicitna. Funkcijo $f(x, y(x))$ nadomestimo z interpolacijskim polinomom.
     (primer)
-    \item Milneove metode
-    Ideja za izpeljavo: doferencialno enačbo $y' = f(x, y)$ integriramo na $[x_{n-k}, x_n]$, integral funkcije $f(x, y(x))$ pa nadomestimo
+    \item Milneove metode: \\
+    Ideja za izpeljavo: diferencialno enačbo $y' = f(x, y)$ integriramo na $[x_{n-k}, x_n]$, integral funkcije $f(x, y(x))$ pa nadomestimo
     z izbranim integracijskim pravilom.
     \begin{itemize}
         \item odprta pravila - eksplicitne metode
@@ -3009,7 +3009,7 @@ Računanje Jordanove kanonične forme ni obratno stabilno.
 
 Schurova forma ni enolična. Vrstni red diagonalnih elementov je lahko poljuben.
 
-Tudi če je $A \in \R^{n\times n}$, je lahko njen schurov razcep kompleksen. Da se izognemo kompleksni aritmetiki, uporabimo tako imenovani Realni Schurov razcep.
+Tudi če je $A \in \R^{n\times n}$, je lahko njen Schurov razcep kompleksen. Da se izognemo kompleksni aritmetiki, uporabimo tako imenovani Realni Schurov razcep.
 
 \begin{theorem}
     Za vsako matriko $A \in \R^{n\times n}$ obstajata ortogonalna matrika $Q$ in kvazi-zgornje trikotna matrika $R$, da je
@@ -3062,8 +3062,8 @@ Za dano matriko $A \in \R^{n \times m}$ iščemo dominantno lastno vrednost in p
 Dobimo zaporedje vektorjev $z_0, z_1, z_2, \dots$
 
 \begin{theorem}
-    Naj bo $A \in \R^{n \times m}$ in naj bo $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \dots \geq |\lambda_n| \geq 0$ njene lastne vrednosti.
-    Potem za poljubni začetni vektor $z_0$ zaporednje vektorjev $(z_k)_k$, ki ga tvori potenčna metoda, konvergira (numerično) proti dominantnemu lastnemu 
+    Naj bo $A \in \R^{n \times m}$ in naj bodo $|\lambda_1| > |\lambda_2| \geq |\lambda_3| \geq \dots \geq |\lambda_n| \geq 0$ njene lastne vrednosti.
+    Potem za poljubni začetni vektor $z_0$ zaporednje vektorjev $(z_k)_k$, ki ga tvori potenčna metoda, (numerično) konvergira proti dominantnemu lastnemu 
     vektorju, to je lastnemu vektorju za $\lambda_1$.
 \end{theorem}
 
@@ -3075,7 +3075,7 @@ Dobimo zaporedje vektorjev $z_0, z_1, z_2, \dots$
     Začetni vektor $z_0$ razvijemo po bazi lastnih vektorjev:
     \begin{gather*}
         z_0 = \sum_{i = 1}^{n} \alpha_i x_i \\
-        z_k = \frac{A z_{k-1}}{\norm{A z_{k-1}}} = \frac{A (\frac{A z_{k-1}}{\norm{A z_{k-2}}})}{A (\frac{A z_{k-2}}{\norm{A z_{k-2}}})} = \dots \frac{A^k z_0}{\norm{A^k z_0}} = (*) \\ 
+        z_k = \frac{A z_{k-1}}{\norm{A z_{k-1}}} = \frac{A (\frac{A z_{k-1}}{\norm{A z_{k-2}}})}{A (\frac{A z_{k-2}}{\norm{A z_{k-2}}})} = \dots = \frac{A^k z_0}{\norm{A^k z_0}} = (*) \\ 
         A^k z_0 = \sum_{i=1}^{n} \alpha_i A^k x_i = \sum_{i=1}^{n} \alpha_i \lambda_i^k x_i \\
         z_k = \frac{\alpha_1 \lambda_1^k x_1 + \sum_{i=1}^{n}\alpha_i \lambda_i^k x_i}{\norm{\alpha_1 \lambda_1^k x_1 + \sum_{i=1}^{n}\alpha_i \lambda_i^k x_i}} = \pm \frac{\alpha_1 x_1 + \sum_{i=1}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}{\norm{\alpha_1 x_1 + \sum_{i=1}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}} \\
         \xrightarrow[k \to \infty]{} \pm \frac{\alpha_1 x_1}{\norm{\alpha_1 x_1}} = \pm \frac{x_1}{\norm{x_1}}
@@ -3194,7 +3194,7 @@ Vidimo, da je $\frac{1}{\lambda_i - \sigma}$ dominantna lastna vrednost za $(A -
     \end{algorithmic}
 \end{algorithm}
 
-\rem{Če inverzno iteracijo kombiniramo z Rayleighovim kvocientom dobimo Rayleighovo iteracijo}
+\rem{Če inverzno iteracijo kombiniramo z Rayleighovim kvocientom dobimo Rayleighovo iteracijo.}
 %Izberi normiran $z_0$
 %ponavljaj $k = 0, 1, 2, \dots$
 %    $\sigma_k = \rho(z_k, A)$
