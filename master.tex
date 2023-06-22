@@ -425,7 +425,7 @@ kjer so $(\alpha_j)_{j = 1}^n$ neznani koeficienti. Iz izreka sledi, da mora bit
 \end{equation*}
 \begin{align*}
     0 =& \innerproduct{f - f^*}{\varphi_i}\\
-      =& \innerproduct{f - \sum_{j = 1}^{n}\alpha_j \varphi_j}{\varphi_j}\\
+      =& \innerproduct{f - \sum_{j = 1}^{n}\alpha_j \varphi_j}{\varphi_i}\\
       =& \innerproduct{f}{\varphi_i} - \sum_{j = 1}^{n}\alpha_j \innerproduct{\varphi_j}{\varphi_i}
 \end{align*}
 Za vsak i tako dobimo enačbo
@@ -653,7 +653,7 @@ kar je baza za $S$. Dobljeni sistem enačb lahko rešimo z razcepom Choleskega.
     \end{bmatrix} \text{, }  b \in R^m
 \end{equation*}
 \begin{equation*}
-    \min_{x \in \R^n} \norm{Ax - b}_2 = \min_{z \in ImA} \norm{b - z}_2
+    \min_{x \in \R^n} \norm{Ax - b}_2 = \min_{z \in ImA} \norm{z - b}_2
 \end{equation*}
 
 Aproksimiramo vektor $b \in \R^m (X = \R^m)$
@@ -667,13 +667,13 @@ Aproksimiramo vektor $b \in \R^m (X = \R^m)$
     \innerproduct{x}{y} = \sum_{i = 1}^{m}x_i y_i = x^T y
 \end{equation*}
 
-$\innerproduct{x}{y} = \sum_{i = 1}^{m} x_i y_i$:
-\begin{equation}
+Definiramo skalarni produkt kot $\innerproduct{x}{y} = \sum_{i = 1}^{m} x_i y_i$:
+\begin{equation*}
     G = (\innerproduct{a_j}{a_i})_{i, j = 1}^n = A^T A
-\end{equation}
-\begin{equation}
+\end{equation*}
+\begin{equation*}
     \text{desna stran } = (\innerproduct{a_i}{b})_{i = 1}^n = A^Tb
-\end{equation}
+\end{equation*}
 
 \begin{ex}
     $X = \mathscr{C} ([0, 1])$
@@ -2004,7 +2004,7 @@ Ulomek je ocena za napako približka $F_{\frac{h}{2}}$.
 
 Podobno:
 \begin{equation*}
-    I = \frac{2^p F_{\frac{h}{2}} - 2^p F_h + F_h - 2^p F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
+    I = \frac{2^p F_{\frac{h}{2}} - F_h + 2^p F_h - 2^p F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
     = F_h + 2^p \frac{F_{\frac{h}{2}} - F_h}{2^p - 1} + \mathscr{O} (h^{p+1})
 \end{equation*}
 Ulomek je ocena za napako približka $F_h$.
@@ -2081,7 +2081,7 @@ Iz pogojev sestavimo sistem nelinearnih enačb:
 \end{align*}
 
 \begin{rem}
-    Drug način: Iz baze $1, x, \dots, x^{n+1}$ izračunamo ortonormirano bazo polinomov $P_0, P_1, \dots P_{n+1}$ (glede na dan skalarni produkt).
+    Drug način: Iz baze $1, x, \dots, x^{n+1}$ izračunamo ortonormirano bazo polinomov $P_0, P_1, \dots, P_{n+1}$ (glede na dan skalarni produkt).
     Za vozle izberemo ničle polinoma $P_{n+1}$.
 \end{rem}
 
