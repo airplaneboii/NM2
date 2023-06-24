@@ -1101,7 +1101,7 @@ $x_0, x_1, \dots, x_k$, kjer bo $p_{k-1} \in \Pp_{k-1} \text{ in } p_k \in \Pp_k
 \begin{equation*}
     p_k (x) = p_{k-1}(x) + c (x-x_0)(x-x_1)\cdots(x-x_{k-1})
 \end{equation*}
-Vstavimo $x = x_j$, $j \in \{0, 1, \dots, k-1\}$
+Vstavimo $x = x_j$, $j = 0, 1, \dots, k-1$
 \begin{equation*}
     p_k(x_j) = p_{k-1}(x_j) + c \cdot 0 = f(x_j)
 \end{equation*}
@@ -1333,7 +1333,7 @@ To lahko rešimo tudi z uporabo tabele:
     \begin{align*}
         p(x) =& f(x_0)\cdot 1 + [x_0, x_1] f (x-x_0) \\
              =& f(x_0) + \frac{f(x_1) - f(x_0)}{x_1 - x_0}(x-x_0) \\
-             \xrightarrow{x_1 \to x_0}& f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0)
+             &\xrightarrow{x_1 \to x_0} f(x_0) + \biggl(\lim_{x_1 \to x_0} \frac{f(x_1)-f(x_0)}{x_1-x_0}\biggr)(x-x_0) \\
         p(x) =& f(x_0) - f'(x_0)(x-x_0) \\
     \end{align*}
     Iz tega dobimo sistem enačb:
@@ -1535,7 +1535,7 @@ označujemo z $R(f)$ oziroma $Rf$.
 Interpolacijske točke običajno izberemo $\textbf{ekvidistantno}$, za $x$ pa izberemo eno od interpolacijskih točk, na primer 
 $x_k$, $k \in \{0, 1, \dots, n\}$. Tedaj dobimo:
 \begin{equation*}
-    f'(x_k) = \sum_{i=0}^{n}f(x_i) \ell_{i, n}'(x_k) + \omega'(x_k) [x_0, x_1, \dots, x_k] f + \omega(x_k) [x_0, x_1, \dots, x_k] f
+    f'(x_k) = \sum_{i=0}^{n}f(x_i) \ell_{i, n}'(x_k) + \omega'(x_k) [x_0, x_1, \dots, x_{k-1}, x_k] f + \omega(x_k) [x_0, x_1, \dots, x_{k-1}, x_k, x_k] f
 \end{equation*}
 kjer je prvi sumand približek, drugi napaka, tretji pa je enak nič. Napako zapišemo kot
 \begin{equation*}
@@ -1714,7 +1714,7 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
     \begin{theorem}
         Posplošen izrek o povprečni vrednosti:
         
-        če $f$ na $[a, b]$ ne spremeni predznaka, je
+        Če $f$ na $[a, b]$ ne spremeni predznaka, je
         \begin{equation*}
             \int_{a}^{b} f(x) g(x) dx = g(\xi) \int_{a}^{b} f(x) dx
         \end{equation*}
@@ -1755,15 +1755,16 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
 \begin{ex}
     $n = 2, x_0 = a, x_1 = x_0 + h, x_2 = x_0 + 2h = b, h = \frac{b-a}{2}$
     \begin{multline*}
-        \int_{x_0}^{x_1} f(x) dx = \int_{x_0}^{x_1} \frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)} dx + \int_{x_0}^{x_1} \frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)} dx + \\
-        + \int_{x_0}^{x_1} \frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)} dx + \\
-        + \int_{x_0}^{x_1} (x-x_0)(x-x_1)(x-x_2) [x_0, x_1, x_2, x] f dx
+        \int_{x_0}^{x_2} f(x) dx = f(x_0) \int_{x_0}^{x_2} \frac{(x-x_1)(x-x_2)}{(x_0-x_1)(x_0-x_2)} dx + \\
+        + f(x_1) \int_{x_0}^{x_2} \frac{(x-x_0)(x-x_2)}{(x_1-x_0)(x_1-x_2)} dx + \\
+        + f(x_2) \int_{x_0}^{x_2} \frac{(x-x_0)(x-x_1)}{(x_2-x_0)(x_2-x_1)} dx + \\
+        + \int_{x_0}^{x_2} (x-x_0)(x-x_1)(x-x_2) [x_0, x_1, x_2, x] f dx
     \end{multline*}
     
     Izračunamo uteži
     \begin{align*}
-        A_0 =& \frac{1}{h^2} \int_{x_0}^{x_1} (x-x_1)(x-x_2) dx \\
-            =& \frac{1}{h^2} \int_{x_0}^{x_1} h(t-1) h(t-2) h dt \\
+        A_0 =& \frac{1}{h^2} \int_{x_0}^{x_2} (x-x_1)(x-x_2) dx \\
+            =& \frac{1}{h^2} \int_{x_0}^{x_2} h(t-1) h(t-2) h dt \\
             =& \dots \\
             =& \frac{h}{3}
     \end{align*}
@@ -1834,7 +1835,7 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
         \end{equation*}
     \end{rem}
 
-    Izpeljali smo Simpsonovo pravilo
+    Izpeljali smo $\textbf{Simpsonovo pravilo}$
     \begin{equation*}
         \int_{x_0}^{x_2} f(x) dx = \frac{h}{3} (f(x_0) + 4f(x_1) + f(x_2)) - \frac{h^5}{90} f^{(4)}(\xi)
     \end{equation*}
@@ -1855,17 +1856,17 @@ Izberemo bazo polinomov
 \begin{equation*}
     \int_{x_0}^{x_2}f(x) dx = A_0 f(x_0) + A_1 f(x_1) + A_2 f(x_2) + Rf
 \end{equation*}
-Če rečemo, da $f(x) = 1$:
+Če rečemo, da je $f(x) = 1$:
 \begin{gather*}
     \int_{x_0}^{x_2} 1 dx = A_0 + A_1 + A_2 \\
     2h =  A_0 + A_1 + A_2
 \end{gather*}
-Če rečemo, da $f(x) = x-x_0$:
+Če rečemo, da je $f(x) = x-x_0$:
 \begin{gather*}
     \int_{x_0}^{x_2} (x-x_0) dx = A_0 (x_0-x_0) + A_1(x_1-x_0) + A_2(x_2-x_0) \\
     2h = A_1 + 2A_2
 \end{gather*}
-Če rečemo, da $f(x) = (x-x_0)^2$:
+Če rečemo, da je $f(x) = (x-x_0)^2$:
 \begin{equation*}
     \frac{8}{3} h = A_1 + 4A_2
 \end{equation*}
@@ -2286,7 +2287,7 @@ kjer je $y_a$ podana konstanta in $f: [a, b] \times \R \to \R$.
 \end{gather*}
 kjer so $y(a)$, $y'(a)$, \dots, $y^{(p-1)}(a)$ podane konstante.
 
-Pri numeričnem reševanju in analizi rešitev se bomo omejili na probleme, pri katerih so izpolnjeni pogoji eksistenčnega izreka (E.I.).
+Pri numeričnem reševanju in analizi rešitev se bomo omejili na probleme, pri katerih so izpolnjeni pogoji Eksistenčnega izreka (E.I.).
 
 \subsubsection{Robni problemi}
 
@@ -2300,7 +2301,9 @@ Pri numeričnem reševanju in analizi rešitev se bomo omejili na probleme, pri 
 
 Robnih primerov pri tem predmetu ne bomo reševali.
 
-Numerične metode za reševanje teh problemov delimo na:
+\subsection{Delitev numeričnih metod}
+
+Numerične metode za reševanje problemov (iz E.I.) delimo na:
 
 \begin{enumerate}
     \item Diferenčne metode
@@ -2312,9 +2315,9 @@ Numerične metode za reševanje teh problemov delimo na:
     \end{equation*}
     za $n = 0, 1, 2, \dots$, kjer je $y_n$ numerični približek, $y(x_n)$ pa točna rešitev pri $x_n$.
     (slikca)
-    \item Metode, pri katerih iščemo približek k rešitvi kot funkcijo v nekem izbranem podprostoru funkcij
+    \item Metode, pri katerih iščemo približek k rešitvi kot funkcijo v nekem izbranem podprostoru funkcij.
     
-    Dve znani metodi sta kolokacija in metoda končnih elementov. Teh metod letos ne bomo obravnavali.
+    Dve znani metodi sta $\textbf{kolokacija}$ in $\textbf{metoda končnih elementov}$. Teh metod letos ne bomo obravnavali.
 \end{enumerate}
 
 
@@ -2372,7 +2375,7 @@ Drug način izpeljave te metode:
 
 Spomnimo se formule za aproksimacijo odvoda:
 \begin{equation*}
-    y(x_0) = \frac{y(x_1) - y(x_0)}{h} - \frac{h}{2} y''(\xi)
+    y'(x_0) = \frac{y(x_1) - y(x_0)}{h} - \frac{h}{2} y''(\xi)
 \end{equation*}
 
 Vstavimo to aproksimacijo v diferencialno enačbo:
@@ -2405,7 +2408,7 @@ oziroma
 \begin{equation*}
     y_{n+1} = y_n + h f(x_{n+1}, y(x_{n+1}))
 \end{equation*}
-za $n = 0, 1, 2, \dots$ To je implicitna Eulerjeva metoda.
+za $n = 0, 1, 2, \dots$ To je Implicitna Eulerjeva metoda.
 
 Pri implicitnih metodah moramo za izračun $y_{n+1}$ rešiti (nelinearno) enačbo. Uporabimo lahko postopek navadne iteracije.
 
@@ -2483,7 +2486,7 @@ Numerične približke $(y_n)_{n=0}^m$ povežemo z odsekoma linearno funkcijo $y_
     
     Ekvivalentno:
     \begin{equation*}
-        \max_{0 \leq n \leq m} |y(x_n) - y_n|
+        \max_{0 \leq n \leq m} |y(x_n) - y_n| \xrightarrow{m \to \infty} 0
     \end{equation*}
     ko $m \to \infty$
 \end{defn}
@@ -2496,7 +2499,7 @@ Numerične približke $(y_n)_{n=0}^m$ povežemo z odsekoma linearno funkcijo $y_
 \end{defn}
 
 \begin{defn}
-    Globalna napaka v točki $x_n$ je $|y(x_n) - y_n|$
+    Globalna napaka v točki $x_n$ je $|y(x_n) - y_n|$.
 \end{defn}
 
 \begin{defn}
@@ -2514,9 +2517,9 @@ Pri določanju reda metode oziroma reda globalne napake si pomagamo z lokalno na
     \begin{equation*}
         T_n(h) = y(x_n) - y_n
     \end{equation*}
-    ob predpostavki
+    ob predpostavki za $j = 1, 2, \dots$
     \begin{equation*}
-        y(x_{n-j}) = y_{n-j}, j=1, 2, \dots
+        y(x_{n-j}) = y_{n-j}
     \end{equation*}
 \end{defn}
 
@@ -2550,41 +2553,38 @@ Določi red lokalne napake eksplicitne Eulerjeve metode.
     y_{n+1} = y_n + h f(x_n, y_n)
 \end{equation*}
 
-% polepšaj
-\begin{align*}
-    T_{n+1} &= y(x_{n+1}) - y_{n+1} \\
-            &= y(x_n) + h f(x_n, y(x_n)) \\
-            &+ \frac{h^2}{2} (f_x(x_n, y(x_n)) \\
-            &+ f_y(x_n, y(x_n))\cdot f(x_n, y(x_n))) \\
-            &+ \mathcal{O}(h^3) - y_n - h f(x_n, y_n)
-\end{align*}
+
+\begin{equation*}
+    T_{n+1} = y(x_{n+1}) - y_{n+1}
+\end{equation*}
+\begin{multline*}
+    T_{n+1} = y(x_n) + h f(x_n, y(x_n)) + \frac{h^2}{2} (f_x(x_n, y(x_n)) \\
+    + f_y(x_n, y(x_n)) \cdot f(x_n, y(x_n))) \\
+    + \mathcal{O}(h^3) - y_n - h f(x_n, y_n)
+\end{multline*}
 
 Vstavimo $y(x_n) = y_n$ in dobimo
 \begin{equation*}
-    T_{n+1} = \frac{h^2}{2} (f_x(x_n, y_n) + f_y(x_n, y_n)f(x_n, y_n)) = \mathcal{O}(h^3)
+    T_{n+1} = \frac{h^2}{2} (f_x(x_n, y_n) + f_y(x_n, y_n)f(x_n, y_n)) = \mathcal{O}(h^2)
 \end{equation*}
 
 Red lokalne napake je 2, torej je Eulerjeva metoda reda 1.
 
 \subsection{Runge-Kutta metode}
-s-stopenjska R-K metoda:
-Izračunamo s-koeficientov
+s-stopenjska R-K metoda: \\
+Za $i = 1, 2, \dots, s$ izračunamo koeficiente
 \begin{equation*}
-    k_i = h f(x_n + \alpha_i h, y_n + \sum_{j=1}^{s} \beta_{ij} k_j), i = 1, 2, \dots s    
+    k_i = h f(x_n + \alpha_i h, y_n + \sum_{j=1}^{s} \beta_{ij} k_j) 
 \end{equation*}
+
+Zgoraj izračunane koeficiente uporabimo za izračun $y_{n+1}$
 
 \begin{equation*}
     y_{n+1} = y_n + \sum_{i=1}^{s} \gamma_i k_i 
 \end{equation*}
 
 Pri tem so $(\alpha_i)_{i=1}^s$, $(\beta_{ij})_{i, j=1}^s$ in $(\gamma_i)_{i=1}^s$ prosti koeficienti, ki jih izberemo tako,
-da bo metoda konvergentna in čim višjega reda.
-
-\begin{equation*}
-    \alpha_i \in [0, 1]
-\end{equation*}
-
-Velja še $\alpha_i = \sum_{j=1}^{s} \beta_{ij}$.
+da bo metoda konvergentna in čim višjega reda. Pri tem velja $\alpha_i \in [0, 1]$ in $\alpha_i = \sum_{j=1}^{s} \beta_{ij}$.
 
 Metoda bo konvergentna oziroma reda vsaj 1, če bo $\sum_{i=1}^{s} \gamma_i = 1$.
 
@@ -2605,8 +2605,6 @@ R-K metodo lahko predstavimo v t.i. Butcherjevi shemi
 \begin{equation*}
     k_i = h f(x_n + \alpha_i h, y_n + \beta_{i1}k_1 + \beta_{i2}k_2 + \dots + \beta_{is}k_s)
 \end{equation*}
-
-za $i = 1 \dots s$
 
 \begin{equation*}
     y_{n+1} = y_n + \gamma_1 k_1 + \gamma_2 k_2 + \dots + \gamma_s k_s
@@ -2632,44 +2630,53 @@ R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in
 
 \subsubsection{Sistemi diferencialnih enačb 1. reda}
 Začetni problem prvega reda za sistem je oblike
-\begin{align*}
-    y_1' =& f_1(x, y_1, y_2, \dots, y_d) + y_1(a) = y_{1, a} \\
-    y_2' =& f_2(x, y_1, y_2, \dots, y_d) + y_2(a) = y_{2, a} \\
-    \vdots& \\
-    y_d' =& f_d(x, y_1, y_2, \dots, y_d) + y_d(a) = y_{d, a}
-\end{align*}
-pri čemer za $j \in [1, d]$ velja
+\begin{equation*}
+    \begin{matrix}
+        y_1' = f_1(x, y_1, y_2, \dots, y_d) \\
+        y_2' = f_2(x, y_1, y_2, \dots, y_d) \\
+        \vdots \\
+        y_d' = f_d(x, y_1, y_2, \dots, y_d)
+    \end{matrix}
+    +
+    \begin{matrix}
+        y_1(a) = y_{1, a} \\
+        y_2(a) = y_{2, a} \\
+        \vdots \\
+        y_d(a) = y_{d, a}
+    \end{matrix}
+\end{equation*}
+
+pri čemer za $j = 1, \dots, d$ velja
 \begin{equation*}
     f_j: [a, b] \times \R^d \to \R
 \end{equation*}
 
-Definiramo
-\begin{gather*}
+Definirajmo $y: [a, b] \to \R^d$, $F: [a, b]\times \R^d \to \R^d$ in $Y_a$:
+\begin{equation*}
     y = \begin{bmatrix}
         y_1 \\
         y_2 \\
         \vdots \\
         y_d
-    \end{bmatrix}, y: [a, b] \to \R^d \\
+    \end{bmatrix}, 
     F = \begin{bmatrix}
         f_1 \\
         f_2 \\
         \vdots \\
         f_d
-    \end{bmatrix}, 
-    F: [a, b]\times \R^d \to \R^d
-\end{gather*}
-
-Sistem lahko sedaj zapišemo kot:
-\begin{gather*}
-    y' = F(x, Y) \\
-    Y(a) = Y_a \\
+    \end{bmatrix} \text{ in } 
     Y_a = \begin{bmatrix}
         y_{1, a} \\
         y_{2, a} \\
         \vdots \\
         y_{d, a}
-    \end{bmatrix}
+    \end{bmatrix}  
+\end{equation*}
+
+Sistem lahko sedaj zapišemo kot:
+\begin{gather*}
+    y' = F(x, Y) \\
+    Y(a) = Y_a    
 \end{gather*}
 
 Vse metode, ki smo jih spoznali, lahko direktno uporabimo za rešenje sistemov diferencialnih enačb prvega reda.
@@ -2715,6 +2722,7 @@ Zgornje funkcije spravimo v vektorsko obliko
     \begin{bmatrix}
         z_1 \\
         z_2 \\
+        z_3 \\
         \vdots \\
         z_{p-1} \\
         f(x, y, z_1, z_2, \dots, z_{p-1})
@@ -2734,7 +2742,9 @@ Zapišemo
     \begin{bmatrix}
         Y(1) \\
         Y(2) \\
+        Y(3) \\
         \vdots \\
+        Y(p-1) \\
         Y(p)
     \end{bmatrix}
 \end{equation*}
@@ -2872,11 +2882,11 @@ Najbolj znani razredi teh metod so (probably na ustnih)
         \item zaprta pravila - implicitne metode
     \end{itemize}
     (primer)
-    \item BDF metode
+    \item BDF metode: \\
     Odvod $y'(x_n) = f(x_n, y(x_n))$ aproksimiramo z diferencami.
     (primer?=)
     \begin{equation*}
-        y_n = \frac{4}{3} y_{n-1} - \frac{1}{3} y_{n-1} + \frac{2}{3} h f_n
+        y_n = \underbrace{\frac{4}{3} y_{n-1} - \frac{1}{3} y_{n-2}}_{\text{diferenca}} + \frac{2}{3} h f_n
     \end{equation*}
 \end{itemize}
 
@@ -3080,12 +3090,12 @@ Dobimo zaporedje vektorjev $z_0, z_1, z_2, \dots$
     Začetni vektor $z_0$ razvijemo po bazi lastnih vektorjev:
     \begin{gather*}
         z_0 = \sum_{i = 1}^{n} \alpha_i x_i \\
-        z_k = \frac{A z_{k-1}}{\norm{A z_{k-1}}} = \frac{A (\frac{A z_{k-1}}{\norm{A z_{k-2}}})}{A (\frac{A z_{k-2}}{\norm{A z_{k-2}}})} = \dots = \frac{A^k z_0}{\norm{A^k z_0}} = (*) \\ 
+        z_k = \frac{A z_{k-1}}{\norm{A z_{k-1}}} = \frac{A (\frac{A z_{k-2}}{\norm{A z_{k-2}}})}{\norm{A (\frac{A z_{k-2}}{\norm{A z_{k-2}}})}} = \frac{A^2 z_{k-2}}{\norm{A^2 z_{k-2}}} = \dots = \frac{A^k z_0}{\norm{A^k z_0}} \\ 
         A^k z_0 = \sum_{i=1}^{n} \alpha_i A^k x_i = \sum_{i=1}^{n} \alpha_i \lambda_i^k x_i \\
-        z_k = \frac{\alpha_1 \lambda_1^k x_1 + \sum_{i=1}^{n}\alpha_i \lambda_i^k x_i}{\norm{\alpha_1 \lambda_1^k x_1 + \sum_{i=1}^{n}\alpha_i \lambda_i^k x_i}} = \pm \frac{\alpha_1 x_1 + \sum_{i=1}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}{\norm{\alpha_1 x_1 + \sum_{i=1}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}} \\
+        z_k = \frac{\alpha_1 \lambda_1^k x_1 + \sum_{i=2}^{n}\alpha_i \lambda_i^k x_i}{\norm{\alpha_1 \lambda_1^k x_1 + \sum_{i=2}^{n}\alpha_i \lambda_i^k x_i}} = \pm \frac{\alpha_1 x_1 + \sum_{i=2}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}{\norm{\alpha_1 x_1 + \sum_{i=2}^{n}\alpha_i (\frac{\lambda_i}{\lambda_1})^k x_i}} \\
         \xrightarrow[k \to \infty]{} \pm \frac{\alpha_1 x_1}{\norm{\alpha_1 x_1}} = \pm \frac{x_1}{\norm{x_1}}
     \end{gather*}
-    Pri čemer mora veljati, da $\alpha_1 \neq 0$.
+    Pri tem mora veljati, da $\alpha_1 \neq 0$.
 \end{proof}
 
 \rem{V izreku nismo navedli predpostavke, da mora biti $\alpha_1 \neq 0$, saj je ta predpostavka vedno izpolnjena zaradi zaokrožitvenih napak.}
@@ -3442,12 +3452,12 @@ Potrebujemo $\mathcal{O}(n^2)$ operacij.
 
 
 
-Enostavni premik:
+\subsubsection*{Enostavni premik}
 \begin{equation*}
     \sigma_k = A_k(n, n)
 \end{equation*}
 
-Dvojni premik
+\subsubsection*{Dvojni premik}
 Vzamemo 2x2 matriko v spodnjem desnem kotu, izračunamo lastne vrednosti in iz njih dobimo $\sigma$. (ne vem, kako)
 
 Če se na prvi poddiagonali v zgornji Hessenbergovi matriki pojavi 0, problem razpade na dva problema.
