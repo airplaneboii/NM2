@@ -139,11 +139,6 @@
 
 \begin{document}
 
-%\title{Numeri"cne metode 2\\ \small zapiski s predavanj prof. Marjetke Knez}
-%\author{Domen Vogrin}
-%\date{pomlad 2023}
-%\maketitle
-
 \begin{titlepage}
     \begin{center}
         
@@ -153,7 +148,7 @@
         \textbf{Numerične metode 2}
 
         \large
-        Zapiski s predavanj prof. Marjetke Knez
+        Zapiski s predavanj prof. Marjete Knez
 
         \vspace*{0.5cm}
         \LARGE
@@ -1430,8 +1425,9 @@ Brez izpeljave povejmo še sledeče trditve:
 \begin{claim}
     Za $f \in \mathscr{C}^{n+1}([a, b]), a \leq x_0 \leq x_1 \leq \dots \leq x_n \leq b$ in interpolacijski polinom $p$ za $f$ na teh točkah velja
     \begin{equation*}
-        f(x) - p(x) = \omega(x) [x_0, x_1, \dots, x_n, x] f = \omega(x) \frac{f^{(n+1)(\xi_x)}}{(n+1)!}, \xi_x in (a, b), x \in [a, b]
+        f(x) - p(x) = \omega(x) [x_0, x_1, \dots, x_n, x] f = \omega(x) \frac{f^{(n+1)(\xi_x)}}{(n+1)!}
     \end{equation*}
+    pri upoštevanju $\xi_x \in (a, b)$ in $ x \in [a, b]$.
     \begin{equation*}
         \omega(x) = \prod_{i = 0}^{n} (x-x_i)
     \end{equation*}
@@ -1470,6 +1466,12 @@ Protiprimer: (Rungejev primer)
 
 Za funkcijo $f(x) = \frac{1}{1+x^2}$ na interalu $[-5, 5]$ interpoliramo z ekvidistantnimi točkami. Z večanjem $n$-ja gre napaka
 proti $\infty$. S Čebiševimi točkami gre napaka proti 0, a v resnici je napaka pri krajiščih ogromna.
+
+\begin{figure}[H]
+    \center
+    \includegraphics[scale=0.25]{paradoks.jpg}
+    \caption{Rungejev primer.}
+\end{figure}
 
 \subsubsubsection{Odsekoma polinomske funkcije (zlepki)}
 
@@ -1793,7 +1795,7 @@ Glede na izbiro vozlov ločimo dve vrsti pravil:
                    =& 0
     \end{align*}
     
-    Red je vsaj 3
+    Red je vsaj 3.
     \begin{align*}
         R(x-x_0)^4 =& S(x-x_0)^4 - F(x-x_0)^4 \\
                    =& \int_{x_0}^{x_2} (x-x_0)^4 dx - \frac{h}{3} ((x_0-x_0)^4 + 4(x_1-x_0)^4 + (x_2 - x_0)^4) \\
@@ -2613,15 +2615,94 @@ R-K metoda je eksplicitna, če bodo $\beta_{ij} = 0$ za vse $j \geq i$.
 R-K metoda je diagonalno implicitna, če bodo $\beta_{ij} = 0$ za vse $j > i$ in bo vsaj en $\beta_{ii} \neq 0$. Sicer je metoda implicitna.
 
 \subsubsection{Primeri R-K metod}
-(manjka)
-%\subsubsubsection{Modificirana Eulerjeva metoda}
-% (shema)
-%
-%\begin{gather*}
-%    k_1 = h f(x_n, y_n) \\
-%    k_2 = h f(x_n + \frac{1}{2} h, y_n + \frac{1}{2}k_1) \\
-%    y_{n+1} = y_n + k_2
-%\end{gather*}
+
+\subsubsubsection{Modificirana Eulerjeva metoda}
+    
+\begin{center}
+    \begin{tabular}{c|c c}
+        $0$ & $0$ & $0$ \\
+        $\frac{1}{2}$ & $\frac{1}{2}$ & $0$ \\
+        \hline
+        & $0$ & $1$
+    \end{tabular}
+\end{center}
+
+\begin{gather*}
+    k_1 = h f(x_n, y_n) \\
+    k_2 = h f(x_n + \frac{h}{2}, y_n + \frac{1}{2} k_1) \\
+    y_{n+1} = y_n + k_2
+\end{gather*}
+
+Lokalna napaka je reda $3$, globalna pa $2$.
+    
+\begin{figure}[H]
+    \center
+    \includegraphics[scale=1]{rk1.jpg}
+    \caption{Princip delovanja ME metode}
+\end{figure}
+
+Postopek:
+\begin{enumerate}
+    \item odvod pri $x_n$
+    \item dobimo vejo pri $x_n + \frac{1}{2} h$
+    \item tangentno premico prestavimo v $x_n$
+    \item dobimo približek v $x_n+1$
+\end{enumerate}
+
+
+
+\subsubsubsection{Heunova metoda}
+    
+\begin{center}
+    \begin{tabular}{c|c c}
+        $0$ & $0$ & $0$ \\
+        $1$ & $1$ & $0$ \\
+        \hline
+        & $\frac{1}{2}$ & $\frac{1}{2}$
+    \end{tabular}
+\end{center}
+Red lokalne napake je 3.
+
+\subsubsubsection{?}
+    
+\begin{center}
+    \begin{tabular}{c|c c}
+        $0$ & $0$ & $0$ \\
+        $1$ & $\frac{1}{2}$ & $\frac{1}{2}$ \\
+        \hline
+        & $\frac{1}{2}$ & $\frac{1}{2}$
+    \end{tabular}
+\end{center}
+Red lokalne napake je 3.
+
+\subsubsubsection{4-stopenjska RK metoda}
+    
+\begin{center}
+    \begin{tabular}{c|c c c c}
+        $0$ & $0$ & & & \\
+        $\frac{1}{2}$ & $\frac{1}{2}$ & $0$ & & \\
+        $\frac{1}{2}$ & $0$ & $\frac{1}{2}$ & $0$ & \\
+        $1$ & $0$ & $0$ & $1$ & $0$ \\
+        \hline
+        & $\frac{1}{6}$ & $\frac{2}{6}$ & $\frac{2}{6}$ & $\frac{1}{6}$
+    \end{tabular}
+\end{center}
+
+Lokalna napaka je reda 5, napaka metode pa je reda 4:
+\begin{equation*}
+    \max_{0 \leq n < m} |y(x_n) - y_n| = \mathcal{O}(h^4)
+\end{equation*}
+    
+\begin{gather*}
+    k_1 = h \cdot f(x_n, y_n) \\
+    k_2 = h \cdot f(x_n + \frac{1}{2} h, y_n + \frac{1}{2} k_1) \\
+    k_3 = h \cdot f(x_n + \frac{1}{2} h, y_n + \frac{1}{2} k_2) \\
+    k_4 = h \cdot f(x_n + h, y_n + k_3) \\ 
+    y_{n+1} = y_n + \frac{1}{6} k_1 + \frac{2}{6} k_2 + \frac{2}{6} k_3 + \frac{1}{6} k_4
+\end{gather*}
+
+Če pri enočlenskih metodah želimo večji red metode, to plačamo s tem, da je treba izračunati več $k$-jev.
+
 
 % 15. 5. 2023
 %(metode)
@@ -3257,7 +3338,7 @@ Podprostor $Lin\{x_1, x_2, \dots, x_p\}$ se imenuje dominantni invariantni podpr
     Naj bo $A = X \Lambda X^{-1}$, $\Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n)$, $X = \begin{bmatrix}
         x_1 & x_2 & \dots & x_n
     \end{bmatrix}$ in naj velja $|\lambda_1| \geq |\lambda_2| \geq \dots \geq |\lambda_p| > |\lambda_{p+1}| \geq \dots \geq |\lambda_n| \geq 0$.
-    Potem za poljubno začetno matriko $Z_0 \in \R^{n \times p}$, $Z_0^T Z_0 = I$, zaporedje matrik $(Z_k)_k$ konvergira protu matriki,
+    Potem za poljubno začetno matriko $Z_0 \in \R^{n \times p}$, $Z_0^T Z_0 = I$, zaporedje matrik $(Z_k)_k$ konvergira proti matriki,
     katere stolpci tvorijo bazo za dominantni invariantni podprostor $Lin\{x_1, x_2, \dots, x_p\}$.
 \end{theorem}
 
