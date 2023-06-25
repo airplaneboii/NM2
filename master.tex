@@ -281,7 +281,7 @@ Za dolo"canje aproksimanta $\tilde{f}$ lo"cimo dva primera:
 \end{enumerate}
 
 
-\subsubsection{Splo"sen optimalni aproksimacijski problem}
+\subsection{Splo"sen optimalni aproksimacijski problem}
 Naj bo $X$ vektorski prostor z normo $\norm{\cdot}$, $S \subseteq X$. Za $f \in X$ i"s"cemo $\tilde{f} \in S$, da velja
 \begin{equation*}
     \norm{f - \tilde{f}} = \inf_{s \in S} \norm{f - s} = dist(f, S)
@@ -338,7 +338,7 @@ Po Weierstrassovem izreku imamo zagotovljeno konvergenco v neskon"cni normi, "za
 
 
 % 20. 2. 2023
-\subsection{Aproksimacija po metodi najmanjših kvadratov \- (MNK)}
+\subsubsection{Aproksimacija po metodi najmanjših kvadratov \- (MNK)}
 Sodi pod optimalne aproksimacijske probleme.
 
 Naj bo $X$ normiran vektorski prostor nad $\R$ s skalarnim produktom $\innerproduct{\cdot}{\cdot}$ in naj bo $\norm{\cdot}_2 = \sqrt[]{\innerproduct{\cdot}{\cdot}}$.
@@ -730,7 +730,7 @@ $X \in \mathscr{C}([a, b])$
     \caption{Druga norma, porojena iz zveznega (levo) in diskretnega (desno) skalarnega produkta.}
 \end{figure}
 
-\subsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
+\subsubsection{Enakomerna aproksimacija zveznih funkcij s polinomi}
 \begin{equation*}
     X = \mathscr{C} ([a, b]), S = \Pp_n, \norm{\cdot}_{\infty}
 \end{equation*}
@@ -765,7 +765,7 @@ Nasledni izrek nam poda $\textbf{zadostni pogoj}$, da je nek polinom PNEA za nek
     Potem je $p$ polinom najboljše enakomerne aproksimacije za $f$ na $[a, b]$.
 \end{theorem}
 
-\rem{Kaj pomeni `alternirajoče doseže svojo normo'?} \\
+\rem{Kaj pomeni ``alternirajoče doseže svojo normo''?} \\
 Za $i = 0, \dots, n+1$ mora veljati
 \begin{equation*}
     \norm{r}_{\infty, [a, b]} = \left| r(x_i) \right|
@@ -859,8 +859,8 @@ ter koeficient $m$, za katerega velja
 V prvem koraku normalno pričnemo z ekvidistantnimi točkami. V drugem koraku poiščemo dejanski ekstrem in eno točko pomaknemo tja, pri čemer pazimo na alteriranje. Tako dobimo nov polinom.
 
 
-\newpage
-\section{Interpolacija}
+%\newpage
+\subsection{Interpolacija}
 Problem: Podane imamo vrednosti izbrane funkcije $f$ v $n+1$ paroma različnih točkah $x_0, x_1, \dots, x_n$ na realni osi. Te točke bomo imenovali
 $\textbf{interpolacijske}$ $\textbf{točke}$. Iščemo neko preprostejšo funkcijo $g$, ki zadošča pogojem
 \begin{equation*}
@@ -877,7 +877,7 @@ Interpolacija se uporablja za
     \item za izpeljavo formul za numerično integriranje, odvajanje, reševanje navadnih diferencialnih enačb (NDE) \dots
 \end{itemize}
 
-\subsection{Polinomska interpolacija}
+\subsubsection{Polinomska interpolacija}
 Za $f \in \mathscr{C}([a, b])$ in interpolacijske točke $a \leq x_0 < x_1 < \dots < x_n \leq b$ iščemo $\textbf{polinom}$ $p_i$, ki za $i = 0, \dots, n$ zadošča enačbam
 \begin{equation*}
     p(x_i) = f(x_i)
@@ -982,7 +982,7 @@ za $c_j \in \R$.
 
 Kako izbrati koeficiente, da bo polinom interpolacijski oziroma da bo zadoščal pogojem
 \begin{equation*}
-    p(x_i) = \sum_{j = 0}^{n} c_j \ell_{j, n} (x_i) = f(x_i)
+    p(x_i) = \underbrace{\sum_{j = 0}^{n} c_j \underbrace{\ell_{j, n} (x_i)}_{\delta_{i, j}}}_{c_i} = f(x_i)
 \end{equation*}
 za $i = 1, \dots, n$. Za vsak $i$ je tudi vsota enaka $c_i$.
 
@@ -1111,7 +1111,7 @@ Ostane le pogoj za $x = x_k$
 \end{equation*}
 kjer lahko zapišemo
 \begin{equation*}
-    p_k(x_k) = p_{k-1}(x_x) +  c \prod_{j = 0}^{k-1}(x_k - x_j)
+    p_k(x_k) = p_{k-1}(x_k) +  c \prod_{j = 0}^{k-1}(x_k - x_j)
 \end{equation*}
 S tem je določen $c$, ki je kar $\textbf{vodilni koeficient}$ od $p_k$. Označimo ga z $[x_0, x_1, \dots, x_k] f$ in ga imenujemo $\textbf{deljena diferenca}$.
 
@@ -1184,9 +1184,9 @@ V zgornji enačbi je $\frac{f(x_1)- f(x_0)}{x_1 - x_0}$ vodilni koeficient, $1$ 
     Velja, da sta $q_0, q_1 \in \Pp_{k-1}$.
     Kako priti do polinoma $p$, ki bo interpolacijski na $x_0, x_1, \dots, x_k$? Ta $p$ bo tak, da bo veljalo $p \in \Pp_k$.
 
-    Sestavimo model za $p$
+    Sestavimo model za $p$. Pri tem nas zanimata $\ell_0, \ell_1$, za katera upoštevamo, da velja $\ell_0, \ell_1 \in \Pp_1$:
     \begin{equation*}
-        p(x) = \ell_0(x) q_0(x) + \ell_1(x) q_1(x), \ell_0, \ell_1 \in \Pp_1, \ell_0, \ell_1 = ?
+        p(x) = \ell_0(x) q_0(x) + \ell_1(x) q_1(x)
     \end{equation*}
     kjer za $x_j \in \{x_1, x_2, \dots, x_{k-1}\}$ upoštevamo
     \begin{equation*}
@@ -1469,7 +1469,7 @@ povečujemo stopnjo $n$. Dobimo zaporedje interpolacijskih polinomov $(p_n)_n$. 
 Protiprimer: (Rungejev primer)
 
 Za funkcijo $f(x) = \frac{1}{1+x^2}$ na interalu $[-5, 5]$ interpoliramo z ekvidistantnimi točkami. Z večanjem $n$-ja gre napaka
-proti $\infty$. Z Čebiševimi točkami gre napaka proti 0, a v resnici je napaka pri krajiščih ogromna.
+proti $\infty$. S Čebiševimi točkami gre napaka proti 0, a v resnici je napaka pri krajiščih ogromna.
 
 \subsubsubsection{Odsekoma polinomske funkcije (zlepki)}
 
@@ -1534,10 +1534,12 @@ označujemo z $R(f)$ oziroma $Rf$.
 
 Interpolacijske točke običajno izberemo $\textbf{ekvidistantno}$, za $x$ pa izberemo eno od interpolacijskih točk, na primer 
 $x_k$, $k \in \{0, 1, \dots, n\}$. Tedaj dobimo:
-\begin{equation*}
-    f'(x_k) = \sum_{i=0}^{n}f(x_i) \ell_{i, n}'(x_k) + \omega'(x_k) [x_0, x_1, \dots, x_{k-1}, x_k] f + \omega(x_k) [x_0, x_1, \dots, x_{k-1}, x_k, x_k] f
-\end{equation*}
-kjer je prvi sumand približek, drugi napaka, tretji pa je enak nič. Napako zapišemo kot
+
+\begin{multline*}
+    f'(x_k) = \underbrace{\sum_{i=0}^{n}f(x_i) \ell_{i, n}'(x_k)}_{\text{približek}} + \underbrace{\omega'(x_k) [x_0, x_1, \dots, x_{k-1}, x_k] f}_{napaka} + \\
+    + \underbrace{\omega(x_k) [x_0, x_1, \dots, x_{k-1}, x_k, x_k] f}_{0}
+\end{multline*}
+Napako zapišemo kot
 \begin{equation*}
     Rf = \omega'(x_k) \frac{f^{(n+1)}(\xi)}{(n+1)!}
 \end{equation*}
@@ -1984,16 +1986,12 @@ Označimo $F_h$ približek, ki ga izračunamo s korakom $h$ za neko fiksno funkc
 kjer je $c_0$ konstanta.
 
 Namesto s korakom $h$ računamo s korakom $\frac{h}{2}$:
-\begin{equation*}
-    I = F_{\frac{h}{2}} + c_0 (\frac{h}{2})^p + \mathscr{O} (h^{p+1})
-\end{equation*}
-\begin{equation*}
-    2^p I = 2^p F_{\frac{h}{2}} + c_0 h^p  + \mathscr{O} (h^{p+1})
-    (2^p - 1) I = 2^p F_{\frac{h}{2}} - F_h + \mathscr{O} (h^{p+1})
-\end{equation*}
-\begin{equation*}
+\begin{gather*}
+    I = F_{\frac{h}{2}} + c_0 (\frac{h}{2})^p + \mathscr{O} (h^{p+1}) \\
+    2^p I = 2^p F_{\frac{h}{2}} + c_0 h^p  + \mathscr{O} (h^{p+1}) \\
+    (2^p - 1) I = 2^p F_{\frac{h}{2}} - F_h + \mathscr{O} (h^{p+1}) \\
     I = \frac{2^p F_{\frac{h}{2}} - F_h}{(2^p - 1)} + \mathscr{O} (h^{p+1})
-\end{equation*}
+\end{gather*}
 
 Ulomku pravimo ekstrapoliran približek.
 \begin{equation*}
@@ -2260,7 +2258,7 @@ Napaka je enaka kot prej, torej $I - I_N = \mathcal{O}(N^{-\frac{1}{2}})$.
 \newpage
 \section{Numerično reševanje navadnih diferencialnih enačb}
 
-Ponovitev teorije:
+\subsection{Ponovitev teorije}
 \begin{itemize}
     \item NDE je funkcijska enačba, v kateri poleg neznane funkcije nastopajo tudi njeni odvodi.
     \item Red NDE je stopnja najvišjega odvoda, ki nastopa v enačbi.
@@ -2461,7 +2459,7 @@ V splošnem bi do predpisov za približke $y_n$ lahko prišli na naslednje nači
     \end{gather*}
     Napako odrežemo in točne vrednosti nadomestimo s približki in pridemo do metode:
     \begin{gather*}
-        y_{n+1} = y_n + \frac{h}{2} (f(x_n, y(x_n)) + f(x_{n+1}, yx_{n+1}))
+        y_{n+1} = y_n + \frac{h}{2} \big(f(x_n, y(x_n)) + f(x_{n+1}, y(x_{n+1}))\big)
     \end{gather*}
     To je trapezna metoda za reševanje diferencialnih enačb.
 \end{ex}
@@ -3066,10 +3064,6 @@ Za dano matriko $A \in \R^{n \times m}$ iščemo dominantno lastno vrednost in p
         \While{true}
             \State $y_{k+1} = A z_k$
             \State $z_{k+1} = \frac{y_{k+1}}{\|y_{k+1}\|}$
-            \State $k \gets k + 1$
-            \If{$\norm{A z_k - \rho_k z_k} < \epsilon$} \Comment{Stop condition}
-                \State \textbf{break}
-            \EndIf
         \EndWhile
     \end{algorithmic}
 \end{algorithm}
@@ -3085,7 +3079,9 @@ Dobimo zaporedje vektorjev $z_0, z_1, z_2, \dots$
 \begin{proof}
     Izrek velja za poljubno matriko, dokazali pa ga bomo za matriko $A$, ki se da diagonalizirati. To je
     \begin{gather*}
-        A = X \Lambda X^{-1}, \Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n), X = [x_1, x_2, \dots, x_n] \in \R^{n \times m}
+        A = X \Lambda X^{-1} \\
+        \Lambda = diag(\lambda_1, \lambda_2, \dots, \lambda_n) \\
+         X = [x_1, x_2, \dots, x_n] \in \R^{n \times m}
     \end{gather*}
     Začetni vektor $z_0$ razvijemo po bazi lastnih vektorjev:
     \begin{gather*}
@@ -3267,7 +3263,7 @@ Podprostor $Lin\{x_1, x_2, \dots, x_p\}$ se imenuje dominantni invariantni podpr
 
 % 31.5.2023
 \begin{theorem}
-    Naj bo $p = n$ in naj velja $| \lambda_1 | > | \lambda_2 | > \dots > | \lambda_n | \geq 0$. Definiramo matriko $A_k = Z_k€T A Z_k \in \R^{n \times n}$.
+    Naj bo $p = n$ in naj velja $| \lambda_1 | > | \lambda_2 | > \dots > | \lambda_n | \geq 0$. Definiramo matriko $A_k = Z_k^T A Z_k \in \R^{n \times n}$.
     Potem zaporedje matrike $(A_k)_k$ konvergira proti zgornje trikotni matriki (iz Schurovega razcepa).
 \end{theorem}
 
@@ -3382,7 +3378,8 @@ $A$ zapišemo kot
 \end{center}
 
 Na podlagi rdeče obkroženega vektorja določimo Householderjevo zrcaljenje, ki uniči elemente od prvega navzdol, torej od drugega navzdol v celotnem stolpcu.
-Dobimo $\tilde{P}_1$, ki je $4 \times 4$ matrika.
+Dobimo $\tilde{P}_1$, ki je $4 \times 4$ matrika. Iz nje sestavimo matriko $P_1$, za katero velja, da je $p_{1,1} = 1$, preostanek prve vrstice in prvega
+stolpca pa je ničeln. Ostala polja zasede matrika $\tilde{P}_1$.
 
 $P_1 A$ izgleda tako:
 
